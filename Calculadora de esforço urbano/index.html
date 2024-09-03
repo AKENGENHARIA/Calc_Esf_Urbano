@@ -1,114 +1,605 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Esforço Urbano</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
+        h1 {
+            color: #0044cc;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px 0;
+        }
+
+        .force-input {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 180px;
+            box-sizing: border-box;
+            min-width: 150px;
+        }
+
+        .force-input h3 {
+            color: #0044cc;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .vao-ang, .RedeDentrega, .estaio, .usoMutuo {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        input[type="number"], select {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-size: 12px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .buttons button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: #0044cc;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .buttons button:hover {
+            background-color: #0033a0;
+        }
+
+        .results {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .results .value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0044cc;
+        }
+
+        .chart {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+    </style>
+</head>
 <body>
+    <h1>Calculadora de Esforço Urbano</h1>
     <div class="container">
-        <h1>Calculadora de Esforço Urbano</h1>
-        <!-- FORMULARIO DA FORÇA 1 -->
-        <div class="force-input">
-            <div class="force" id="force1">
-                <h3>FORÇA 1</h3>
-                <section class="vao-ang">
-                    <label>Vão:</label>
-                    <input type="number" id="span1" value="0" <label>Ângulo:</label>
-                    <input type="number" id="angle1" value="0">
-                </section>
-                <!-- REDE DE ENERGIA -->
-                <div class="RedeDentrega">
-                    <h3>Rede de Energia</h3>
-                    <p>Rede MT</p>
-                    <select name="" id="">
-                        <option value=""></option>
-                        <option value="">3#50+9,5</option>
-                        <option value="">1#50+9,6</option>
-                        <option value="">3#150+9,7</option>
-                        <option value="">1#4</option>
-                        <option value="">2#4</option>
-                        <option value="">3#4</option>
-                        <option value="">1#2</option>
-                        <option value="">2#2</option>
-                    </select>
-                    <p>Rede BT</p>
-                    <select name="" id="">
-                        <option value=""></option>
-                        <option value="">Nivel I</option>
-                        <option value="">Nivel II</option>
-                        <option value="">Nivel III</option>
-                    </select>
-                    <p>Nivel da cruzeta MT</p>
-                    <select name="" id="">
-                        <option value=""></option>
-                        <option value="">1</option>
-                        <option value="">2</option>
-                        <option value="">3</option>
-                    </select>
-                </div>
+        <!-- Layout F1 -->
+        <div class="force-input" id="F1">
+            <h3>FORÇA 1</h3>
+            <section class="vao-ang">
+                <label for="span1_F1">Vão:</label>
+                <input type="number" id="span1_F1" value="0">
+                <label for="angle1_F1">Ângulo:</label>
+                <input type="number" id="angle1_F1" value="0">
+            </section>
+            <div class="RedeDentrega">
+                <h3>Rede de Energia</h3>
+                <p>Rede MT</p>
+                <select name="rede_mt_F1" id="rede_mt_F1">
+                    <option value="3#50+9,5">3#50+9,5 - 415,00 daN</option>
+                    <option value="1#50+9,6">1#50+9,6 - 255,00 daN</option>
+                    <option value="3#150+9,7">3#150+9,7 - 517,00 daN</option>
+                    <option value="1#4">1#4 - 58 daN</option>
+                    <option value="2#4">2#4 - 116 daN</option>
+                    <option value="3#4">3#4 - 174 daN</option>
+                    <option value="1#2">1#2 - 92 daN</option>
+                    <option value="2#2">2#2 - 184 daN</option>
+                    <option value="3#2">3#2 - 276 daN</option>
+                    <option value="1#1/0">1#1/0 - 145 daN</option>
+                    <option value="2#1/0">2#1/0 - 290 daN</option>
+                    <option value="3#1/0 (1/0)">3#1/0 (1/0) - 435 daN</option>
+                    <option value="1#4/0">1#4/0 - 293 daN</option>
+                    <option value="2#4/0">2#4/0 - 586 daN</option>
+                    <option value="3#4/0">3#4/0 - 879 daN</option>
+                    <option value="1#336">1#336 - 467 daN</option>
+                    <option value="2#336">2#336 - 934 daN</option>
+                    <option value="3#336">3#336 - 1401 daN</option>
+                </select>
+                <p>Rede BT</p>
+                <select name="rede_bt_F1" id="rede_bt_F1">
+                    <option value="2x1x35+70">2x1x35+70 - 114 daN</option>
+                    <option value="2x1x70+70">2x1x70+70 - 181 daN</option>
+                    <option value="3x1x35+70">3x1x35+70 - 161 daN</option>
+                    <option value="3x1x70+70">3x1x70+70 - 245 daN</option>
+                    <option value="3x1x120+70">3x1x120+70 - 381 daN</option>
+                    <option value="1#4">1#4 - 58 daN</option>
+                    <option value="2#4(4)">2#4(4) - 116 daN</option>
+                    <option value="3#4(4)">3#4(4) - 174 daN</option>
+                    <option value="1#2">1#2 - 92 daN</option>
+                    <option value="2#2(4)">2#2(4) - 183 daN</option>
+                    <option value="2#2(2)">2#2(2) - 184 daN</option>
+                    <option value="3#2(4)">3#2(4) - 275 daN</option>
+                    <option value="3#2(2)">3#2(2) - 276 daN</option>
+                    <option value="1#1/0">1#1/0 - 145 daN</option>
+                    <option value="2#1/0(2)">2#1/0(2) - 290 daN</option>
+                    <option value="3#1/0(2)">3#1/0(2) - 435 daN</option>
+                    <option value="1#4/0">1#4/0 - 293 daN</option>
+                    <option value="2#4/0(1/0)">2#4/0(1/0) - 586 daN</option>
+                    <option value="3#4/0(1/0)">3#4/0(1/0) - 879 daN</option>
+                    <option value="1#336">1#336 - 467 daN</option>
+                    <option value="2#336(4/0)">2#336(4/0) - 934 daN</option>
+                    <option value="3#336(4/0)">3#336(4/0) - 1401 daN</option>
+                </select>
+                <p>Nível da cruzeta MT</p>
+                <select name="nivel_cruzeta_mt_F1" id="nivel_cruzeta_mt_F1">
+                    <option value="0">0,00 daN</option>
+                    <option value="3#50+9,5">3#50+9,5 - 415,00 daN</option>
+                    <option value="1#50+9,6">1#50+9,6 - 255,00 daN</option>
+                    <option value="3#150+9,7">3#150+9,7 - 517,00 daN</option>
+                    <option value="1#4">1#4 - 58 daN</option>
+                    <option value="2#4">2#4 - 116 daN</option>
+                    <option value="3#4">3#4 - 174 daN</option>
+                    <option value="1#2">1#2 - 92 daN</option>
+                    <option value="2#2">2#2 - 184 daN</option>
+                    <option value="3#2">3#2 - 276 daN</option>
+                    <option value="1#1/0">1#1/0 - 145 daN</option>
+                    <option value="2#1/0">2#1/0 - 290 daN</option>
+                    <option value="3#1/0 (1/0)">3#1/0 (1/0) - 435 daN</option>
+                    <option value="1#4/0">1#4/0 - 293 daN</option>
+                    <option value="2#4/0">2#4/0 - 586 daN</option>
+                    <option value="3#4/0">3#4/0 - 879 daN</option>
+                    <option value="1#336">1#336 - 467 daN</option>
+                    <option value="2#336">2#336 - 934 daN</option>
+                    <option value="3#336">3#336 - 1401 daN</option>
+                </select>
             </div>
-            <!-- FINAL DA REDE DE ENERGIA -->
-            <!-- COMEÇO DO ESTAIO -->
-            <div class="estaio">
-                <h3>Estaio</3>
-                    <section class="secaoEstaio">
-                        <input type="radio">Sim
-                        <input type="radio">Não
-                        <div class="TipodeEstaio">
-                            <p>Tipo de Estaio</p>
-                            <select name="" id="">
-                                <option value=""></option>
-                            </select>
-                            <p>Valor do Estaio</p>
-                            <select name="" id="">
-                                <option value=""></option>
-                            </select>
-                    </section>
+            <section class="estaio">
+                <h3>Estaio</h3>
+                <select id="estaio_F1">
+                    <option value="opcao1">Opção 1</option>
+                    <option value="opcao2">Opção 2</option>
+                </select>
+            </section>
+            <section class="usoMutuo">
+                <h3>Uso Mútuo</h3>
+                <select id="usoMutuo_F1">
+                    <option value="opcao1">Opção 1</option>
+                    <option value="opcao2">Opção 2</option>
+                </select>
+            </section>
+        </div>
+
+        <!-- Layout F2 -->
+        <div class="force-input" id="F2">
+            <h3>FORÇA 2</h3>
+            <section class="vao-ang">
+                <label for="span1_F2">Vão:</label>
+                <input type="number" id="span1_F2" value="0">
+                <label for="angle1_F2">Ângulo:</label>
+                <input type="number" id="angle1_F2" value="0">
+            </section>
+            <div class="RedeDentrega">
+                <h3>Rede de Energia</h3>
+                <p>Rede MT</p>
+                <select name="rede_mt_F2" id="rede_mt_F2">
+                    <option value="3#50+9,5">3#50+9,5 - 415,00 daN</option>
+                    <option value="1#50+9,6">1#50+9,6 - 255,00 daN</option>
+                    <option value="3#150+9,7">3#150+9,7 - 517,00 daN</option>
+                    <option value="1#4">1#4 - 58 daN</option>
+                    <option value="2#4">2#4 - 116 daN</option>
+                    <option value="3#4">3#4 - 174 daN</option>
+                    <option value="1#2">1#2 - 92 daN</option>
+                    <option value="2#2">2#2 - 184 daN</option>
+                    <option value="3#2">3#2 - 276 daN</option>
+                    <option value="1#1/0">1#1/0 - 145 daN</option>
+                    <option value="2#1/0">2#1/0 - 290 daN</option>
+                    <option value="3#1/0 (1/0)">3#1/0 (1/0) - 435 daN</option>
+                    <option value="1#4/0">1#4/0 - 293 daN</option>
+                    <option value="2#4/0">2#4/0 - 586 daN</option>
+                    <option value="3#4/0">3#4/0 - 879 daN</option>
+                    <option value="1#336">1#336 - 467 daN</option>
+                    <option value="2#336">2#336 - 934 daN</option>
+                    <option value="3#336">3#336 - 1401 daN</option>
+                </select>
+                <p>Rede BT</p>
+                <select name="rede_bt_F2" id="rede_bt_F2">
+                    <option value="2x1x35+70">2x1x35+70 - 114 daN</option>
+                    <option value="2x1x70+70">2x1x70+70 - 181 daN</option>
+                    <option value="3x1x35+70">3x1x35+70 - 161 daN</option>
+                    <option value="3x1x70+70">3x1x70+70 - 245 daN</option>
+                    <option value="3x1x120+70">3x1x120+70 - 381 daN</option>
+                    <option value="1#4">1#4 - 58 daN</option>
+                    <option value="2#4(4)">2#4(4) - 116 daN</option>
+                    <option value="3#4(4)">3#4(4) - 174 daN</option>
+                    <option value="1#2">1#2 - 92 daN</option>
+                    <option value="2#2(4)">2#2(4) - 183 daN</option>
+                    <option value="2#2(2)">2#2(2) - 184 daN</option>
+                    <option value="3#2(4)">3#2(4) - 275 daN</option>
+                    <option value="3#2(2)">3#2(2) - 276 daN</option>
+                    <option value="1#1/0">1#1/0 - 145 daN</option>
+                    <option value="2#1/0(2)">2#1/0(2) - 290 daN</option>
+                    <option value="3#1/0(2)">3#1/0(2) - 435 daN</option>
+                    <option value="1#4/0">1#4/0 - 293 daN</option>
+                    <option value="2#4/0(1/0)">2#4/0(1/0) - 586 daN</option>
+                    <option value="3#4/0(1/0)">3#4/0(1/0) - 879 daN</option>
+                    <option value="1#336">1#336 - 467 daN</option>
+                    <option value="2#336(4/0)">2#336(4/0) - 934 daN</option>
+                    <option value="3#336(4/0)">3#336(4/0) - 1401 daN</option>
+                </select>
+                <p>Nível da cruzeta MT</p>
+                <select name="nivel_cruzeta_mt_F2" id="nivel_cruzeta_mt_F2">
+                    <option value="0">0,00 daN</option>
+                    <option value="3#50+9,5">3#50+9,5 - 415,00 daN</option>
+                    <option value="1#50+9,6">1#50+9,6 - 255,00 daN</option>
+                    <option value="3#150+9,7">3#150+9,7 - 517,00 daN</option>
+                    <option value="1#4">1#4 - 58 daN</option>
+                    <option value="2#4">2#4 - 116 daN</option>
+                    <option value="3#4">3#4 - 174 daN</option>
+                    <option value="1#2">1#2 - 92 daN</option>
+                    <option value="2#2">2#2 - 184 daN</option>
+                    <option value="3#2">3#2 - 276 daN</option>
+                    <option value="1#1/0">1#1/0 - 145 daN</option>
+                    <option value="2#1/0">2#1/0 - 290 daN</option>
+                    <option value="3#1/0 (1/0)">3#1/0 (1/0) - 435 daN</option>
+                    <option value="1#4/0">1#4/0 - 293 daN</option>
+                    <option value="2#4/0">2#4/0 - 586 daN</option>
+                    <option value="3#4/0">3#4/0 - 879 daN</option>
+                    <option value="1#336">1#336 - 467 daN</option>
+                    <option value="2#336">2#336 - 934 daN</option>
+                    <option value="3#336">3#336 - 1401 daN</option>
+                </select>
             </div>
+            <section class="estaio">
+                <h3>Estaio</h3>
+                <select id="estaio_F2">
+                    <option value="opcao1">Opção 1</option>
+                    <option value="opcao2">Opção 2</option>
+                </select>
+            </section>
+            <section class="usoMutuo">
+                <h3>Uso Mútuo</h3>
+                <select id="usoMutuo_F2">
+                    <option value="opcao1">Opção 1</option>
+                    <option value="opcao2">Opção 2</option>
+                </select>
+            </section>
         </div>
+
+        <!-- Layout F3 -->
+        <div class="force-input" id="F3">
+            <h3>FORÇA 3</h3>
+            <section class="vao-ang">
+                <label for="span1_F3">Vão:</label>
+                <input type="number" id="span1_F3" value="0">
+                <label for="angle1_F3">Ângulo:</label>
+                <input type="number" id="angle1_F3" value="0">
+            </section>
+            <div class="RedeDentrega">
+                <h3>Rede de Energia</h3>
+                <p>Rede MT</p>
+                <select name="rede_mt_F3" id="rede_mt_F3">
+                    <option value="3#50+9,5">3#50+9,5 - 415,00 daN</option>
+                    <option value="1#50+9,6">1#50+9,6 - 255,00 daN</option>
+                    <option value="3#150+9,7">3#150+9,7 - 517,00 daN</option>
+                    <option value="1#4">1#4 - 58 daN</option>
+                    <option value="2#4">2#4 - 116 daN</option>
+                    <option value="3#4">3#4 - 174 daN</option>
+                    <option value="1#2">1#2 - 92 daN</option>
+                    <option value="2#2">2#2 - 184 daN</option>
+                    <option value="3#2">3#2 - 276 daN</option>
+                    <option value="1#1/0">1#1/0 - 145 daN</option>
+                    <option value="2#1/0">2#1/0 - 290 daN</option>
+                    <option value="3#1/0 (1/0)">3#1/0 (1/0) - 435 daN</option>
+                    <option value="1#4/0">1#4/0 - 293 daN</option>
+                    <option value="2#4/0">2#4/0 - 586 daN</option>
+                    <option value="3#4/0">3#4/0 - 879 daN</option>
+                    <option value="1#336">1#336 - 467 daN</option>
+                    <option value="2#336">2#336 - 934 daN</option>
+                    <option value="3#336">3#336 - 1401 daN</option>
+                </select>
+                <p>Rede BT</p>
+                <select name="rede_bt_F3" id="rede_bt_F3">
+                    <option value="2x1x35+70">2x1x35+70 - 114 daN</option>
+                    <option value="2x1x70+70">2x1x70+70 - 181 daN</option>
+                    <option value="3x1x35+70">3x1x35+70 - 161 daN</option>
+                    <option value="3x1x70+70">3x1x70+70 - 245 daN</option>
+                    <option value="3x1x120+70">3x1x120+70 - 381 daN</option>
+                    <option value="1#4">1#4 - 58 daN</option>
+                    <option value="2#4(4)">2#4(4) - 116 daN</option>
+                    <option value="3#4(4)">3#4(4) - 174 daN</option>
+                    <option value="1#2">1#2 - 92 daN</option>
+                    <option value="2#2(4)">2#2(4) - 183 daN</option>
+                    <option value="2#2(2)">2#2(2) - 184 daN</option>
+                    <option value="3#2(4)">3#2(4) - 275 daN</option>
+                    <option value="3#2(2)">3#2(2) - 276 daN</option>
+                    <option value="1#1/0">1#1/0 - 145 daN</option>
+                    <option value="2#1/0(2)">2#1/0(2) - 290 daN</option>
+                    <option value="3#1/0(2)">3#1/0(2) - 435 daN</option>
+                    <option value="1#4/0">1#4/0 - 293 daN</option>
+                    <option value="2#4/0(1/0)">2#4/0(1/0) - 586 daN</option>
+                    <option value="3#4/0(1/0)">3#4/0(1/0) - 879 daN</option>
+                    <option value="1#336">1#336 - 467 daN</option>
+                    <option value="2#336(4/0)">2#336(4/0) - 934 daN</option>
+                    <option value="3#336(4/0)">3#336(4/0) - 1401 daN</option>
+                </select>
+                <p>Nível da cruzeta MT</p>
+                <select name="nivel_cruzeta_mt_F3" id="nivel_cruzeta_mt_F3">
+                    <option value="0">0,00 daN</option>
+                    <option value="3#50+9,5">3#50+9,5 - 415,00 daN</option>
+                    <option value="1#50+9,6">1#50+9,6 - 255,00 daN</option>
+                    <option value="3#150+9,7">3#150+9,7 - 517,00 daN</option>
+                    <option value="1#4">1#4 - 58 daN</option>
+                    <option value="2#4">2#4 - 116 daN</option>
+                    <option value="3#4">3#4 - 174 daN</option>
+                    <option value="1#2">1#2 - 92 daN</option>
+                    <option value="2#2">2#2 - 184 daN</option>
+                    <option value="3#2">3#2 - 276 daN</option>
+                    <option value="1#1/0">1#1/0 - 145 daN</option>
+                    <option value="2#1/0">2#1/0 - 290 daN</option>
+                    <option value="3#1/0 (1/0)">3#1/0 (1/0) - 435 daN</option>
+                    <option value="1#4/0">1#4/0 - 293 daN</option>
+                    <option value="2#4/0">2#4/0 - 586 daN</option>
+                    <option value="3#4/0">3#4/0 - 879 daN</option>
+                    <option value="1#336">1#336 - 467 daN</option>
+                    <option value="2#336">2#336 - 934 daN</option>
+                    <option value="3#336">3#336 - 1401 daN</option>
+                </select>
+            </div>
+            <section class="estaio">
+                <h3>Estaio</h3>
+                <select id="estaio_F3">
+                    <option value="opcao1">Opção 1</option>
+                    <option value="opcao2">Opção 2</option>
+                </select>
+            </section>
+            <section class="usoMutuo">
+                <h3>Uso Mútuo</h3>
+                <select id="usoMutuo_F3">
+                    <option value="opcao1">Opção 1</option>
+                    <option value="opcao2">Opção 2</option>
+                </select>
+            </section>
         </div>
-        </select>
-        <!-- FIM DO ESTAIO -->
-        <!-- COMEÇO DO USO MUTUO -->
-        <div class="usoMutuo">
-        <h3>Uso Mútuo</h3>
-        <section>
-            <p>Cabo de fibra</p>
-            <select name="" id="">
-                <option value=""></option>
-                <option value="">3#50+9,5</option>
-                <option value="">1#50+9,6</option>
-                <option value="">3#150+9,7</option>
-                <option value="">1#4</option>
-                <option value="">2#4</option>
-                <option value="">3#4</option>
-                <option value="">1#2</option>
-                <option value="">2#2</option>
+
+        <!-- Layout F4 -->
+        <div class="force-input" id="F3">
+        <h3>FORÇA 4</h3>
+        <section class="vao-ang">
+            <label for="span1_F3">Vão:</label>
+            <input type="number" id="span1_F3" value="0">
+            <label for="angle1_F3">Ângulo:</label>
+            <input type="number" id="angle1_F3" value="0">
+        </section>
+        <div class="RedeDentrega">
+            <h3>Rede de Energia</h3>
+            <p>Rede MT</p>
+            <select name="rede_mt_F3" id="rede_mt_F3">
+                <option value="3#50+9,5">3#50+9,5 - 415,00 daN</option>
+                <option value="1#50+9,6">1#50+9,6 - 255,00 daN</option>
+                <option value="3#150+9,7">3#150+9,7 - 517,00 daN</option>
+                <option value="1#4">1#4 - 58 daN</option>
+                <option value="2#4">2#4 - 116 daN</option>
+                <option value="3#4">3#4 - 174 daN</option>
+                <option value="1#2">1#2 - 92 daN</option>
+                <option value="2#2">2#2 - 184 daN</option>
+                <option value="3#2">3#2 - 276 daN</option>
+                <option value="1#1/0">1#1/0 - 145 daN</option>
+                <option value="2#1/0">2#1/0 - 290 daN</option>
+                <option value="3#1/0 (1/0)">3#1/0 (1/0) - 435 daN</option>
+                <option value="1#4/0">1#4/0 - 293 daN</option>
+                <option value="2#4/0">2#4/0 - 586 daN</option>
+                <option value="3#4/0">3#4/0 - 879 daN</option>
+                <option value="1#336">1#336 - 467 daN</option>
+                <option value="2#336">2#336 - 934 daN</option>
+                <option value="3#336">3#336 - 1401 daN</option>
             </select>
-            <p>Par Metálico</p>
-            <select name="" id="">
-                <option value=""></option>
-                <option value="">Nivel I</option>
-                <option value="">Nivel II</option>
-                <option value="">Nivel III</option>
+            <p>Rede BT</p>
+            <select name="rede_bt_F3" id="rede_bt_F3">
+                <option value="2x1x35+70">2x1x35+70 - 114 daN</option>
+                <option value="2x1x70+70">2x1x70+70 - 181 daN</option>
+                <option value="3x1x35+70">3x1x35+70 - 161 daN</option>
+                <option value="3x1x70+70">3x1x70+70 - 245 daN</option>
+                <option value="3x1x120+70">3x1x120+70 - 381 daN</option>
+                <option value="1#4">1#4 - 58 daN</option>
+                <option value="2#4(4)">2#4(4) - 116 daN</option>
+                <option value="3#4(4)">3#4(4) - 174 daN</option>
+                <option value="1#2">1#2 - 92 daN</option>
+                <option value="2#2(4)">2#2(4) - 183 daN</option>
+                <option value="2#2(2)">2#2(2) - 184 daN</option>
+                <option value="3#2(4)">3#2(4) - 275 daN</option>
+                <option value="3#2(2)">3#2(2) - 276 daN</option>
+                <option value="1#1/0">1#1/0 - 145 daN</option>
+                <option value="2#1/0(2)">2#1/0(2) - 290 daN</option>
+                <option value="3#1/0(2)">3#1/0(2) - 435 daN</option>
+                <option value="1#4/0">1#4/0 - 293 daN</option>
+                <option value="2#4/0(1/0)">2#4/0(1/0) - 586 daN</option>
+                <option value="3#4/0(1/0)">3#4/0(1/0) - 879 daN</option>
+                <option value="1#336">1#336 - 467 daN</option>
+                <option value="2#336(4/0)">2#336(4/0) - 934 daN</option>
+                <option value="3#336(4/0)">3#336(4/0) - 1401 daN</option>
             </select>
-            <p>Nº de Fibra</p>
-            <select name="" id=""></select>
+            <p>Nível da cruzeta MT</p>
+            <select name="nivel_cruzeta_mt_F3" id="nivel_cruzeta_mt_F3">
+                <option value="0">0,00 daN</option>
+                <option value="3#50+9,5">3#50+9,5 - 415,00 daN</option>
+                <option value="1#50+9,6">1#50+9,6 - 255,00 daN</option>
+                <option value="3#150+9,7">3#150+9,7 - 517,00 daN</option>
+                <option value="1#4">1#4 - 58 daN</option>
+                <option value="2#4">2#4 - 116 daN</option>
+                <option value="3#4">3#4 - 174 daN</option>
+                <option value="1#2">1#2 - 92 daN</option>
+                <option value="2#2">2#2 - 184 daN</option>
+                <option value="3#2">3#2 - 276 daN</option>
+                <option value="1#1/0">1#1/0 - 145 daN</option>
+                <option value="2#1/0">2#1/0 - 290 daN</option>
+                <option value="3#1/0 (1/0)">3#1/0 (1/0) - 435 daN</option>
+                <option value="1#4/0">1#4/0 - 293 daN</option>
+                <option value="2#4/0">2#4/0 - 586 daN</option>
+                <option value="3#4/0">3#4/0 - 879 daN</option>
+                <option value="1#336">1#336 - 467 daN</option>
+                <option value="2#336">2#336 - 934 daN</option>
+                <option value="3#336">3#336 - 1401 daN</option>
+            </select>
+        </div>
+        <section class="estaio">
+            <h3>Estaio</h3>
+            <select id="estaio_F3">
+                <option value="opcao1">Opção 1</option>
+                <option value="opcao2">Opção 2</option>
+            </select>
+        </section>
+        <section class="usoMutuo">
+            <h3>Uso Mútuo</h3>
+            <select id="usoMutuo_F3">
+                <option value="opcao1">Opção 1</option>
+                <option value="opcao2">Opção 2</option>
             </select>
         </section>
     </div>
+     <!-- Layout F5 -->
+     <div class="force-input" id="F3">
+        <h3>FORÇA 5</h3>
+        <section class="vao-ang">
+            <label for="span1_F3">Vão:</label>
+            <input type="number" id="span1_F3" value="0">
+            <label for="angle1_F3">Ângulo:</label>
+            <input type="number" id="angle1_F3" value="0">
+        </section>
+        <div class="RedeDentrega">
+            <h3>Rede de Energia</h3>
+            <p>Rede MT</p>
+            <select name="rede_mt_F3" id="rede_mt_F3">
+                <option value="3#50+9,5">3#50+9,5 - 415,00 daN</option>
+                <option value="1#50+9,6">1#50+9,6 - 255,00 daN</option>
+                <option value="3#150+9,7">3#150+9,7 - 517,00 daN</option>
+                <option value="1#4">1#4 - 58 daN</option>
+                <option value="2#4">2#4 - 116 daN</option>
+                <option value="3#4">3#4 - 174 daN</option>
+                <option value="1#2">1#2 - 92 daN</option>
+                <option value="2#2">2#2 - 184 daN</option>
+                <option value="3#2">3#2 - 276 daN</option>
+                <option value="1#1/0">1#1/0 - 145 daN</option>
+                <option value="2#1/0">2#1/0 - 290 daN</option>
+                <option value="3#1/0 (1/0)">3#1/0 (1/0) - 435 daN</option>
+                <option value="1#4/0">1#4/0 - 293 daN</option>
+                <option value="2#4/0">2#4/0 - 586 daN</option>
+                <option value="3#4/0">3#4/0 - 879 daN</option>
+                <option value="1#336">1#336 - 467 daN</option>
+                <option value="2#336">2#336 - 934 daN</option>
+                <option value="3#336">3#336 - 1401 daN</option>
+            </select>
+            <p>Rede BT</p>
+            <select name="rede_bt_F3" id="rede_bt_F3">
+                <option value="2x1x35+70">2x1x35+70 - 114 daN</option>
+                <option value="2x1x70+70">2x1x70+70 - 181 daN</option>
+                <option value="3x1x35+70">3x1x35+70 - 161 daN</option>
+                <option value="3x1x70+70">3x1x70+70 - 245 daN</option>
+                <option value="3x1x120+70">3x1x120+70 - 381 daN</option>
+                <option value="1#4">1#4 - 58 daN</option>
+                <option value="2#4(4)">2#4(4) - 116 daN</option>
+                <option value="3#4(4)">3#4(4) - 174 daN</option>
+                <option value="1#2">1#2 - 92 daN</option>
+                <option value="2#2(4)">2#2(4) - 183 daN</option>
+                <option value="2#2(2)">2#2(2) - 184 daN</option>
+                <option value="3#2(4)">3#2(4) - 275 daN</option>
+                <option value="3#2(2)">3#2(2) - 276 daN</option>
+                <option value="1#1/0">1#1/0 - 145 daN</option>
+                <option value="2#1/0(2)">2#1/0(2) - 290 daN</option>
+                <option value="3#1/0(2)">3#1/0(2) - 435 daN</option>
+                <option value="1#4/0">1#4/0 - 293 daN</option>
+                <option value="2#4/0(1/0)">2#4/0(1/0) - 586 daN</option>
+                <option value="3#4/0(1/0)">3#4/0(1/0) - 879 daN</option>
+                <option value="1#336">1#336 - 467 daN</option>
+                <option value="2#336(4/0)">2#336(4/0) - 934 daN</option>
+                <option value="3#336(4/0)">3#336(4/0) - 1401 daN</option>
+            </select>
+            <p>Nível da cruzeta MT</p>
+            <select name="nivel_cruzeta_mt_F3" id="nivel_cruzeta_mt_F3">
+                <option value="0">0,00 daN</option>
+                <option value="3#50+9,5">3#50+9,5 - 415,00 daN</option>
+                <option value="1#50+9,6">1#50+9,6 - 255,00 daN</option>
+                <option value="3#150+9,7">3#150+9,7 - 517,00 daN</option>
+                <option value="1#4">1#4 - 58 daN</option>
+                <option value="2#4">2#4 - 116 daN</option>
+                <option value="3#4">3#4 - 174 daN</option>
+                <option value="1#2">1#2 - 92 daN</option>
+                <option value="2#2">2#2 - 184 daN</option>
+                <option value="3#2">3#2 - 276 daN</option>
+                <option value="1#1/0">1#1/0 - 145 daN</option>
+                <option value="2#1/0">2#1/0 - 290 daN</option>
+                <option value="3#1/0 (1/0)">3#1/0 (1/0) - 435 daN</option>
+                <option value="1#4/0">1#4/0 - 293 daN</option>
+                <option value="2#4/0">2#4/0 - 586 daN</option>
+                <option value="3#4/0">3#4/0 - 879 daN</option>
+                <option value="1#336">1#336 - 467 daN</option>
+                <option value="2#336">2#336 - 934 daN</option>
+                <option value="3#336">3#336 - 1401 daN</option>
+            </select>
+        </div>
+        <section class="estaio">
+            <h3>Estaio</h3>
+            <select id="estaio_F3">
+                <option value="opcao1">Opção 1</option>
+                <option value="opcao2">Opção 2</option>
+            </select>
+        </section>
+        <section class="usoMutuo">
+            <h3>Uso Mútuo</h3>
+            <select id="usoMutuo_F3">
+                <option value="opcao1">Opção 1</option>
+                <option value="opcao2">Opção 2</option>
+            </select>
+        </section>
     </div>
-    </div>
-    </div>
-    <!-- FINAL DO FORMULARIO DA FORÇA 1 -->
 
-
+        <!-- Buttons -->
+        <div id="buttons">
+            <button type="button" id="calculate">Calcular</button>
+            <button type="button" id="clear">Limpar</button>
+        </div>
+    </form>
+    <script src="script.js"></script>
 </body>
-
 </html>
