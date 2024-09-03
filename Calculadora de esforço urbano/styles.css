@@ -1,0 +1,78 @@
+
+*{
+    padding: 0%;
+    margin: 0%;
+    box-shadow: none;
+}
+/* estilo da parte do vão e angulo */
+.vao-ang input{
+   display: flex ;
+   border: solid 2px;
+   margin: 2px;
+   text-align: center;
+   
+}
+.vao-ang{
+    padding: 4px;
+}
+/* FIM DA PARTE DO VÃO E ANGULO */
+/* COMEÇO DA PARTE DE REDE DE ENERGIA */
+.RedeDentrega{
+    border: solid;
+    display: flex;
+    flex-wrap: wrap;
+    flex-flow: column;
+    width: 50vh;
+    padding: 10px;
+}
+.RedeDentrega p{
+    font-weight: 999;
+}
+
+.RedeDentrega select{
+    width: 50%;
+    border: solid 1px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 900;
+}
+.force-input{
+    border: solid ;
+    padding: 20px;
+    width: 55vh;
+}
+/* FIM DA REDE ENERGIA */
+/* COMEÇO DO ESTAIO */
+.estaio{
+    border: solid;
+    padding: 1px;
+    margin-top: 5px;
+    padding: 5px;
+    width: 52vh;
+
+}
+
+.secaoEstaio select{
+    width: 50%;
+    border: solid 1px;
+    border-radius: 5px;
+    margin-top: 4px;
+}
+
+.secaoEstaio{
+    margin: 5px auto;
+    font-size: 16px;
+}
+.secaoEstaio input{
+    margin: 5px;
+    margin: 7px;
+    
+    
+}
+/* FINAL DO ESTAIO */
+/* COMEÇO DO USO MÚTUO */
+.usoMutuo{
+    border: solid;
+    padding: 20px;
+    margin: 20px;
+}
