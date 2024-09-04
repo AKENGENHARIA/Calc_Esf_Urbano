@@ -1,339 +1,205 @@
 // Função para configurar visibilidade dos campos para uma seção estaio
-        function setupEstaio(section) {
-            const estaioSim = document.getElementById(`estaio_sim${section}`);
-            const estaioNao = document.getElementById(`estaio_nao${section}`);
-            const estaioF = document.getElementById(`estaio_F${section}`);
-            const estaioNumber = document.getElementById(`estaio_number${section}`);
+function setupEstaio(section) {
+    const estaioSim = document.getElementById(`estaio_sim${section}`);
+    const estaioNao = document.getElementById(`estaio_nao${section}`);
+    const estaioF = document.getElementById(`estaio_F${section}`);
+    const estaioNumber = document.getElementById(`estaio_number${section}`);
 
-            if (!estaioSim || !estaioNao || !estaioF || !estaioNumber) {
-                console.error(`Elementos para Estaio ${section} não encontrados.`);
-                return;
-            }
+    if (!estaioSim || !estaioNao || !estaioF || !estaioNumber) {
+        console.error(`Elementos para Estaio ${section} não encontrados.`);
+        return;
+    }
 
-            estaioF.style.display = 'none'; // Inicialmente oculto
-            estaioNumber.style.display = 'none'; // Inicialmente oculto
+    estaioF.style.display = 'none'; // Inicialmente oculto
+    estaioNumber.style.display = 'none'; // Inicialmente oculto
 
-            estaioSim.addEventListener('change', () => {
-                if (estaioSim.checked) {
-                    estaioF.style.display = 'block';
-                    estaioNumber.style.display = 'block';
-                }
-            });
-
-            estaioNao.addEventListener('change', () => {
-                if (estaioNao.checked) {
-                    estaioF.style.display = 'none';
-                    estaioNumber.style.display = 'none';
-                }
-            });
+    estaioSim.addEventListener('change', () => {
+        if (estaioSim.checked) {
+            estaioF.style.display = 'block';
+            estaioNumber.style.display = 'block';
         }
+    });
 
-        // Inicialize todas as seções de estaio
-        for (let i = 1; i <= 5; i++) {
-            setupEstaio(i);
+    estaioNao.addEventListener('change', () => {
+        if (estaioNao.checked) {
+            estaioF.style.display = 'none';
+            estaioNumber.style.display = 'none';
         }
+    });
+}
+
+// Inicialize todas as seções de estaio
+for (let i = 1; i <= 5; i++) {
+    setupEstaio(i);
+}
 
 
 document.addEventListener('DOMContentLoaded', function () {
+
     var btn = document.getElementById('calculate');
-    var modal = document.getElementById('resultModal');
-    var resultadoModal = document.getElementById('resultadoModal');
+    var resultadoDiv = document.getElementById('resultado');
     var vectorChart;
 
-    if (!btn || !modal || !resultadoModal) {
+    if (!btn || !resultadoDiv) {
         console.error("Elementos necessários não foram encontrados.");
         return;
     }
 
     btn.addEventListener('click', function () {
-        // Força 1
-        let ang1 = 0, redeMt1 = 415, redeBt1 = 10, nivelMt1 = 0, vao1 = 0;
-        let somaF1 = (redeMt1 * nivelMt1) + redeBt1;
-        let rad1 = ang1 * Math.PI / 180;
-        let x1 = somaF1 * Math.cos(rad1);
-        let y1 = somaF1 * Math.sin(rad1);
 
-        // Força 2
-        let ang2 = 45, redeMt2 = 255, redeBt2 = 0, nivelMt2 = 0, vao2 = 0;
-        let somaF2 = (redeMt2 * nivelMt2) + redeBt2;
-        let rad2 = ang2 * Math.PI / 180;
-        let x2 = somaF2 * Math.cos(rad2);
-        let y2 = somaF2 * Math.sin(rad2);
+   // FORÇA 1
+   let ang1 = Number(document.getElementById('angle1_F1').value);
+   let redeMt1Select = document.getElementById('rede_mt_F1');
+   let redeBt1Select = document.getElementById('rede_bt_F1');
+   let nivelMt1 = Number(document.getElementById('nivel_cruzeta_mt_F1').value);
+   let vao1 = Number(document.getElementById('span1_F1').value);
 
-        // Força 3
-        let ang3 = 90, redeMt3 = 517, redeBt3 = 0, nivelMt3 = 0, vao3 = 31;
-        let somaF3 = (redeMt3 * nivelMt3) + redeBt3;
-        let rad3 = ang3 * Math.PI / 180;
-        let x3 = somaF3 * Math.cos(rad3);
-        let y3 = somaF3 * Math.sin(rad3);
+   let redeMt1Value = parseFloat(redeMt1Select.value); // Valor de MT1
+   let redeMt1Id = redeMt1Select.options[redeMt1Select.selectedIndex]?.id || 'ID não encontrado'; // ID de MT1
+   let redeBt1Value = parseFloat(redeBt1Select.value); // Valor de BT1
+   let redeBt1Id = redeBt1Select.options[redeBt1Select.selectedIndex]?.id || 'ID não encontrado'; // ID de BT1
 
-        // Força 4
-        let ang4 = 135, redeMt4 = 58, redeBt4 = 0, nivelMt4 = 0, vao4 = 32;
-        let somaF4 = (redeMt4 * nivelMt4) + redeBt4;
-        let rad4 = ang4 * Math.PI / 180;
-        let x4 = somaF4 * Math.cos(rad4);
-        let y4 = somaF4 * Math.sin(rad4);
+   let somaF1 = (redeMt1Value * nivelMt1) + redeBt1Value;
+   let rad1 = ang1 * Math.PI / 180;
+   let x1 = somaF1 * Math.cos(rad1);
+   let y1 = somaF1 * Math.sin(rad1);
 
-        // Força 5
-        let ang5 = 180, redeMt5 = 174, redeBt5 = 0, nivelMt5 = 0, vao5 = 33;
-        let somaF5 = (redeMt5 * nivelMt5) + redeBt5;
-        let rad5 = ang5 * Math.PI / 180;
-        let x5 = somaF5 * Math.cos(rad5);
-        let y5 = somaF5 * Math.sin(rad5);
+   // FORÇA 2
+   let ang2 = Number(document.getElementById('angle2_F2').value);
+   let redeMt2Select = document.getElementById('rede_mt_F2');
+   let redeBt2Select = document.getElementById('rede_bt_F2');
+   let nivelMt2 = Number(document.getElementById('nivel_cruzeta_mt_F2').value);
+   let vao2 = Number(document.getElementById('span2_F2').value);
 
-        // Resultado Final
-        let xResult = x1 + x2 + x3 + x4 + x5;
-        let yResult = y1 + y2 + y3 + y4 + y5;
-        let magnitudeResultante = Math.sqrt(xResult * xResult + yResult * yResult);
-        let anguloResultante = Math.atan2(yResult, xResult) * 180 / Math.PI;
+   let redeMt2Value = parseFloat(redeMt2Select.value); // Valor de MT2
+   let redeMt2Id = redeMt2Select.options[redeMt2Select.selectedIndex]?.id || 'ID não encontrado'; // ID de MT2
+   let redeBt2Value = parseFloat(redeBt2Select.value); // Valor de BT2
+   let redeBt2Id = redeBt2Select.options[redeBt2Select.selectedIndex]?.id || 'ID não encontrado'; // ID de BT2
 
-        // Atualiza o conteúdo do modal
-        resultadoModal.innerHTML = `
-            <h3>Resultados das Forças</h3>
+   let somaF2 = (redeMt2Value * nivelMt2) + redeBt2Value;
+   let rad2 = ang2 * Math.PI / 180;
+   let x2 = somaF2 * Math.cos(rad2);
+   let y2 = somaF2 * Math.sin(rad2);
 
-            <div class="force-box">
-                <h4>Força 1</h4>
-                <p><strong>Ângulo:</strong> ${ang1}°</p>
-                <p><strong>Vão:</strong> ${vao1}</p>
-                <p><strong>Rede MT:</strong> ${redeMt1}</p>
-                <p><strong>Rede BT:</strong> ${redeBt1}</p>
-                <p><strong>Magnitude:</strong> ${somaF1.toFixed(2)}</p>
-                <p><strong>Componente X:</strong> ${x1.toFixed(2)}</p>
-                <p><strong>Componente Y:</strong> ${y1.toFixed(2)}</p>
-            </div>
+   // FORÇA 3
+   let ang3 = Number(document.getElementById('angle3_F3').value);
+   let redeMt3Select = document.getElementById('rede_mt_F3');
+   let redeBt3Select = document.getElementById('rede_bt_F3');
+   let nivelMt3 = Number(document.getElementById('nivel_cruzeta_mt_F3').value);
+   let vao3 = Number(document.getElementById('span3_F3').value);
 
-            <div class="force-box">
-                <h4>Força 2</h4>
-                <p><strong>Ângulo:</strong> ${ang2}°</p>
-                <p><strong>Vão:</strong> ${vao2}</p>
-                <p><strong>Rede MT:</strong> ${redeMt2}</p>
-                <p><strong>Rede BT:</strong> ${redeBt2}</p>
-                <p><strong>Magnitude:</strong> ${somaF2.toFixed(2)}</p>
-                <p><strong>Componente X:</strong> ${x2.toFixed(2)}</p>
-                <p><strong>Componente Y:</strong> ${y2.toFixed(2)}</p>
-            </div>
+   let redeMt3Value = parseFloat(redeMt3Select.value); // Valor de MT3
+   let redeMt3Id = redeMt3Select.options[redeMt3Select.selectedIndex]?.id || 'ID não encontrado'; // ID de MT3
+   let redeBt3Value = parseFloat(redeBt3Select.value); // Valor de BT3
+   let redeBt3Id = redeBt3Select.options[redeBt3Select.selectedIndex]?.id || 'ID não encontrado'; // ID de BT3
 
-            <div class="force-box">
-                <h4>Força 3</h4>
-                <p><strong>Ângulo:</strong> ${ang3}°</p>
-                <p><strong>Vão:</strong> ${vao3}</p>
-                <p><strong>Rede MT:</strong> ${redeMt3}</p>
-                <p><strong>Rede BT:</strong> ${redeBt3}</p>
-                <p><strong>Magnitude:</strong> ${somaF3.toFixed(2)}</p>
-                <p><strong>Componente X:</strong> ${x3.toFixed(2)}</p>
-                <p><strong>Componente Y:</strong> ${y3.toFixed(2)}</p>
-            </div>
+   let somaF3 = (redeMt3Value * nivelMt3) + redeBt3Value;
+   let rad3 = ang3 * Math.PI / 180;
+   let x3 = somaF3 * Math.cos(rad3);
+   let y3 = somaF3 * Math.sin(rad3);
 
-            <div class="force-box">
-                <h4>Força 4</h4>
-                <p><strong>Ângulo:</strong> ${ang4}°</p>
-                <p><strong>Vão:</strong> ${vao4}</p>
-                <p><strong>Rede MT:</strong> ${redeMt4}</p>
-                <p><strong>Rede BT:</strong> ${redeBt4}</p>
-                <p><strong>Magnitude:</strong> ${somaF4.toFixed(2)}</p>
-                <p><strong>Componente X:</strong> ${x4.toFixed(2)}</p>
-                <p><strong>Componente Y:</strong> ${y4.toFixed(2)}</p>
-            </div>
+   // FORÇA 4
+   let ang4 = Number(document.getElementById('angle4_F4').value);
+   let redeMt4Select = document.getElementById('rede_mt_F4');
+   let redeBt4Select = document.getElementById('rede_bt_F4');
+   let nivelMt4 = Number(document.getElementById('nivel_cruzeta_mt_F4').value);
+   let vao4 = Number(document.getElementById('span4_F4').value);
 
-            <div class="force-box">
-                <h4>Força 5</h4>
-                <p><strong>Ângulo:</strong> ${ang5}°</p>
-                <p><strong>Vão:</strong> ${vao5}</p>
-                <p><strong>Rede MT:</strong> ${redeMt5}</p>
-                <p><strong>Rede BT:</strong> ${redeBt5}</p>
-                <p><strong>Magnitude:</strong> ${somaF5.toFixed(2)}</p>
-                <p><strong>Componente X:</strong> ${x5.toFixed(2)}</p>
-                <p><strong>Componente Y:</strong> ${y5.toFixed(2)}</p>
-            </div>
+   let redeMt4Value = parseFloat(redeMt4Select.value); // Valor de MT4
+   let redeMt4Id = redeMt4Select.options[redeMt4Select.selectedIndex]?.id || 'ID não encontrado'; // ID de MT4
+   let redeBt4Value = parseFloat(redeBt4Select.value); // Valor de BT4
+   let redeBt4Id = redeBt4Select.options[redeBt4Select.selectedIndex]?.id || 'ID não encontrado'; // ID de BT4
 
-            <h3>Resultado Final</h3>
-            <p><strong>Magnitude Resultante:</strong> ${magnitudeResultante.toFixed(2)}</p>
-            <p><strong>Ângulo Resultante:</strong> ${anguloResultante.toFixed(2)}°</p>
+   let somaF4 = (redeMt4Value * nivelMt4) + redeBt4Value;
+   let rad4 = ang4 * Math.PI / 180;
+   let x4 = somaF4 * Math.cos(rad4);
+   let y4 = somaF4 * Math.sin(rad4);
+
+   // FORÇA 5
+   let ang5 = Number(document.getElementById('angle5_F5').value);
+   let redeMt5Select = document.getElementById('rede_mt_F5');
+   let redeBt5Select = document.getElementById('rede_bt_F5');
+   let nivelMt5 = Number(document.getElementById('nivel_cruzeta_mt_F5').value);
+   let vao5 = Number(document.getElementById('span5_F5').value);
+
+   let redeMt5Value = parseFloat(redeMt5Select.value); // Valor de MT5
+   let redeMt5Id = redeMt5Select.options[redeMt5Select.selectedIndex]?.id || 'ID não encontrado'; // ID de MT5
+   let redeBt5Value = parseFloat(redeBt5Select.value); // Valor de BT5
+   let redeBt5Id = redeBt5Select.options[redeBt5Select.selectedIndex]?.id || 'ID não encontrado'; // ID de BT5
+
+   let somaF5 = (redeMt5Value * nivelMt5) + redeBt5Value;
+   let rad5 = ang5 * Math.PI / 180;
+   let x5 = somaF5 * Math.cos(rad5);
+   let y5 = somaF5 * Math.sin(rad5);
+
+   let xResult = x1 + x2 + x3 + x4 + x5;
+   let yResult = y1 + y2 + y3 + y4 + y5;
+   let magnitudeResultante = Math.sqrt(xResult * xResult + yResult * yResult);
+   let anguloResultante = Math.atan2(yResult, xResult) * 180 / Math.PI;
+
+        // Atualiza o conteúdo do resultadoDiv com a tabela
+        resultadoDiv.innerHTML = `
+            <h2>Cálculo de Esforço Mecânico</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Força</th>
+                        <th>Ângulo (Ɵ)</th>
+                        <th>Rede MT Tipo (ID)</th>
+                        <th>Rede BT Tipo</th>
+                        <th>X</th>
+                        <th>Y</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="f1">F1</td>
+                        <td class="f1">${ang1.toFixed(2)}</td>
+                        <td class="f1">${redeMt1Id}</td>
+                        <td class="f1">${redeBt1Id}</td>
+                        <td class="f1">${x1.toFixed(2)}</td>
+                        <td class="f1">${y1.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td class="f2">F2</td>
+                        <td class="f2">${ang2.toFixed(2)}</td>
+                        <td class="f2">${redeMt2Id}</td>
+                        <td class="f2">${redeBt2Id}</td>
+                        <td class="f2">${x2.toFixed(2)}</td>
+                        <td class="f2">${y2.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td class="f3">F3</td>
+                        <td class="f3">${ang3.toFixed(2)}</td>
+                        <td class="f3">${redeMt3Id}</td>
+                        <td class="f3">${redeBt3Id}</td>
+                        <td class="f3">${x3.toFixed(2)}</td>
+                        <td class="f3">${y3.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td class="f4">F4</td>
+                        <td class="f4">${ang4.toFixed(2)}</td>
+                        <td class="f4">${redeMt4Id}</td>
+                        <td class="f4">${redeBt4Id}</td>
+                        <td class="f4">${x4.toFixed(2)}</td>
+                        <td class="f4">${y4.toFixed(2)}</td>
+                    </tr>
+                    <tr>
+                        <td class="f5">F5</td>
+                        <td class="f5">${ang5.toFixed(2)}</td>
+                        <td class="f5">${redeMt5Id}</td>
+                        <td class="f5">${redeBt5Id}</td>
+                        <td class="f5">${x5.toFixed(2)}</td>
+                        <td class="f5">${y5.toFixed(2)}</td>
+                    </tr>
+                         <tr class="soma">
+                <td colspan="1">Vetor</td>
+                <td colspan="3">${magnitudeResultante.toFixed(2)}</td>
+                <td>Ângulo</td>
+                <td colspan="2">${anguloResultante.toFixed(2)}</td>
+            </tr>
+                </tbody>
+            </table>
         `;
-
-        // Mostra o modal
-        modal.style.display = "block";
-
-        // Desenha o gráfico de vetores usando Chart.js
-        const ctx = document.getElementById('vectorChart').getContext('2d');
-        if (vectorChart) {
-            vectorChart.destroy(); // Destroi o gráfico anterior, se existir
-        }
-        vectorChart = new Chart(ctx, {
-            type: 'scatter',
-            data: {
-                datasets: [{
-                    label: 'Força 1',
-                    data: [{x: 0, y: 0}, {x: x1, y: y1}],
-                    borderColor: 'blue',
-                    showLine: true,
-                    fill: false
-                },
-                {
-                    label: 'Força 2',
-                    data: [{x: 0, y: 0}, {x: x2, y: y2}],
-                    borderColor: 'green',
-                    showLine: true,
-                    fill: false
-                },
-                {
-                    label: 'Força 3',
-                    data: [{x: 0, y: 0}, {x: x3, y: y3}],
-                    borderColor: 'red',
-                    showLine: true,
-                    fill: false
-                },
-                {
-                    label: 'Força 4',
-                    data: [{x: 0, y: 0}, {x: x4, y: y4}],
-                    borderColor: 'purple',
-                    showLine: true,
-                    fill: false
-                },
-                {
-                    label: 'Força 5',
-                    data: [{x: 0, y: 0}, {x: x5, y: y5}],
-                    borderColor: 'orange',
-                    showLine: true,
-                    fill: false
-                },
-                {
-                    label: 'Resultado',
-                    data: [{x: 0, y: 0}, {x: xResult, y: yResult}],
-                    borderColor: 'black',
-                    showLine: true,
-                    fill: false,
-                    borderDash: [5, 5]
-                }]
-            },
-            options: {
-                scales: {
-                    x: {beginAtZero: true},
-                    y: {beginAtZero: true}
-                }
-            }
-        });
     });
-
-    // Fecha o modal quando o usuário clicar fora do conteúdo do modal
-    window.onclick = function(event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }
 });
-
-
-
-
-        const { PDFDocument, rgb } = PDFLib;
-
-        function drawTableRow(page, y, data, isHeader = false) {
-            const rowHeight = 25;
-            const columnWidth1 = 100;
-            const columnWidth2 = 100;
-            const columnWidth3 = 100;
-            const columnWidth4 = 100;
-            const textColor = rgb(0.2, 0.2, 0.2);
-            const headerColor = rgb(0.9, 0.9, 0.9);
-
-            // Garantir que o valor da magnitude seja um número
-            const magnitude = isNaN(data.magnitude) ? 0 : data.magnitude;
-
-            // Garantir que o valor do ângulo resultante seja um número
-            const anguloResultante = isNaN(data.anguloResultante) ? 'N/A' : data.anguloResultante.toFixed(2);
-
-            // Desenha retângulo para cada célula (com cor de fundo para o cabeçalho)
-            page.drawRectangle({
-                x: 50,
-                y: y,
-                width: columnWidth1,
-                height: rowHeight,
-                color: isHeader ? headerColor : undefined,
-                borderColor: rgb(0, 0, 0),
-                borderWidth: 1
-            });
-            page.drawText(data.forca, { x: 55, y: y + 8, size: 12, color: textColor });
-
-            page.drawRectangle({
-                x: 50 + columnWidth1,
-                y: y,
-                width: columnWidth2,
-                height: rowHeight,
-                color: isHeader ? headerColor : undefined,
-                borderColor: rgb(0, 0, 0),
-                borderWidth: 1
-            });
-            page.drawText(`${data.angulo}°`, { x: 55 + columnWidth1, y: y + 8, size: 12, color: textColor });
-
-            page.drawRectangle({
-                x: 50 + columnWidth1 + columnWidth2,
-                y: y,
-                width: columnWidth3,
-                height: rowHeight,
-                color: isHeader ? headerColor : undefined,
-                borderColor: rgb(0, 0, 0),
-                borderWidth: 1
-            });
-            page.drawText(`${magnitude.toFixed(2)}`, { x: 55 + columnWidth1 + columnWidth2, y: y + 8, size: 12, color: textColor });
-
-            page.drawRectangle({
-                x: 50 + columnWidth1 + columnWidth2 + columnWidth3,
-                y: y,
-                width: columnWidth4,
-                height: rowHeight,
-                color: isHeader ? headerColor : undefined,
-                borderColor: rgb(0, 0, 0),
-                borderWidth: 1
-            });
-            page.drawText(`${anguloResultante}°`, {
-                x: 55 + columnWidth1 + columnWidth2 + columnWidth3,
-                y: y + 8,
-                size: 12,
-                color: textColor
-            });
-        }
-
-        document.getElementById('generatePdf').addEventListener('click', async function () {
-            const pdfDoc = await PDFDocument.create();
-            const page = pdfDoc.addPage([600, 500]);
-
-            // Definir título e subtítulo
-            page.drawText('Calculadora de Esforço Urbano', { x: 50, y: 480, size: 24, color: rgb(0.2, 0.2, 0.2) });
-            page.drawText('Forças e Resultados', { x: 50, y: 450, size: 18, color: rgb(0.2, 0.2, 0.2) });
-
-            // Posição inicial da tabela
-            const tableStartY = 430;
-            const rowHeight = 25;
-
-            // Cabeçalho da tabela
-            drawTableRow(page, tableStartY, { forca: 'Força', angulo: 'Ângulo', magnitude: 'Magnitude', anguloResultante: 'Ângulo Resultante' }, true);
-
-            let currentY = tableStartY - rowHeight;
-            const forces = window.pdfData?.forcas || [];
-
-            // Linhas da tabela com dados
-            forces.forEach(force => {
-                drawTableRow(page, currentY, {
-                    forca: `Força ${force.numero}`,
-                    angulo: force.angulo,
-                    magnitude: force.magnitude,
-                    anguloResultante: force.anguloResultante
-                });
-                currentY -= rowHeight;
-            });
-
-            // Resultado Final
-            page.drawText('Resultado Final', { x: 50, y: currentY - 20, size: 18, color: rgb(0.2, 0.2, 0.2) });
-            page.drawText(`Magnitude Resultante: ${window.pdfData?.magnitudeResultante?.toFixed(2) || '0.00'}`, { x: 50, y: currentY - 50, size: 14, color: rgb(0, 0, 0) });
-            page.drawText(`Ângulo Resultante: ${window.pdfData?.anguloResultante?.toFixed(2) || '0.00'}°`, { x: 50, y: currentY - 70, size: 14, color: rgb(0, 0, 0) });
-
-            // Salva o PDF e permite o download
-            const pdfBytes = await pdfDoc.save();
-            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'resultado.pdf';
-            link.click();
-        });
