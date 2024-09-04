@@ -4,96 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto - Calculadora de Esforço Urbano</title>
+    <link rel="stylesheet" href="css/style_BemVindo.css">
     <style>
-        /* Reset básico */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Estilo da página de bem-vindo */
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-image: url('img/fundo-bemvindo.jpg'); /* Caminho relativo da imagem */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .container {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 40px;
-            border-radius: 10px;
-            text-align: center;
-            color: white;
-            width: 350px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .container h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #fff;
-        }
-
-        .container h3 {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #ccc;
-        }
-
-        .container input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 14px;
-        }
-
-        .container input[type="text"]::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .radio-group {
-            text-align: left;
-            margin-top: 10px;
-            color: white;
-        }
-
-        .radio-group input {
-            margin-right: 10px;
-        }
-
-        .container button {
-            padding: 12px 25px;
-            background-color: #0044cc;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-            width: 100%;
-        }
-
-        .container button:hover {
-            background-color: #0033a0;
-        }
-
-        /* Estilos adicionais para input e botão */
-        .container input[type="text"]:focus, 
-        .container input[type="radio"]:focus {
-            outline: none;
-            border: 1px solid #00aaff;
-        }
+       
     </style>
 </head>
 <body>
@@ -115,26 +28,6 @@
             <button type="submit" class="button">Iniciar o Projeto</button>
         </form>
     </div>
-
-    <script>
-        document.getElementById('projectForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Coleta os dados do formulário
-            const cidade = document.getElementById('cidade').value;
-            const concessionaria = document.getElementById('concessionaria').value;
-            const empresa = document.getElementById('empresa').value;
-            const tipoProjeto = document.querySelector('input[name="tipo_projeto"]:checked').value;
-
-            // Armazenar os dados no localStorage (ou poderia ser no backend)
-            localStorage.setItem('projetoCidade', cidade);
-            localStorage.setItem('projetoConcessionaria', concessionaria);
-            localStorage.setItem('projetoEmpresa', empresa);
-            localStorage.setItem('projetoTipo', tipoProjeto);
-
-            // Redirecionar para a página de características do poste
-            window.location.href = 'index.html';
-        });
-    </script>
+    <script src="js/bemVindo.js"></script>
 </body>
 </html>
