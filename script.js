@@ -157,81 +157,67 @@ function drawTableRow(page, y, data) {
 }
 
 document.getElementById('generatePdf').addEventListener('click', async function () {
+    // Dados de exemplo para demonstração
+  const tableData = [
+    { concessionaria: 'CEMIG', empresaOcupante: 'TECHLINK', cidadeUF: 'Araguari', forca: 'F1', angulo: 90, vao: 30, caboMT: '3x50+S', caboBT: '4x16+2x5', tracao: 'REF' },
+    { concessionaria: 'CEMIG', empresaOcupante: 'TECHLINK', cidadeUF: 'Araguari', forca: 'F2', angulo: -90, vao: 30, caboMT: '3x50+S', caboBT: '4x16+2x5', tracao: 'REF' },
+    // ... adicione mais linhas conforme necessário ...
+  ];
+
+  const generatePDF = async () => {
     const doc = await PDFDocument.create();
     const page = doc.addPage([600, 500]);
 
-    page.drawText('Calculadora de Esforço Urbano', { x: 50, y: 480, size: 24, color: rgb(0, 0, 0) });
-
-    page.drawText('Forças e Resultados', { x: 50, y: 450, size: 18, color: rgb(0, 0, 0) });
+    // ... (cabeçalho do PDF) ...
 
     const tableStartY = 430;
     const rowHeight = 20;
-    const columnWidth1 = 120;
-    const columnWidth2 = 120;
-    const columnWidth3 = 120;
-    const columnWidth4 = 120;
 
-    page.drawRectangle({
-        x: 50,
-        y: tableStartY,
-        width: columnWidth1 + columnWidth2 + columnWidth3 + columnWidth4,
-        height: rowHeight * 6,
-        borderColor: rgb(0, 0, 0),
-        borderWidth: 1
-    });
+    // Define as colunas da tabela
+    const columns = [
+      { header: 'Concessionária', width: 50 },
+      { header: 'Empresa Ocupante', width: 100 },
+      { header: 'Cidade/UF', width: 50 },
+      { header: 'Força', width: 100 },
+      { header: 'Ângulo (e)', width: 50 },
+      { header: 'Vão (m)', width: 50 },
+      { header: 'Cabo MT/Mensageiro', width: 150 },
+      { header: 'Cabo BT/Mensageiro', width: 150 },
+      { header: 'Tração', width: 50 }
+    ];
 
-    // Cabeçalho da tabela
-    page.drawRectangle({
-        x: 50,
+    // Desenha o cabeçalho da tabela
+    let x = 50;
+    columns.forEach(column => {
+      page.drawRectangle({
+        x,
         y: tableStartY,
-        width: columnWidth1,
+        width: column.width,
         height: rowHeight,
         borderColor: rgb(0, 0, 0),
         borderWidth: 1
+      });
+      page.drawText(column.header, { x: x + 5, y: tableStartY + 5, size: 12 });
+      x += column.width;
     });
-    page.drawText('Força', { x: 55, y: tableStartY + 5, size: 12 });
 
-    page.drawRectangle({
-        x: 50 + columnWidth1,
-        y: tableStartY,
-        width: columnWidth2,
-        height: rowHeight,
-        borderColor: rgb(0, 0, 0),
-        borderWidth: 1
-    });
-    page.drawText('Ângulo', { x: 55 + columnWidth1, y: tableStartY + 5, size: 12 });
-
-    page.drawRectangle({
-        x: 50 + columnWidth1 + columnWidth2,
-        y: tableStartY,
-        width: columnWidth3,
-        height: rowHeight,
-        borderColor: rgb(0, 0, 0),
-        borderWidth: 1
-    });
-    page.drawText('Magnitude', { x: 55 + columnWidth1 + columnWidth2, y: tableStartY + 5, size: 12 });
-
-    page.drawRectangle({
-        x: 50 + columnWidth1 + columnWidth2 + columnWidth3,
-        y: tableStartY,
-        width: columnWidth4,
-        height: rowHeight,
-        borderColor: rgb(0, 0, 0),
-        borderWidth: 1
-    });
-    page.drawText('Ângulo Resultante', { x: 55 + columnWidth1 + columnWidth2 + columnWidth3, y: tableStartY + 5, size: 12 });
-
+    // Desenha as linhas da tabela
     let currentY = tableStartY - rowHeight;
-    const forces = window.pdfData.forcas || [];
-
-    forces.forEach(force => {
-        drawTableRow(page, currentY, {
-            forca: `Força ${force.numero}`,
-            angulo: force.angulo,
-            magnitude: force.magnitude,
-            anguloResultante: force.anguloResultante
+    tableData.forEach(row => {
+      x = 50;
+      columns.forEach(column => {
+        page.drawRectangle({
+          x,
+          y: currentY,
+          width: column.width,
+          height: rowHeight,
+          borderColor: rgb(0, 0, 0),
+          borderWidth: 1
         });
-        currentY -= rowHeight;
+        page.drawText(row[column.header], { x: x + 5, y: currentY + 5, size: 12 });
+        x += column.width;
+      });
+      currentY -= rowHeight;
     });
 
     page.drawText('Resultado Final', { x: 50, y: currentY - 20, size: 18, color: rgb(0, 0, 0) });
@@ -246,4 +232,8 @@ document.getElementById('generatePdf').addEventListener('click', async function 
     link.href = url;
     link.download = 'resultado.pdf';
     link.click();
+};
+
+    generatePDF();
+    console.log('window.pdfData:', window.pdfData);
 });
