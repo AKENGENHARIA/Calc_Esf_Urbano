@@ -138,13 +138,15 @@
             width: 100%;
             max-width: 500px;
         }
-        label{
-           align-items: center;
+
+        label {
+            align-items: center;
         }
     </style>
 </head>
 
 <body>
+
     <header class="cabecalho">
         <ul>
             <a href="">Informação</a>
@@ -220,16 +222,15 @@
                     <option value="0.86">NIVEL 3</option>
                 </select>
             </div>
-            <section class="estaio">
-                <h3>Estaio</h3>
-
-                <input type="radio">Sim
-                <input type="radio">Não
+            <section class="estaio estaio-section">
+                <h3>Estaio 1</h3>
+                <input type="radio" id="estaio_sim1" name="estaio1" value="sim"> Sim
+                <input type="radio" id="estaio_nao1" name="estaio1" value="nao"> Não
                 <select id="estaio_F1">
                     <option value="opcao1">Opção 1</option>
                     <option value="opcao2">Opção 2</option>
                 </select>
-                <input type="number">
+                <input type="number" id="estaio_number1">
             </section>
             <section class="usoMutuo">
                 <h3>Uso Mútuo</h3>
@@ -306,15 +307,17 @@
                     <option value="0.86">NIVEL 3</option>
                 </select>
             </div>
-            <section class="estaio">
-                <h3>Estaio</h3>
-                <input type="radio">Sim
-                <input type="radio">Não
+            <section class="estaio estaio-section">
+                <h3>Estaio 2</h3>
+                <input type="radio" id="estaio_sim2" name="estaio2" value="sim"> Sim
+                <input type="radio" id="estaio_nao2" name="estaio2" value="nao"> Não
                 <select id="estaio_F2">
                     <option value="opcao1">Opção 1</option>
                     <option value="opcao2">Opção 2</option>
                 </select>
+                <input type="number" id="estaio_number2">
             </section>
+
             <section class="usoMutuo">
                 <h3>Uso Mútuo</h3>
                 <select id="usoMutuo_F2">
@@ -390,14 +393,15 @@
                 <option value="0.96">NIVEL 2</option>
                 <option value="0.86">NIVEL 3</option>
             </select>
-            <section class="estaio">
-                <h3>Estaio</h3>
-                <input type="radio">Sim
-                <input type="radio">Não
+            <section class="estaio estaio-section">
+                <h3>Estaio 3</h3>
+                <input type="radio" id="estaio_sim3" name="estaio3" value="sim"> Sim
+                <input type="radio" id="estaio_nao3" name="estaio3" value="nao"> Não
                 <select id="estaio_F3">
                     <option value="opcao1">Opção 1</option>
                     <option value="opcao2">Opção 2</option>
                 </select>
+                <input type="number" id="estaio_number3">
             </section>
             <section class="usoMutuo">
                 <h3>Uso Mútuo</h3>
@@ -474,22 +478,17 @@
                 <option value="0.96">NIVEL 2</option>
                 <option value="0.86">NIVEL 3</option>
             </select>
-            <section class="estaio">
-                <h3>Estaio</h3>
-                <input type="radio">Sim
-                <input type="radio">Não
-                <label>
-                    <input type="radio" name="estaio_F4" value="sim" id="estaio_sim_F4"> Sim
-                </label>
-                <div id="estaio_options_F4" class="hidden">
-                    <select id="estaio_F4" disabled>
-                        <option value="opcao1">Opção 1</option>
-                        <option value="opcao2">Opção 2</option>
-                    </select>
-                    <label for="valor_estaio_F4">Valor:</label>
-                    <input type="number" id="valor_estaio_F4" disabled>
-                </div>
+            <section class="estaio estaio-section">
+                <h3>Estaio 4</h3>
+                <input type="radio" id="estaio_sim4" name="estaio4" value="sim"> Sim
+                <input type="radio" id="estaio_nao4" name="estaio4" value="nao"> Não
+                <select id="estaio_F4">
+                    <option value="opcao1">Opção 1</option>
+                    <option value="opcao2">Opção 2</option>
+                </select>
+                <input type="number" id="estaio_number4">
             </section>
+
             <section class="usoMutuo">
                 <h3>Uso Mútuo</h3>
                 <select id="usoMutuo_F4">
@@ -566,14 +565,15 @@
                 <option value="0.96">NIVEL 2</option>
                 <option value="0.86">NIVEL 3</option>
             </select>
-            <section class="estaio">
-                <h3>Estaio</h3>
-                <input type="radio">Sim
-                <input type="radio">Não
+            <section class="estaio estaio-section">
+                <h3>Estaio 5</h3>
+                <input type="radio" id="estaio_sim5" name="estaio5" value="sim"> Sim
+                <input type="radio" id="estaio_nao5" name="estaio5" value="nao"> Não
                 <select id="estaio_F5">
                     <option value="opcao1">Opção 1</option>
                     <option value="opcao2">Opção 2</option>
                 </select>
+                <input type="number" id="estaio_number5">
             </section>
             <section class="usoMutuo">
                 <h3>Uso Mútuo</h3>
@@ -596,6 +596,44 @@
 
     </form>
     <div id="resultado"></div>
+
+    <script>
+        // Função para configurar visibilidade dos campos para uma seção específica
+        function setupEstaio(section) {
+            const estaioSim = document.getElementById(`estaio_sim${section}`);
+            const estaioNao = document.getElementById(`estaio_nao${section}`);
+            const estaioF = document.getElementById(`estaio_F${section}`);
+            const estaioNumber = document.getElementById(`estaio_number${section}`);
+
+            if (!estaioSim || !estaioNao || !estaioF || !estaioNumber) {
+                console.error(`Elementos para Estaio ${section} não encontrados.`);
+                return;
+            }
+
+            estaioF.style.display = 'none'; // Inicialmente oculto
+            estaioNumber.style.display = 'none'; // Inicialmente oculto
+
+            estaioSim.addEventListener('change', () => {
+                if (estaioSim.checked) {
+                    estaioF.style.display = 'block';
+                    estaioNumber.style.display = 'block';
+                }
+            });
+
+            estaioNao.addEventListener('change', () => {
+                if (estaioNao.checked) {
+                    estaioF.style.display = 'none';
+                    estaioNumber.style.display = 'none';
+                }
+            });
+        }
+
+        // Inicialize todas as seções de estaio
+        for (let i = 1; i <= 5; i++) {
+            setupEstaio(i);
+        }
+    </script>
+
 
     <script>
 
