@@ -142,62 +142,57 @@
         label {
             align-items: center;
         }
-        .button{
+
+        .button {
             --bezier: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --edge-light: hsla(0, 0%, 50%, 0.8);
-  --text-light: rgba(255, 255, 255, 0.4);
-  --back-color: 240, 40%;
+            --edge-light: hsla(0, 0%, 50%, 0.8);
+            --text-light: rgba(255, 255, 255, 0.4);
+            --back-color: 240, 40%;
 
-  cursor: pointer;
-  padding: 0.7em 1em;
-  border-radius: 0.5em;
-  min-height: 2.4em;
-  min-width: 3em;
-  display: inline;
-  align-items: center;
-  font-size: 18px;
-  letter-spacing: 0.05em;
-  line-height: 1;
-  font-weight: bold;
-  margin: 10px;
+            cursor: pointer;
+            padding: 0.7em 1em;
+            border-radius: 0.5em;
+            min-height: 2.4em;
+            min-width: 3em;
+            display: inline;
+            align-items: center;
+            font-size: 18px;
+            letter-spacing: 0.05em;
+            line-height: 1;
+            font-weight: bold;
+            margin: 10px;
 
-  background: linear-gradient(
-    140deg,
-    hsla(var(--back-color), 50%, 1) min(2em, 20%),
-    hsla(var(--back-color), 50%, 0.6) min(8em, 100%)
-  );
-  color: hsla(0, 0%, 90%);
-  border: 0;
-  box-shadow: inset 0.4px 1px 4px var(--edge-light);
+            background: linear-gradient(140deg,
+                    hsla(var(--back-color), 50%, 1) min(2em, 20%),
+                    hsla(var(--back-color), 50%, 0.6) min(8em, 100%));
+            color: hsla(0, 0%, 90%);
+            border: 0;
+            box-shadow: inset 0.4px 1px 4px var(--edge-light);
 
-  transition: all 0.1s var(--bezier);
-}
+            transition: all 0.1s var(--bezier);
+        }
 
-.button:hover {
-  --edge-light: hsla(0, 0%, 50%, 1);
-  text-shadow: 0px 0px 10px var(--text-light);
-  box-shadow: inset 0.4px 1px 4px var(--edge-light),
-    2px 4px 8px hsla(0, 0%, 0%, 0.295);
-  transform: scale(1.1);
-}
+        .button:hover {
+            --edge-light: hsla(0, 0%, 50%, 1);
+            text-shadow: 0px 0px 10px var(--text-light);
+            box-shadow: inset 0.4px 1px 4px var(--edge-light),
+                2px 4px 8px hsla(0, 0%, 0%, 0.295);
+            transform: scale(1.1);
+        }
 
-.button:active {
-  --text-light: rgba(255, 255, 255, 1);
+        .button:active {
+            --text-light: rgba(255, 255, 255, 1);
 
-  background: linear-gradient(
-    140deg,
-    hsla(var(--back-color), 50%, 1) min(2em, 20%),
-    hsla(var(--back-color), 50%, 0.6) min(8em, 100%)
-  );
-  box-shadow: inset 0.4px 1px 8px var(--edge-light),
-    0px 0px 8px hsla(var(--back-color), 50%, 0.6);
-  text-shadow: 0px 0px 20px var(--text-light);
-  color: hsla(0, 0%, 100%, 1);
-  letter-spacing: 0.1em;
-  transform: scale(1);
-}
-
-
+            background: linear-gradient(140deg,
+                    hsla(var(--back-color), 50%, 1) min(2em, 20%),
+                    hsla(var(--back-color), 50%, 0.6) min(8em, 100%));
+            box-shadow: inset 0.4px 1px 8px var(--edge-light),
+                0px 0px 8px hsla(var(--back-color), 50%, 0.6);
+            text-shadow: 0px 0px 20px var(--text-light);
+            color: hsla(0, 0%, 100%, 1);
+            letter-spacing: 0.1em;
+            transform: scale(1);
+        }
     </style>
 </head>
 
@@ -387,10 +382,10 @@
         <div class="force-input" id="F3">
             <h3>FORÇA 3</h3>
             <section class="vao-ang">
-                <label for="span1_F3">Vão:</label>
-                <input type="number" id="span1_F3" value="">
-                <label for="angle1_F3">Ângulo:</label>
-                <input type="number" id="angle1_F3" value="">
+                <label for="span3_F3">Vão:</label>
+                <input type="number" id="span3_F3" value="">
+                <label for="angle3_F3">Ângulo:</label>
+                <input type="number" id="angle3_F3" value="">
             </section>
             <div class="RedeDentrega">
                 <h3>Rede de Energia</h3>
@@ -472,10 +467,10 @@
         <div class="force-input" id="F4">
             <h3>FORÇA 4</h3>
             <section class="vao-ang">
-                <label for="span1_F4">Vão:</label>
-                <input type="number" id="span1_F4" value="">
-                <label for="angle1_F4">Ângulo:</label>
-                <input type="number" id="angle1_F4" value="">
+                <label for="span4_F4">Vão:</label>
+                <input type="number" id="span4_F4" value="">
+                <label for="angle4_F4">Ângulo:</label>
+                <input type="number" id="angle4_F4" value="">
             </section>
             <div class="RedeDentrega">
                 <h3>Rede de Energia</h3>
@@ -559,10 +554,10 @@
         <div class="force-input" id="F5">
             <h3>FORÇA 5</h3>
             <section class="vao-ang">
-                <label for="span1_F5">Vão:</label>
-                <input type="number" id="span1_F5" value="">
-                <label for="angle1_F5">Ângulo:</label>
-                <input type="number" id="angle1_F5" value="">
+                <label for="span5_F5">Vão:</label>
+                <input type="number" id="span5_F5" value="">
+                <label for="angle5_F5">Ângulo:</label>
+                <input type="number" id="angle5_F5" value="">
             </section>
             <div class="RedeDentrega">
                 <h3>Rede de Energia</h3>
@@ -644,15 +639,63 @@
     <!-- Buttons -->
     <div id="buttons">
         <button class="button" id="calculate">Calcular</button>
-        <button class="button" id="save">Salvar</button> 
-         <button class="button" id="generatePdf">Gerar PDF</button>
-    </div>
+        <button class="button" id="generatePdf">Gerar PDF</button>
+       
+        <div id="resultModal" class="modal">
+            <div class="modal-content">
+                <!-- Resultados -->
+                <div id="resultadoModal"></div>
+                <!-- Gráfico dos vetores -->
+                <canvas id="vectorChart"></canvas>
+            </div>
+        </div>
+    
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
 
-    </form>
-    <div id="resultado"></div>
+    <style>
+        /* Estilos do Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            font-family: Arial, sans-serif;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+        }
+        h3, h4 {
+            color: #333;
+        }
+        p {
+            line-height: 1.6;
+        }
+        .force-box {
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        #vectorChart {
+            margin-top: 20px;
+            max-width: 100%;
+        }
+    </style>
 
     <script>
-        // Função para configurar visibilidade dos campos para uma seção específica
+        // Função para configurar visibilidade dos campos para uma seção estaio
         function setupEstaio(section) {
             const estaioSim = document.getElementById(`estaio_sim${section}`);
             const estaioNao = document.getElementById(`estaio_nao${section}`);
@@ -687,229 +730,287 @@
             setupEstaio(i);
         }
     </script>
-
-
     <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var btn = document.getElementById('calculate');
-            btn.addEventListener('click', function () {
-                // Força 1
-                let ang1 = parseFloat(document.getElementById('angle1_F1')?.value) || 0;
-                let redeMt1 = parseFloat(document.getElementById('rede_mt_F1')?.value) || 0;
-                let redeBt1 = parseFloat(document.getElementById('rede_bt_F1')?.value) || 0;
-                let nivelMt1 = parseFloat(document.getElementById('nivel_cruzeta_mt_F1')?.value) || 0;
+document.addEventListener('DOMContentLoaded', function () {
+    var btn = document.getElementById('calculate');
+    var modal = document.getElementById('resultModal');
+    var resultadoModal = document.getElementById('resultadoModal');
+    var vectorChart;
 
-                let somaF1 = (redeMt1 * nivelMt1) + redeBt1;
-                let rad1 = ang1 * Math.PI / 180;
-                let x1 = somaF1 * Math.cos(rad1);
-                let y1 = somaF1 * Math.sin(rad1);
+    if (!btn || !modal || !resultadoModal) {
+        console.error("Elementos necessários não foram encontrados.");
+        return;
+    }
 
-                // Força 2
-                let ang2 = parseFloat(document.getElementById('angle2_F2')?.value) || 0;
-                let redeMt2 = parseFloat(document.getElementById('rede_mt_F2')?.value) || 0;
-                let redeBt2 = parseFloat(document.getElementById('rede_bt_F2')?.value) || 0;
-                let nivelMt2 = parseFloat(document.getElementById('nivel_cruzeta_mt_F2')?.value) || 0;
+    btn.addEventListener('click', function () {
+        // Força 1
+        let ang1 = 0, redeMt1 = 415, redeBt1 = 10, nivelMt1 = 0, vao1 = 0;
+        let somaF1 = (redeMt1 * nivelMt1) + redeBt1;
+        let rad1 = ang1 * Math.PI / 180;
+        let x1 = somaF1 * Math.cos(rad1);
+        let y1 = somaF1 * Math.sin(rad1);
 
-                let somaF2 = (redeMt2 * nivelMt2) + redeBt2;
-                let rad2 = ang2 * Math.PI / 180;
-                let x2 = somaF2 * Math.cos(rad2);
-                let y2 = somaF2 * Math.sin(rad2);
+        // Força 2
+        let ang2 = 45, redeMt2 = 255, redeBt2 = 0, nivelMt2 = 0, vao2 = 0;
+        let somaF2 = (redeMt2 * nivelMt2) + redeBt2;
+        let rad2 = ang2 * Math.PI / 180;
+        let x2 = somaF2 * Math.cos(rad2);
+        let y2 = somaF2 * Math.sin(rad2);
 
-                // Força 3
-                let ang3 = parseFloat(document.getElementById('angle3_F3')?.value) || 0;
-                let redeMt3 = parseFloat(document.getElementById('rede_mt_F3')?.value) || 0;
-                let redeBt3 = parseFloat(document.getElementById('rede_bt_F3')?.value) || 0;
-                let nivelMt3 = parseFloat(document.getElementById('nivel_cruzeta_mt_F3')?.value) || 0;
+        // Força 3
+        let ang3 = 90, redeMt3 = 517, redeBt3 = 0, nivelMt3 = 0, vao3 = 31;
+        let somaF3 = (redeMt3 * nivelMt3) + redeBt3;
+        let rad3 = ang3 * Math.PI / 180;
+        let x3 = somaF3 * Math.cos(rad3);
+        let y3 = somaF3 * Math.sin(rad3);
 
-                let somaF3 = (redeMt3 * nivelMt3) + redeBt3;
-                let rad3 = ang3 * Math.PI / 180;
-                let x3 = somaF3 * Math.cos(rad3);
-                let y3 = somaF3 * Math.sin(rad3);
+        // Força 4
+        let ang4 = 135, redeMt4 = 58, redeBt4 = 0, nivelMt4 = 0, vao4 = 32;
+        let somaF4 = (redeMt4 * nivelMt4) + redeBt4;
+        let rad4 = ang4 * Math.PI / 180;
+        let x4 = somaF4 * Math.cos(rad4);
+        let y4 = somaF4 * Math.sin(rad4);
 
-                // Força 4
-                let ang4 = parseFloat(document.getElementById('angle4_F4')?.value) || 0;
-                let redeMt4 = parseFloat(document.getElementById('rede_mt_F4')?.value) || 0;
-                let redeBt4 = parseFloat(document.getElementById('rede_bt_F4')?.value) || 0;
-                let nivelMt4 = parseFloat(document.getElementById('nivel_cruzeta_mt_F4')?.value) || 0;
+        // Força 5
+        let ang5 = 180, redeMt5 = 174, redeBt5 = 0, nivelMt5 = 0, vao5 = 33;
+        let somaF5 = (redeMt5 * nivelMt5) + redeBt5;
+        let rad5 = ang5 * Math.PI / 180;
+        let x5 = somaF5 * Math.cos(rad5);
+        let y5 = somaF5 * Math.sin(rad5);
 
-                let somaF4 = (redeMt4 * nivelMt4) + redeBt4;
-                let rad4 = ang4 * Math.PI / 180;
-                let x4 = somaF4 * Math.cos(rad4);
-                let y4 = somaF4 * Math.sin(rad4);
+        // Resultado Final
+        let xResult = x1 + x2 + x3 + x4 + x5;
+        let yResult = y1 + y2 + y3 + y4 + y5;
+        let magnitudeResultante = Math.sqrt(xResult * xResult + yResult * yResult);
+        let anguloResultante = Math.atan2(yResult, xResult) * 180 / Math.PI;
 
-                // Força 5
-                let ang5 = parseFloat(document.getElementById('angle5_F5')?.value) || 0;
-                let redeMt5 = parseFloat(document.getElementById('rede_mt_F5')?.value) || 0;
-                let redeBt5 = parseFloat(document.getElementById('rede_bt_F5')?.value) || 0;
-                let nivelMt5 = parseFloat(document.getElementById('nivel_cruzeta_mt_F5')?.value) || 0;
-
-                let somaF5 = (redeMt5 * nivelMt5) + redeBt5;
-                let rad5 = ang5 * Math.PI / 180;
-                let x5 = somaF5 * Math.cos(rad5);
-                let y5 = somaF5 * Math.sin(rad5);
-
-                // Calcula o vetor resultante
-                let xResultante = x1 + x2 + x3 + x4 + x5;
-                let yResultante = y1 + y2 + y3 + y4 + y5;
-
-                const magnitudeResultante = Math.sqrt(xResultante * xResultante + yResultante * yResultante);
-                const anguloResultante = Math.atan2(yResultante, xResultante) * 180 / Math.PI;
-
-                // Armazena os dados para o PDF
-                window.pdfData = {
-                    forcas: [
-                        { numero: 1, angulo: ang1, magnitude: somaF1, x: x1, y: y1 },
-                        { numero: 2, angulo: ang2, magnitude: somaF2, x: x2, y: y2 },
-                        { numero: 3, angulo: ang3, magnitude: somaF3, x: x3, y: y3 },
-                        { numero: 4, angulo: ang4, magnitude: somaF4, x: x4, y: y4 },
-                        { numero: 5, angulo: ang5, magnitude: somaF5, x: x5, y: y5 }
-                    ],
-                    magnitude: magnitudeResultante,
-                    anguloResultante: anguloResultante
-                };
-
-                // Atualiza a div com resultados
-                document.getElementById('resultado').innerHTML = `
+        // Atualiza o conteúdo do modal
+        resultadoModal.innerHTML = `
             <h3>Resultados das Forças</h3>
-            ${window.pdfData.forcas.map(f => `
-                <h4>Força ${f.numero}</h4>
-                <p>Ângulo: ${f.angulo}°</p>
-                <p>Magnitude: ${f.magnitude.toFixed(2)}</p>
-                <p>Componente X: ${f.x.toFixed(2)}</p>
-                <p>Componente Y: ${f.y.toFixed(2)}</p>
-            `).join('')}
+
+            <div class="force-box">
+                <h4>Força 1</h4>
+                <p><strong>Ângulo:</strong> ${ang1}°</p>
+                <p><strong>Vão:</strong> ${vao1}</p>
+                <p><strong>Rede MT:</strong> ${redeMt1}</p>
+                <p><strong>Rede BT:</strong> ${redeBt1}</p>
+                <p><strong>Magnitude:</strong> ${somaF1.toFixed(2)}</p>
+                <p><strong>Componente X:</strong> ${x1.toFixed(2)}</p>
+                <p><strong>Componente Y:</strong> ${y1.toFixed(2)}</p>
+            </div>
+
+            <div class="force-box">
+                <h4>Força 2</h4>
+                <p><strong>Ângulo:</strong> ${ang2}°</p>
+                <p><strong>Vão:</strong> ${vao2}</p>
+                <p><strong>Rede MT:</strong> ${redeMt2}</p>
+                <p><strong>Rede BT:</strong> ${redeBt2}</p>
+                <p><strong>Magnitude:</strong> ${somaF2.toFixed(2)}</p>
+                <p><strong>Componente X:</strong> ${x2.toFixed(2)}</p>
+                <p><strong>Componente Y:</strong> ${y2.toFixed(2)}</p>
+            </div>
+
+            <div class="force-box">
+                <h4>Força 3</h4>
+                <p><strong>Ângulo:</strong> ${ang3}°</p>
+                <p><strong>Vão:</strong> ${vao3}</p>
+                <p><strong>Rede MT:</strong> ${redeMt3}</p>
+                <p><strong>Rede BT:</strong> ${redeBt3}</p>
+                <p><strong>Magnitude:</strong> ${somaF3.toFixed(2)}</p>
+                <p><strong>Componente X:</strong> ${x3.toFixed(2)}</p>
+                <p><strong>Componente Y:</strong> ${y3.toFixed(2)}</p>
+            </div>
+
+            <div class="force-box">
+                <h4>Força 4</h4>
+                <p><strong>Ângulo:</strong> ${ang4}°</p>
+                <p><strong>Vão:</strong> ${vao4}</p>
+                <p><strong>Rede MT:</strong> ${redeMt4}</p>
+                <p><strong>Rede BT:</strong> ${redeBt4}</p>
+                <p><strong>Magnitude:</strong> ${somaF4.toFixed(2)}</p>
+                <p><strong>Componente X:</strong> ${x4.toFixed(2)}</p>
+                <p><strong>Componente Y:</strong> ${y4.toFixed(2)}</p>
+            </div>
+
+            <div class="force-box">
+                <h4>Força 5</h4>
+                <p><strong>Ângulo:</strong> ${ang5}°</p>
+                <p><strong>Vão:</strong> ${vao5}</p>
+                <p><strong>Rede MT:</strong> ${redeMt5}</p>
+                <p><strong>Rede BT:</strong> ${redeBt5}</p>
+                <p><strong>Magnitude:</strong> ${somaF5.toFixed(2)}</p>
+                <p><strong>Componente X:</strong> ${x5.toFixed(2)}</p>
+                <p><strong>Componente Y:</strong> ${y5.toFixed(2)}</p>
+            </div>
+
             <h3>Resultado Final</h3>
-            <p>Magnitude Resultante: ${magnitudeResultante.toFixed(2)}</p>
-            <p>Ângulo Resultante: ${anguloResultante.toFixed(2)}°</p>
+            <p><strong>Magnitude Resultante:</strong> ${magnitudeResultante.toFixed(2)}</p>
+            <p><strong>Ângulo Resultante:</strong> ${anguloResultante.toFixed(2)}°</p>
         `;
-            });
+
+        // Mostra o modal
+        modal.style.display = "block";
+
+        // Desenha o gráfico de vetores usando Chart.js
+        const ctx = document.getElementById('vectorChart').getContext('2d');
+        if (vectorChart) {
+            vectorChart.destroy(); // Destroi o gráfico anterior, se existir
+        }
+        vectorChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Força 1',
+                    data: [{x: 0, y: 0}, {x: x1, y: y1}],
+                    borderColor: 'blue',
+                    showLine: true,
+                    fill: false
+                },
+                {
+                    label: 'Força 2',
+                    data: [{x: 0, y: 0}, {x: x2, y: y2}],
+                    borderColor: 'green',
+                    showLine: true,
+                    fill: false
+                },
+                {
+                    label: 'Força 3',
+                    data: [{x: 0, y: 0}, {x: x3, y: y3}],
+                    borderColor: 'red',
+                    showLine: true,
+                    fill: false
+                },
+                {
+                    label: 'Força 4',
+                    data: [{x: 0, y: 0}, {x: x4, y: y4}],
+                    borderColor: 'purple',
+                    showLine: true,
+                    fill: false
+                },
+                {
+                    label: 'Força 5',
+                    data: [{x: 0, y: 0}, {x: x5, y: y5}],
+                    borderColor: 'orange',
+                    showLine: true,
+                    fill: false
+                },
+                {
+                    label: 'Resultado',
+                    data: [{x: 0, y: 0}, {x: xResult, y: yResult}],
+                    borderColor: 'black',
+                    showLine: true,
+                    fill: false,
+                    borderDash: [5, 5]
+                }]
+            },
+            options: {
+                scales: {
+                    x: {beginAtZero: true},
+                    y: {beginAtZero: true}
+                }
+            }
         });
+    });
+
+    // Fecha o modal quando o usuário clicar fora do conteúdo do modal
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+});
+
+
 
 
         const { PDFDocument, rgb } = PDFLib;
 
-        // Função para desenhar uma linha da tabela no PDF
-        function drawTableRow(page, y, data) {
-            const rowHeight = 20;
-            const columnWidth1 = 120;
-            const columnWidth2 = 120;
-            const columnWidth3 = 120;
-            const columnWidth4 = 120;
+        function drawTableRow(page, y, data, isHeader = false) {
+            const rowHeight = 25;
+            const columnWidth1 = 100;
+            const columnWidth2 = 100;
+            const columnWidth3 = 100;
+            const columnWidth4 = 100;
+            const textColor = rgb(0.2, 0.2, 0.2);
+            const headerColor = rgb(0.9, 0.9, 0.9);
 
-            // Desenha retângulo para coluna 1
+            // Garantir que o valor da magnitude seja um número
+            const magnitude = isNaN(data.magnitude) ? 0 : data.magnitude;
+
+            // Garantir que o valor do ângulo resultante seja um número
+            const anguloResultante = isNaN(data.anguloResultante) ? 'N/A' : data.anguloResultante.toFixed(2);
+
+            // Desenha retângulo para cada célula (com cor de fundo para o cabeçalho)
             page.drawRectangle({
                 x: 50,
                 y: y,
                 width: columnWidth1,
                 height: rowHeight,
+                color: isHeader ? headerColor : undefined,
                 borderColor: rgb(0, 0, 0),
                 borderWidth: 1
             });
-            page.drawText(data.forca, { x: 55, y: y + 5, size: 12 });
+            page.drawText(data.forca, { x: 55, y: y + 8, size: 12, color: textColor });
 
-            // Desenha retângulo para coluna 2
             page.drawRectangle({
                 x: 50 + columnWidth1,
                 y: y,
                 width: columnWidth2,
                 height: rowHeight,
+                color: isHeader ? headerColor : undefined,
                 borderColor: rgb(0, 0, 0),
                 borderWidth: 1
             });
-            page.drawText(`${data.angulo}°`, { x: 55 + columnWidth1, y: y + 5, size: 12 });
+            page.drawText(`${data.angulo}°`, { x: 55 + columnWidth1, y: y + 8, size: 12, color: textColor });
 
-            // Desenha retângulo para coluna 3
             page.drawRectangle({
                 x: 50 + columnWidth1 + columnWidth2,
                 y: y,
                 width: columnWidth3,
                 height: rowHeight,
+                color: isHeader ? headerColor : undefined,
                 borderColor: rgb(0, 0, 0),
                 borderWidth: 1
             });
-            page.drawText(`${data.magnitude.toFixed(2)}`, { x: 55 + columnWidth1 + columnWidth2, y: y + 5, size: 12 });
+            page.drawText(`${magnitude.toFixed(2)}`, { x: 55 + columnWidth1 + columnWidth2, y: y + 8, size: 12, color: textColor });
 
-            // Desenha retângulo para coluna 4
             page.drawRectangle({
                 x: 50 + columnWidth1 + columnWidth2 + columnWidth3,
                 y: y,
                 width: columnWidth4,
                 height: rowHeight,
+                color: isHeader ? headerColor : undefined,
                 borderColor: rgb(0, 0, 0),
                 borderWidth: 1
             });
-            page.drawText(`${data.anguloResultante ? data.anguloResultante.toFixed(2) : 'N/A'}°`, { x: 55 + columnWidth1 + columnWidth2 + columnWidth3, y: y + 5, size: 12 });
+            page.drawText(`${anguloResultante}°`, {
+                x: 55 + columnWidth1 + columnWidth2 + columnWidth3,
+                y: y + 8,
+                size: 12,
+                color: textColor
+            });
         }
 
         document.getElementById('generatePdf').addEventListener('click', async function () {
-            const doc = await PDFDocument.create();
-            const page = doc.addPage([600, 500]);
+            const pdfDoc = await PDFDocument.create();
+            const page = pdfDoc.addPage([600, 500]);
 
-            page.drawText('Calculadora de Esforço Urbano', { x: 50, y: 480, size: 24, color: rgb(0, 0, 0) });
+            // Definir título e subtítulo
+            page.drawText('Calculadora de Esforço Urbano', { x: 50, y: 480, size: 24, color: rgb(0.2, 0.2, 0.2) });
+            page.drawText('Forças e Resultados', { x: 50, y: 450, size: 18, color: rgb(0.2, 0.2, 0.2) });
 
-            page.drawText('Forças e Resultados', { x: 50, y: 450, size: 18, color: rgb(0, 0, 0) });
-
+            // Posição inicial da tabela
             const tableStartY = 430;
-            const rowHeight = 20;
-            const columnWidth1 = 120;
-            const columnWidth2 = 120;
-            const columnWidth3 = 120;
-            const columnWidth4 = 120;
-
-            page.drawRectangle({
-                x: 50,
-                y: tableStartY,
-                width: columnWidth1 + columnWidth2 + columnWidth3 + columnWidth4,
-                height: rowHeight * 6,
-                borderColor: rgb(0, 0, 0),
-                borderWidth: 1
-            });
+            const rowHeight = 25;
 
             // Cabeçalho da tabela
-            page.drawRectangle({
-                x: 50,
-                y: tableStartY,
-                width: columnWidth1,
-                height: rowHeight,
-                borderColor: rgb(0, 0, 0),
-                borderWidth: 1
-            });
-            page.drawText('Força', { x: 55, y: tableStartY + 5, size: 12 });
-
-            page.drawRectangle({
-                x: 50 + columnWidth1,
-                y: tableStartY,
-                width: columnWidth2,
-                height: rowHeight,
-                borderColor: rgb(0, 0, 0),
-                borderWidth: 1
-            });
-            page.drawText('Ângulo', { x: 55 + columnWidth1, y: tableStartY + 5, size: 12 });
-
-            page.drawRectangle({
-                x: 50 + columnWidth1 + columnWidth2,
-                y: tableStartY,
-                width: columnWidth3,
-                height: rowHeight,
-                borderColor: rgb(0, 0, 0),
-                borderWidth: 1
-            });
-            page.drawText('Magnitude', { x: 55 + columnWidth1 + columnWidth2, y: tableStartY + 5, size: 12 });
-
-            page.drawRectangle({
-                x: 50 + columnWidth1 + columnWidth2 + columnWidth3,
-                y: tableStartY,
-                width: columnWidth4,
-                height: rowHeight,
-                borderColor: rgb(0, 0, 0),
-                borderWidth: 1
-            });
-            page.drawText('Ângulo Resultante', { x: 55 + columnWidth1 + columnWidth2 + columnWidth3, y: tableStartY + 5, size: 12 });
+            drawTableRow(page, tableStartY, { forca: 'Força', angulo: 'Ângulo', magnitude: 'Magnitude', anguloResultante: 'Ângulo Resultante' }, true);
 
             let currentY = tableStartY - rowHeight;
-            const forces = window.pdfData.forcas || [];
+            const forces = window.pdfData?.forcas || [];
 
+            // Linhas da tabela com dados
             forces.forEach(force => {
                 drawTableRow(page, currentY, {
                     forca: `Força ${force.numero}`,
@@ -920,12 +1021,13 @@
                 currentY -= rowHeight;
             });
 
-            page.drawText('Resultado Final', { x: 50, y: currentY - 20, size: 18, color: rgb(0, 0, 0) });
+            // Resultado Final
+            page.drawText('Resultado Final', { x: 50, y: currentY - 20, size: 18, color: rgb(0.2, 0.2, 0.2) });
+            page.drawText(`Magnitude Resultante: ${window.pdfData?.magnitudeResultante?.toFixed(2) || '0.00'}`, { x: 50, y: currentY - 50, size: 14, color: rgb(0, 0, 0) });
+            page.drawText(`Ângulo Resultante: ${window.pdfData?.anguloResultante?.toFixed(2) || '0.00'}°`, { x: 50, y: currentY - 70, size: 14, color: rgb(0, 0, 0) });
 
-            page.drawText(`Magnitude Resultante: ${window.pdfData.magnitude.toFixed(2)}`, { x: 50, y: currentY - 50, size: 12 });
-            page.drawText(`Ângulo Resultante: ${window.pdfData.anguloResultante.toFixed(2)}°`, { x: 50, y: currentY - 70, size: 12 });
-
-            const pdfBytes = await doc.save();
+            // Salva o PDF e permite o download
+            const pdfBytes = await pdfDoc.save();
             const blob = new Blob([pdfBytes], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -933,6 +1035,9 @@
             link.download = 'resultado.pdf';
             link.click();
         });
+
+
+
 
     </script>
 </body>
