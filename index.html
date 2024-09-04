@@ -140,20 +140,20 @@
                     <option value="3#2">3#2</option>
                     <option value="1#1/0">1#1/0</option>
                     <option value="2#1/0">2#1/0</option>
-                    <option value="3#1/0 (1/0)">3#1/0 (1/0) - 435 daN</option>
-                    <option value="1#4/0">1#4/0 - 293 daN</option>
-                    <option value="2#4/0">2#4/0 - 586 daN</option>
-                    <option value="3#4/0">3#4/0 - 879 daN</option>
-                    <option value="1#336">1#336 - 467 daN</option>
-                    <option value="2#336">2#336 - 934 daN</option>
-                    <option value="3#336">3#336 - 1401 daN</option>
+                    <option value="3#1/0 (1/0)">3#1/0 (1/0)</option>
+                    <option value="1#4/0">1#4/0 </option>
+                    <option value="2#4/0">2#4/0</option>
+                    <option value="3#4/0">3#4/0</option>
+                    <option value="1#336">1#336</option>
+                    <option value="2#336">2#336</option>
+                    <option value="3#336">3#336</option>
                 </select>
                 <p>Rede BT</p>
                 <select name="rede_bt_F1" id="rede_bt_F1">
                     <option value="disable"></option>
-                    <option value="2x1x35+70">2x1x35+70 - 114 daN</option>
-                    <option value="2x1x70+70">2x1x70+70 - 181 daN</option>
-                    <option value="3x1x35+70">3x1x35+70 - 161 daN</option>
+                    <option value="114">2x1x35+70</option>
+                    <option value="181">2x1x70+70</option>
+                    <option value="3x1x35+70">3x1x35+70</option>
                     <option value="3x1x70+70">3x1x70+70 - 245 daN</option>
                     <option value="3x1x120+70">3x1x120+70 - 381 daN</option>
                     <option value="1#4">1#4 - 58 daN</option>
@@ -534,3 +534,9 @@
     <script src="script.js"></script>
 </body>
 </html>
+
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById('calculate').addEventListener('click', calcularResultado);
+    
+});
