@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 
-/* Estilo da página de login */
+/* Estilo da página de login e cadastro */
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -18,7 +18,7 @@ body {
     background-repeat: no-repeat;
 }
 
-.login-container {
+.container {
     background-color: rgba(0, 0, 0, 0.6);
     padding: 40px;
     border-radius: 10px;
@@ -28,14 +28,14 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.login-container h1 {
+.container h1 {
     margin-bottom: 20px;
     font-size: 24px;
     color: #fff;
 }
 
-.login-container input[type="text"], 
-.login-container input[type="password"] {
+.container input[type="text"], 
+.container input[type="password"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -46,12 +46,12 @@ body {
     font-size: 14px;
 }
 
-.login-container input[type="text"]::placeholder, 
-.login-container input[type="password"]::placeholder {
+.container input[type="text"]::placeholder, 
+.container input[type="password"]::placeholder {
     color: rgba(255, 255, 255, 0.7);
 }
 
-.login-container button {
+.container button {
     padding: 10px;
     width: 100%;
     background-color: #0044cc;
@@ -62,20 +62,25 @@ body {
     font-size: 16px;
 }
 
-.login-container button:hover {
+.container button:hover {
     background-color: #0033a0;
 }
 
-.login-container .options {
+.container .options {
     margin-top: 20px;
     font-size: 14px;
 }
 
-.login-container .options a {
+.container .options a {
     color: #00aaff;
     text-decoration: none;
 }
 
-.login-container .options a:hover {
+.container .options a:hover {
     text-decoration: underline;
+}
+
+/* Esconder o formulário que não está sendo exibido */
+.hidden {
+    display: none;
 }
