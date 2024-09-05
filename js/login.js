@@ -83,3 +83,15 @@ document.getElementById('generatePdf').addEventListener('click', function() {
         alert('Erro ao deslogar: ' + error.message);
     });
 });
+// Função para deslogar o usuário ao clicar no botão "Log out"
+document.getElementById('generatePdf').addEventListener('click', function() {
+    auth.signOut().then(() => {
+        console.log('Usuário deslogado com sucesso.');
+        alert('Você foi deslogado.');
+        // Redirecionar para a página de login
+        window.location.href = 'login.html';  // Certifique-se de que a página de login.html exista
+    }).catch((error) => {
+        console.error('Erro ao deslogar:', error.message);
+        alert('Erro ao deslogar: ' + error.message);
+    });
+});
