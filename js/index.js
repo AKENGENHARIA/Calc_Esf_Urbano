@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 // Função para deslogar o usuário ao clicar no botão "Log out"
-document.getElementById('generatePdf').addEventListener('click', function() {
+document.getElementById('logout').addEventListener('click', function() {
     auth.signOut().then(() => {
         console.log('Usuário deslogado com sucesso.');
         alert('Você foi deslogado.');

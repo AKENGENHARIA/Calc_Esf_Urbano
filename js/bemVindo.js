@@ -9,7 +9,7 @@ auth.onAuthStateChanged((user) => {
 });
 
 // Função de submit do formulário
-document.getElementById('projectForm').addEventListener('submit', function(e) {
+document.getElementById('logout').addEventListener('submit', function(e) {
     e.preventDefault();
 
     // Coleta os dados do formulário
