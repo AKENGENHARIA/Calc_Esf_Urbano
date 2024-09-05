@@ -14,5 +14,5 @@ document.getElementById('projectForm').addEventListener('submit', function(e) {
     localStorage.setItem('projetoTipo', tipoProjeto);
 
     // Redirecionar para a página de características do poste
-    window.location.href = 'index.html';
+    window.location.href = 'index3_Corpo.html';
 });

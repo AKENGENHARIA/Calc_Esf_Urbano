@@ -7,7 +7,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     // Simulação de autenticação simples
     if (username === 'admin' && password === 'admin123') {
         console.log('Redirecionamento iniciado');
-        window.location.href = 'bemvindo.html';
+        window.location.href = 'index2_Bnv.html';
     } else {
         alert('Usuário ou senha incorretos');
     }
