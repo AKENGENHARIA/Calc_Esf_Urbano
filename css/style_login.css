@@ -34,8 +34,17 @@ body {
     color: #fff;
 }
 
+.container label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
 .container input[type="text"], 
-.container input[type="password"] {
+.container input[type="password"], 
+.container input[type="email"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -46,8 +55,7 @@ body {
     font-size: 14px;
 }
 
-.container input[type="text"]::placeholder, 
-.container input[type="password"]::placeholder {
+.container input::placeholder {
     color: rgba(255, 255, 255, 0.7);
 }
 
@@ -80,7 +88,7 @@ body {
     text-decoration: underline;
 }
 
-/* Esconder o formulário que não está sendo exibido */
+/* Classe para ocultar o formulário */
 .hidden {
     display: none;
 }
