@@ -1,18 +1,8 @@
-// Verifica o estado de autenticação ao carregar a página
-auth.onAuthStateChanged((user) => {
-    if (!user) {
-        // Se não estiver autenticado, redireciona para a página de login
-        window.location.href = 'login.html';
-    } else {
-        console.log('Usuário autenticado:', user.email);
-    }
-});
+// Captura o formulário e adiciona o evento de submit
+document.getElementById('projetoForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Previne o comportamento padrão de recarregar a página
 
-// Função de submit do formulário
-document.getElementById('logout').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Coleta os dados do formulário
+    // Coleta os dados dos campos do formulário
     const cidade = document.getElementById('cidade').value;
     const concessionaria = document.getElementById('concessionaria').value;
     const empresa = document.getElementById('empresa').value;
@@ -24,6 +14,6 @@ document.getElementById('logout').addEventListener('submit', function(e) {
     localStorage.setItem('projetoEmpresa', empresa);
     localStorage.setItem('projetoTipo', tipoProjeto);
 
-    // Redirecionar para a próxima página
+    // Redirecionar para a próxima página após armazenar os dados
     window.location.href = 'index3_Corpo.html';
 });

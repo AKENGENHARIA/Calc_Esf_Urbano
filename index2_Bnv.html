@@ -14,21 +14,21 @@
     <div class="container">
         <h1>BEM-VINDO</h1>
         <h3>Defina as Informações do Projeto</h3>
-
-        <form id="projectForm">
-            <input type="text" id="cidade" name="cidade" placeholder="Cidade do Projeto" required>
-            <input type="text" id="concessionaria" name="concessionaria" placeholder="Concessionária" required>
-            <input type="text" id="empresa" name="empresa" placeholder="Empresa" required>
-
-            <div class="radio-group">
-                <label>Tipo de Projeto:</label><br>
-                <input type="radio" id="urbano" name="tipo_projeto" value="Urbano" required> Urbano
-                <input type="radio" id="rural" name="tipo_projeto" value="Rural" required> Rural
+        <form id="projetoForm">
+            <input type="text" id="cidade" placeholder="Cidade" required>
+            <input type="text" id="concessionaria" placeholder="Concessionária" required>
+            <input type="text" id="empresa" placeholder="Empresa" required>
+            <div>
+                <label for="residencial">
+                    <input type="radio" id="residencial" name="tipo_projeto" value="residencial" required> Residencial
+                </label>
+                <label for="comercial">
+                    <input type="radio" id="comercial" name="tipo_projeto" value="comercial"> Comercial
+                </label>
             </div>
-
             <button type="submit" class="button">Iniciar o Projeto</button>
         </form>
-    </div>
+        
     <script src="js/bemVindo.js"></script>
 </body>
 </html>
