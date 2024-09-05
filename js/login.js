@@ -11,6 +11,7 @@ const firebaseConfig = {
   // Inicializa o Firebase
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
+  console.log("Firebase inicializado corretamente.");
   
   // Função de login
   document.getElementById('loginForm').addEventListener('submit', function(e) {
