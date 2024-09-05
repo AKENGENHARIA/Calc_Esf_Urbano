@@ -137,6 +137,31 @@ document.addEventListener('DOMContentLoaded', function () {
    let magnitudeResultante = Math.sqrt(xResult * xResult + yResult * yResult);
    let anguloResultante = Math.atan2(yResult, xResult) * 180 / Math.PI;
 
+   btn.addEventListener('click', function () {
+    // Cálculos das forças...
+
+    let results = {
+        ang1: ang1.toFixed(2),
+        ang2: ang2.toFixed(2),
+        ang3: ang3.toFixed(2),
+        ang4: ang4.toFixed(2),
+        ang5: ang5.toFixed(2),
+        redeMt1Id, redeBt1Id, x1, y1,
+        redeMt2Id, redeBt2Id, x2, y2,
+        redeMt3Id, redeBt3Id, x3, y3,
+        redeMt4Id, redeBt4Id, x4, y4,
+        redeMt5Id, redeBt5Id, x5, y5,
+        magnitudeResultante: magnitudeResultante.toFixed(2),
+        anguloResultante: anguloResultante.toFixed(2)
+    };
+
+    localStorage.setItem('vetorResultados', JSON.stringify(results));
+
+    // Atualizar a div com o resultado (como já está no seu código)
+});
+
+
+
         // Atualiza o conteúdo do resultadoDiv com a tabela
         resultadoDiv.innerHTML = `
             <h2>Cálculo de Esforço Mecânico</h2>
