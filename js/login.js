@@ -11,7 +11,8 @@ const firebaseConfig = {
   // Inicializa o Firebase
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
-  
+  console.log("Firebase inicializado corretamente.");
+
   // Função de login
   document.getElementById('loginForm').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -71,4 +72,15 @@ const firebaseConfig = {
               alert('Erro ao criar conta: ' + error.message);
           });
   });
-  
+  // Função para deslogar o usuário ao clicar no botão "Log out"
+document.getElementById('generatePdf').addEventListener('click', function() {
+    auth.signOut().then(() => {
+        console.log('Usuário deslogado com sucesso.');
+        alert('Você foi deslogado.');
+        // Redirecionar para a página de login
+        window.location.href = 'login.html';  // Certifique-se de que a página de login.html exista
+    }).catch((error) => {
+        console.error('Erro ao deslogar:', error.message);
+        alert('Erro ao deslogar: ' + error.message);
+    });
+});
