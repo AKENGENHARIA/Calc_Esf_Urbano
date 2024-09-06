@@ -1,87 +1,59 @@
-// Configuração do Firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyCCW6ZSLxNw4uJR2ZkWjd5K21Z_2AHsENs",
-    authDomain: "akraquercem.firebaseapp.com",
-    projectId: "akraquercem",
-    storageBucket: "akraquercem.appspot.com",
-    messagingSenderId: "791956843896",
-    appId: "1:791956843896:web:ebf55f3480b68d21722c8d"
-};
-
-// Inicializa o Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-console.log("Firebase inicializado corretamente.");
-
-// Função de login
+// Função de login usando MySQL no backend
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     const email = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    // Autenticação com Firebase
-    auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            // Sucesso no login
-            const user = userCredential.user;
-            console.log('Login bem-sucedido:', user);
+    // Envia uma requisição ao servidor Node.js para autenticar o usuário
+    fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, senha: password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.token) {
+            // Armazena o token JWT no localStorage para futuras requisições
+            localStorage.setItem('token', data.token);
             alert('Login bem-sucedido!');
-            window.location.href = 'index2_Bnv.html'; // Altere para a página de destino
-        })
-        .catch((error) => {
-            // Erro no login
-            console.error('Erro no login:', error.message);
-            alert('Erro ao fazer login: ' + error.message);
-        });
+            window.location.href = 'index2_Bnv.html';  // Altere para a página de destino
+        } else {
+            alert('Login falhou: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Erro no login:', error.message);
+        alert('Erro ao fazer login: ' + error.message);
+    });
 });
 
-// Função de alternância para exibir o formulário de registro
-document.getElementById('showRegisterForm').addEventListener('click', function(e) {
-    e.preventDefault();
-    document.querySelector('.login-container').classList.add('hidden');
-    document.querySelector('.register-container').classList.remove('hidden');
-});
-
-// Função de alternância para exibir o formulário de login
-document.getElementById('showLoginForm').addEventListener('click', function(e) {
-    e.preventDefault();
-    document.querySelector('.register-container').classList.add('hidden');
-    document.querySelector('.login-container').classList.remove('hidden');
-});
-
-// Função de criação de nova conta
+// Função de registro usando MySQL no backend
 document.getElementById('registerForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
     const registerEmail = document.getElementById('registerUsername').value;
     const registerPassword = document.getElementById('registerPassword').value;
 
-    // Criação de conta com Firebase
-    auth.createUserWithEmailAndPassword(registerEmail, registerPassword)
-        .then((userCredential) => {
-            // Sucesso na criação da conta
-            const user = userCredential.user;
-            console.log('Conta criada com sucesso:', user);
-            alert('Conta criada com sucesso!');
-            window.location.href = 'index2_Bnv.html'; // Altere para a página de destino
-        })
-        .catch((error) => {
-            // Erro na criação da conta
-            console.error('Erro ao criar conta:', error.message);
-            alert('Erro ao criar conta: ' + error.message);
-        });
-});
-
-// Função para deslogar o usuário ao clicar no botão "Log out"
-document.getElementById('generatePdf').addEventListener('click', function() {
-    auth.signOut().then(() => {
-        console.log('Usuário deslogado com sucesso.');
-        alert('Você foi deslogado.');
-        // Redirecionar para a página de login
-        window.location.href = 'login.html';  // Certifique-se de que a página de login.html exista
-    }).catch((error) => {
-        console.error('Erro ao deslogar:', error.message);
-        alert('Erro ao deslogar: ' + error.message);
+    // Envia uma requisição ao servidor Node.js para registrar o usuário
+    fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: registerEmail, senha: registerPassword })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        if (data.success) {
+            window.location.href = 'index2_Bnv.html';  // Altere para a página de destino
+        }
+    })
+    .catch(error => {
+        console.error('Erro ao criar conta:', error.message);
+        alert('Erro ao criar conta: ' + error.message);
     });
 });
