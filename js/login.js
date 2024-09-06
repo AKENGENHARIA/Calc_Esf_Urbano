@@ -1,8 +1,8 @@
+// Lida com a submissão do formulário de login
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    console.log('Tentando fazer login...');
 
+    console.log('Tentando fazer login...');
     const email = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
@@ -17,9 +17,11 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     .then(response => response.json())  // Tenta converter a resposta para JSON
     .then(data => {
         if (data.token) {
-            localStorage.setItem('token', data.token);  // Armazena o token JWT no localStorage
-            alert('Login bem-sucedido!');
-            window.location.href = 'index2_Bnv.html';  // Altere para a página de destino
+            // Armazena o token no localStorage ou sessionStorage
+            localStorage.setItem('authToken', data.token);
+
+            // Redireciona para a página index2_Bnv
+            window.location.href = 'index2_Bnv.html';
         } else {
             alert('Login falhou: ' + data.message);
         }

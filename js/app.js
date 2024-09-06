@@ -30,10 +30,15 @@ connection.connect(err => {
 app.post('/register', (req, res) => {
   const { email, senha } = req.body;
 
+  console.log('Verificando e-mail:', email); // Log para verificar o e-mail recebido
+
   connection.query('SELECT * FROM Usuarios WHERE email = ?', [email], (error, results) => {
     if (error) {
+      console.error('Erro ao verificar email:', error); // Adicionar log de erro
       return res.status(500).json({ message: 'Erro no servidor ao verificar email' });
     }
+
+    console.log('Resultados da verificação de e-mail:', results); // Log para verificar os resultados
 
     if (results.length > 0) {
       return res.status(400).json({ message: 'Email já registrado' });
@@ -41,11 +46,13 @@ app.post('/register', (req, res) => {
 
     bcrypt.hash(senha, 10, (err, hash) => {
       if (err) {
+        console.error('Erro ao criptografar a senha:', err); // Adicionar log de erro
         return res.status(500).json({ message: 'Erro ao criptografar a senha' });
       }
 
       connection.query('INSERT INTO Usuarios (email, senha) VALUES (?, ?)', [email, hash], (error, results) => {
         if (error) {
+          console.error('Erro ao inserir usuário no banco:', error); // Adicionar log de erro
           return res.status(500).json({ message: 'Erro ao inserir usuário no banco' });
         }
         res.status(201).json({ message: 'Usuário registrado com sucesso', success: true });
@@ -53,6 +60,7 @@ app.post('/register', (req, res) => {
     });
   });
 });
+
 
 // Função para autenticação de login
 app.post('/login', (req, res) => {
