@@ -94,3 +94,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
+    // Função para lidar com o logout
+    function logout() {
+        // Remove o token JWT do localStorage
+        localStorage.removeItem('token');
+        
+        // Redireciona o usuário para a página de login
+        window.location.href = 'login.html'; // Substitua 'login.html' pela URL da sua página de login
+    }
+
+    // Adiciona o evento de clique ao botão de logout
+    document.getElementById('logout').addEventListener('click', logout);
+

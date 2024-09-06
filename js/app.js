@@ -1,25 +1,24 @@
+require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
+
 const app = express();
+app.use(express.json());
+app.use(cors());
 
-app.use(express.json()); // Para lidar com JSON no corpo das requisições
-
-// Configuração da conexão com o banco de dados MySQL
-const mysql = require('mysql2');
-
-// Configuração da conexão com o banco de dados MySQL
+// Conexão com o banco de dados MySQL
 const connection = mysql.createConnection({
-  host: 'localhost',           // O servidor MySQL está rodando localmente
-  user: 'root',                // Usuário do MySQL
-  password: 'On@07031996',     // Senha do MySQL
-  database: 'info_proj',       // Nome do banco de dados
-  port: 3306                   // Porta padrão do MySQL
+  host: 'localhost',
+  user: 'akcem',
+  password: 'On@07031996',
+  database: 'info_proj',
+  port: 3306
 });
 
-// Conectar ao MySQL
-connection.connect((err) => {
+connection.connect(err => {
   if (err) {
     console.error('Erro ao conectar ao banco de dados: ' + err.stack);
     return;
@@ -27,12 +26,10 @@ connection.connect((err) => {
   console.log('Conectado ao banco de dados MySQL com ID ' + connection.threadId);
 });
 
-
 // Função para criar um novo usuário (registro)
 app.post('/register', (req, res) => {
   const { email, senha } = req.body;
-  
-  // Verifica se o email já está registrado
+
   connection.query('SELECT * FROM Usuarios WHERE email = ?', [email], (error, results) => {
     if (error) {
       return res.status(500).json({ message: 'Erro no servidor ao verificar email' });
@@ -42,13 +39,11 @@ app.post('/register', (req, res) => {
       return res.status(400).json({ message: 'Email já registrado' });
     }
 
-    // Criptografa a senha
     bcrypt.hash(senha, 10, (err, hash) => {
       if (err) {
         return res.status(500).json({ message: 'Erro ao criptografar a senha' });
       }
 
-      // Insere o novo usuário no banco
       connection.query('INSERT INTO Usuarios (email, senha) VALUES (?, ?)', [email, hash], (error, results) => {
         if (error) {
           return res.status(500).json({ message: 'Erro ao inserir usuário no banco' });
@@ -63,9 +58,9 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
   const { email, senha } = req.body;
 
-  // Verifica se o usuário existe
   connection.query('SELECT * FROM Usuarios WHERE email = ?', [email], (error, results) => {
     if (error) {
+      console.error('Erro ao verificar usuário:', error);
       return res.status(500).json({ message: 'Erro no servidor ao verificar o usuário' });
     }
 
@@ -75,9 +70,9 @@ app.post('/login', (req, res) => {
 
     const user = results[0];
 
-    // Verifica a senha com bcrypt
     bcrypt.compare(senha, user.senha, (err, result) => {
       if (err) {
+        console.error('Erro ao comparar senha:', err);
         return res.status(500).json({ message: 'Erro ao comparar a senha' });
       }
 
@@ -85,13 +80,12 @@ app.post('/login', (req, res) => {
         return res.status(401).json({ message: 'Senha incorreta' });
       }
 
-      // Gera o token JWT (expiração de 30 dias)
-      const token = jwt.sign({ id_usuario: user.id_usuario }, 'secreta_chave_token', { expiresIn: '30d' });
+      const token = jwt.sign({ id_usuario: user.id_usuario }, process.env.SECRET_KEY, { expiresIn: '30d' });
 
-      // Insere a sessão no banco de dados
       connection.query('INSERT INTO Sessoes (id_usuario, token, data_expiracao) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 30 DAY))', 
         [user.id_usuario, token], (error, results) => {
           if (error) {
+            console.error('Erro ao registrar sessão:', error);
             return res.status(500).json({ message: 'Erro ao registrar a sessão' });
           }
           res.status(200).json({ token });
@@ -100,7 +94,6 @@ app.post('/login', (req, res) => {
   });
 });
 
-// Porta para o servidor rodar
-app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
+app.listen(7777, () => {
+  console.log('Servidor rodando na porta 7777');
 });

@@ -1,23 +1,23 @@
-// Função de login usando MySQL no backend
 document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
+    console.log('Tentando fazer login...');
+
     const email = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
     // Envia uma requisição ao servidor Node.js para autenticar o usuário
-    fetch('/login', {
+    fetch('http://localhost:7777/login', {  // Certifique-se de que o caminho está correto
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, senha: password })
     })
-    .then(response => response.json())
+    .then(response => response.json())  // Tenta converter a resposta para JSON
     .then(data => {
         if (data.token) {
-            // Armazena o token JWT no localStorage para futuras requisições
-            localStorage.setItem('token', data.token);
+            localStorage.setItem('token', data.token);  // Armazena o token JWT no localStorage
             alert('Login bem-sucedido!');
             window.location.href = 'index2_Bnv.html';  // Altere para a página de destino
         } else {
@@ -25,35 +25,21 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         }
     })
     .catch(error => {
-        console.error('Erro no login:', error.message);
+        console.error('Erro no login:', error);
         alert('Erro ao fazer login: ' + error.message);
     });
 });
 
-// Função de registro usando MySQL no backend
-document.getElementById('registerForm').addEventListener('submit', function(e) {
+// Alterna para o formulário de registro
+document.getElementById('showRegisterForm').addEventListener('click', function(e) {
     e.preventDefault();
-    
-    const registerEmail = document.getElementById('registerUsername').value;
-    const registerPassword = document.getElementById('registerPassword').value;
+    document.querySelector('.login-container').classList.add('hidden');
+    document.querySelector('.register-container').classList.remove('hidden');
+});
 
-    // Envia uma requisição ao servidor Node.js para registrar o usuário
-    fetch('/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: registerEmail, senha: registerPassword })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);
-        if (data.success) {
-            window.location.href = 'index2_Bnv.html';  // Altere para a página de destino
-        }
-    })
-    .catch(error => {
-        console.error('Erro ao criar conta:', error.message);
-        alert('Erro ao criar conta: ' + error.message);
-    });
+// Alterna para o formulário de login
+document.getElementById('showLoginForm').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.querySelector('.register-container').classList.add('hidden');
+    document.querySelector('.login-container').classList.remove('hidden');
 });
