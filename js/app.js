@@ -1,4 +1,4 @@
-require('dotenv').config();
+// server.js
 const express = require('express');
 const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
@@ -30,15 +30,15 @@ connection.connect(err => {
 app.post('/register', (req, res) => {
   const { email, senha } = req.body;
 
-  console.log('Verificando e-mail:', email); // Log para verificar o e-mail recebido
+  console.log('Dados recebidos no servidor:', { email, senha }); // Verifique se os dados estão corretos
 
   connection.query('SELECT * FROM Usuarios WHERE email = ?', [email], (error, results) => {
     if (error) {
-      console.error('Erro ao verificar email:', error); // Adicionar log de erro
+      console.error('Erro ao verificar email:', error);
       return res.status(500).json({ message: 'Erro no servidor ao verificar email' });
     }
 
-    console.log('Resultados da verificação de e-mail:', results); // Log para verificar os resultados
+    console.log('Resultados da verificação de e-mail:', results);
 
     if (results.length > 0) {
       return res.status(400).json({ message: 'Email já registrado' });
@@ -46,13 +46,13 @@ app.post('/register', (req, res) => {
 
     bcrypt.hash(senha, 10, (err, hash) => {
       if (err) {
-        console.error('Erro ao criptografar a senha:', err); // Adicionar log de erro
+        console.error('Erro ao criptografar a senha:', err);
         return res.status(500).json({ message: 'Erro ao criptografar a senha' });
       }
 
       connection.query('INSERT INTO Usuarios (email, senha) VALUES (?, ?)', [email, hash], (error, results) => {
         if (error) {
-          console.error('Erro ao inserir usuário no banco:', error); // Adicionar log de erro
+          console.error('Erro ao inserir usuário no banco:', error);
           return res.status(500).json({ message: 'Erro ao inserir usuário no banco' });
         }
         res.status(201).json({ message: 'Usuário registrado com sucesso', success: true });
@@ -68,7 +68,6 @@ app.post('/login', (req, res) => {
 
   connection.query('SELECT * FROM Usuarios WHERE email = ?', [email], (error, results) => {
     if (error) {
-      console.error('Erro ao verificar usuário:', error);
       return res.status(500).json({ message: 'Erro no servidor ao verificar o usuário' });
     }
 
@@ -80,7 +79,6 @@ app.post('/login', (req, res) => {
 
     bcrypt.compare(senha, user.senha, (err, result) => {
       if (err) {
-        console.error('Erro ao comparar senha:', err);
         return res.status(500).json({ message: 'Erro ao comparar a senha' });
       }
 
@@ -90,10 +88,9 @@ app.post('/login', (req, res) => {
 
       const token = jwt.sign({ id_usuario: user.id_usuario }, process.env.SECRET_KEY, { expiresIn: '30d' });
 
-      connection.query('INSERT INTO Sessoes (id_usuario, token, data_expiracao) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 30 DAY))', 
+      connection.query('INSERT INTO Sessoes (id_usuario, token, data_expiracao) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 30 DAY))',
         [user.id_usuario, token], (error, results) => {
           if (error) {
-            console.error('Erro ao registrar sessão:', error);
             return res.status(500).json({ message: 'Erro ao registrar a sessão' });
           }
           res.status(200).json({ token });
