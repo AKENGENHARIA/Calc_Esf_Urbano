@@ -4,7 +4,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     const email = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    fetch('http://localhost:7777/login', {
+    fetch('mysql://root:EhPuFFhFCMyMGBqFhjsozTbQBWmzRaqX@autorack.proxy.rlwy.net:55800/railway', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
