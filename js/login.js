@@ -1,35 +1,30 @@
-document.getElementById('registerForm').addEventListener('submit', function(e) {
+document.getElementById('loginForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
-    const email = document.getElementById('registerUsername').value;
-    const password = document.getElementById('registerPassword').value;
+    const email = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-    console.log('Dados enviados para o servidor:', { email, password }); // Verifique se os dados estão corretos
-
-    fetch('http://localhost:7777/register', {
+    fetch('http://localhost:7777/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, senha: password })
     })
-    .then(response => {
-        console.log('Resposta do servidor:', response); // Verifique a resposta
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log('Dados recebidos:', data); // Verifique os dados recebidos
-        if (data.success) {
-            alert('Registro bem-sucedido!');
-            document.querySelector('.register-container').classList.add('hidden');
-            document.querySelector('.login-container').classList.remove('hidden');
+        console.log('Dados recebidos:', data);
+        if (data.token) {
+            localStorage.setItem('token', data.token);  // Armazena o token JWT no localStorage
+            alert('Login bem-sucedido!');
+            window.location.href = 'index2_Bnv.html';  // Redireciona para a próxima página
         } else {
-            alert('Registro falhou: ' + data.message);
+            alert('Login falhou: ' + data.message);
         }
     })
     .catch(error => {
-        console.error('Erro no registro:', error);
-        alert('Erro ao registrar: ' + error.message);
+        console.error('Erro no login:', error);
+        alert('Erro ao fazer login: ' + error.message);
     });
 });
 

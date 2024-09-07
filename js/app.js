@@ -27,39 +27,38 @@ connection.connect(err => {
 });
 
 // Função para criar um novo usuário (registro)
-app.post('/register', (req, res) => {
+app.post('/login', (req, res) => {
   const { email, senha } = req.body;
 
-  console.log('Dados recebidos no servidor:', { email, senha }); // Verifique se os dados estão corretos
-
+  // Verifica se o usuário existe
   connection.query('SELECT * FROM Usuarios WHERE email = ?', [email], (error, results) => {
-    if (error) {
-      console.error('Erro ao verificar email:', error);
-      return res.status(500).json({ message: 'Erro no servidor ao verificar email' });
-    }
-
-    console.log('Resultados da verificação de e-mail:', results);
-
-    if (results.length > 0) {
-      return res.status(400).json({ message: 'Email já registrado' });
-    }
-
-    bcrypt.hash(senha, 10, (err, hash) => {
-      if (err) {
-        console.error('Erro ao criptografar a senha:', err);
-        return res.status(500).json({ message: 'Erro ao criptografar a senha' });
+      if (error) {
+          return res.status(500).json({ message: 'Erro no servidor ao verificar o usuário' });
       }
 
-      connection.query('INSERT INTO Usuarios (email, senha) VALUES (?, ?)', [email, hash], (error, results) => {
-        if (error) {
-          console.error('Erro ao inserir usuário no banco:', error);
-          return res.status(500).json({ message: 'Erro ao inserir usuário no banco' });
-        }
-        res.status(201).json({ message: 'Usuário registrado com sucesso', success: true });
+      if (results.length === 0) {
+          return res.status(401).json({ message: 'Usuário não encontrado' });
+      }
+
+      const user = results[0];
+
+      // Verifica a senha
+      bcrypt.compare(senha, user.senha, (err, result) => {
+          if (err) {
+              return res.status(500).json({ message: 'Erro ao comparar a senha' });
+          }
+
+          if (!result) {
+              return res.status(401).json({ message: 'Senha incorreta' });
+          }
+
+          // Gera o token JWT
+          const token = jwt.sign({ id_usuario: user.id_usuario }, 'chave_secreta', { expiresIn: '30d' });
+          res.status(200).json({ token });  // Retorna o token
       });
-    });
   });
 });
+
 
 
 // Função para autenticação de login
