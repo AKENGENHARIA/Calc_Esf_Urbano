@@ -1,22 +1,11 @@
-// server.js
-const express = require('express');
 const mysql = require('mysql2');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const cors = require('cors');
-require('dotenv').config();  // Carregar variáveis de ambiente
-
-const app = express();
-app.use(express.json());
-app.use(cors());
-
-// Conexão com o banco de dados MySQL
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT || 3306
+  port: process.env.DB_PORT,
+  connectTimeout: 10000  // Tempo de timeout em milissegundos (10 segundos)
 });
 
 connection.connect(err => {
