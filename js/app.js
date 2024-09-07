@@ -4,6 +4,7 @@ const mysql = require('mysql2');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
+require('dotenv').config();  // Carregar variáveis de ambiente
 
 const app = express();
 app.use(express.json());
@@ -11,11 +12,11 @@ app.use(cors());
 
 // Conexão com o banco de dados MySQL
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'akcem',
-  password: 'On@07031996',
-  database: 'info_proj',
-  port: 3306
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  port: process.env.MYSQL_PORT || 3306
 });
 
 connection.connect(err => {
@@ -25,41 +26,6 @@ connection.connect(err => {
   }
   console.log('Conectado ao banco de dados MySQL com ID ' + connection.threadId);
 });
-
-// Função para criar um novo usuário (registro)
-app.post('/login', (req, res) => {
-  const { email, senha } = req.body;
-
-  // Verifica se o usuário existe
-  connection.query('SELECT * FROM Usuarios WHERE email = ?', [email], (error, results) => {
-      if (error) {
-          return res.status(500).json({ message: 'Erro no servidor ao verificar o usuário' });
-      }
-
-      if (results.length === 0) {
-          return res.status(401).json({ message: 'Usuário não encontrado' });
-      }
-
-      const user = results[0];
-
-      // Verifica a senha
-      bcrypt.compare(senha, user.senha, (err, result) => {
-          if (err) {
-              return res.status(500).json({ message: 'Erro ao comparar a senha' });
-          }
-
-          if (!result) {
-              return res.status(401).json({ message: 'Senha incorreta' });
-          }
-
-          // Gera o token JWT
-          const token = jwt.sign({ id_usuario: user.id_usuario }, 'chave_secreta', { expiresIn: '30d' });
-          res.status(200).json({ token });  // Retorna o token
-      });
-  });
-});
-
-
 
 // Função para autenticação de login
 app.post('/login', (req, res) => {
@@ -98,6 +64,8 @@ app.post('/login', (req, res) => {
   });
 });
 
-app.listen(7777, () => {
-  console.log('Servidor rodando na porta 7777');
+// Definir a porta dinamicamente para produção
+const PORT = process.env.PORT || 3000;
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`Servidor rodando na porta ${process.env.PORT || 3000}`);
 });
