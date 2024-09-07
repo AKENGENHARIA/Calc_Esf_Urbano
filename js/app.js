@@ -1,4 +1,13 @@
+const express = require('express');
 const mysql = require('mysql2');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const cors = require('cors');
+
+// Inicializa o Express
+const app = express();
+
+// Configurações do banco de dados
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -8,13 +17,9 @@ const connection = mysql.createConnection({
   connectTimeout: 10000  // Tempo de timeout em milissegundos (10 segundos)
 });
 
-connection.connect(err => {
-  if (err) {
-    console.error('Erro ao conectar ao banco de dados: ' + err.stack);
-    return;
-  }
-  console.log('Conectado ao banco de dados MySQL com ID ' + connection.threadId);
-});
+// Middlewares
+app.use(express.json());
+app.use(cors());
 
 // Função para autenticação de login
 app.post('/login', (req, res) => {
@@ -55,6 +60,6 @@ app.post('/login', (req, res) => {
 
 // Definir a porta dinamicamente para produção
 const PORT = process.env.PORT || 3000;
-app.listen(process.env.PORT || 3000, () => {
-  console.log(`Servidor rodando na porta ${process.env.PORT || 3000}`);
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
