@@ -1,9 +1,9 @@
 {
   "name": "calc_esf_urbano",
   "version": "1.0.0",
-  "main": "js/app.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node js/app.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

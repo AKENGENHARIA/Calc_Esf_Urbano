@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Calculadora de Esforço Urbano</title>
+    <link rel="stylesheet" href="css/style_login.css">
+    <!-- Firebase 8.x.x compatível com navegadores -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Login Container -->
+        <div class="login-container">
+            <h1>Login</h1>
+            <form id="loginForm">
+                <label for="username">Usuário (Email)</label>
+                <input type="email" id="username" placeholder="Usuário (Email)" required>
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <div class="options">
+                <a href="#" id="showRegisterForm">Criar conta</a> | <a href="#">Esqueceu a senha?</a>
+            </div>
+        </div>
+    
+        <!-- Register Container -->
+        <div class="register-container hidden">
+            <h1>Criar Conta</h1>
+            <form id="registerForm">
+                <label for="registerUsername">Usuário (Email)</label>
+                <input type="email" id="registerUsername" placeholder="Usuário (Email)" required>
+                <label for="registerPassword">Senha</label>
+                <input type="password" id="registerPassword" placeholder="Senha" required>
+                <button type="submit">Registrar</button>
+            </form>
+            <div class="options">
+                <a href="#" id="showLoginForm">Já tem conta? Fazer login</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Alternância entre formulários de login e registro
+        const loginContainer = document.querySelector('.login-container');
+        const registerContainer = document.querySelector('.register-container');
+        const showRegisterForm = document.getElementById('showRegisterForm');
+        const showLoginForm = document.getElementById('showLoginForm');
+
+        showRegisterForm.addEventListener('click', function (e) {
+            e.preventDefault();
+            loginContainer.classList.add('hidden');
+            registerContainer.classList.remove('hidden');
+        });
+
+        showLoginForm.addEventListener('click', function (e) {
+            e.preventDefault();
+            registerContainer.classList.add('hidden');
+            loginContainer.classList.remove('hidden');
+        });
+
+        // Função para lidar com o formulário de login
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            // Lógica de login com Firebase Authentication
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log('Login realizado com sucesso', userCredential.user);
+                })
+                .catch((error) => {
+                    console.error('Erro ao fazer login:', error.message);
+                });
+        });
+
+        // Função para lidar com o formulário de registro
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('registerUsername').value;
+            const password = document.getElementById('registerPassword').value;
+            // Lógica de registro com Firebase Authentication
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log('Conta criada com sucesso', userCredential.user);
+                })
+                .catch((error) => {
+                    console.error('Erro ao criar conta:', error.message);
+                });
+        });
+    </script>
+</body>
+
+</html>

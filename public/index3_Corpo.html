@@ -192,6 +192,31 @@
         });
 
     </script>
-</body>
+
+    <script>
+        // Função para enviar os dados de forças via AJAX para o backend
+        document.getElementById('forcesForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Evita o reload da página
+            const forceValue = document.getElementById('forceValue').value;
+            const angle = document.getElementById('angle').value;
+
+            // Enviar os dados via fetch para o backend (rota POST /criar)
+            fetch('/criar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    forceValue: forceValue,
+                    angle: angle
+                })
+            }).then(response => response.text())
+            .then(data => {
+                alert('Força enviada com sucesso: ' + data);
+            }).catch(error => {
+                console.error('Erro ao enviar força:', error);
+            });
+        });
+    </script>
+    </body>
+    
 
 </html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto - Calculadora de Esforço Urbano</title>
+    <link rel="stylesheet" href="css/style_BemVindo.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>BEM-VINDO</h1>
+        <h3>Defina as Informações do Projeto</h3>
+        <form id="projetoForm">
+            <input type="text" id="cidade" placeholder="Cidade" required>
+            <input type="text" id="concessionaria" placeholder="Concessionária" required>
+            <input type="text" id="empresa" placeholder="Empresa" required>
+
+            <div>
+                <label for="urbano">
+                    <input type="radio" id="urbano" name="tipo_projeto" value="urbano" required> Urbano
+                </label>
+                <label for="rural">
+                    <input type="radio" id="rural" name="tipo_projeto" value="rural"> Rural
+                </label>
+            </div>
+
+            <button type="submit" class="button">Iniciar o Projeto</button>
+        </form>
+
+        <script src="js/bemVindo.js"></script>
+
+        <script>
+            // Função para enviar o formulário via AJAX para o backend
+            document.getElementById('projetoForm').addEventListener('submit', function (e) {
+                e.preventDefault(); // Evita o reload da página
+                const cidade = document.getElementById('cidade').value;
+                const concessionaria = document.getElementById('concessionaria').value;
+                const empresa = document.getElementById('empresa').value;
+                const tipoProjeto = document.querySelector('input[name="tipo_projeto"]:checked').value;
+
+                // Enviar os dados via fetch para o backend (rota POST /criar)
+                fetch('/criar', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        cidade: cidade,
+                        concessionaria: concessionaria,
+                        empresa: empresa,
+                        tipoProjeto: tipoProjeto
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        return response.text(); // Processa o texto da resposta se for bem-sucedida
+                    }
+                    throw new Error('Erro na resposta do servidor');
+                })
+                .then(data => {
+                    alert('Projeto criado com sucesso: ' + data);
+                })
+                .catch(error => {
+                    console.error('Erro ao criar projeto:', error);
+                    alert('Falha ao criar projeto. Tente novamente.');
+                });
+            });
+        </script>
+    </div>
+
+</body>
+
+</html>
