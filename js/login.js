@@ -4,13 +4,14 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     const email = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    fetch('mysql://root:EhPuFFhFCMyMGBqFhjsozTbQBWmzRaqX@autorack.proxy.rlwy.net:55800/railway', {
+    fetch('/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, senha: password })
     })
+    
     .then(response => response.json())
     .then(data => {
         console.log('Dados recebidos:', data);

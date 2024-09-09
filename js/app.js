@@ -1,54 +1,63 @@
-const express = require('express');
-const mysql = require('mysql2');  // Ou o pacote correto para conexão com MySQL
+// Carregar variáveis de ambiente do arquivo .env
+require('dotenv').config(); 
 
-const dotenv = require('dotenv');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const express = require('express');  // Importar o Express
+const app = express();               // Criar a instância do app
 
-dotenv.config();
+const mysql = require('mysql2');
 
-const app = express();
-app.use(cors());
-app.use(bodyParser.json());
+// Definir a porta
+const PORT = process.env.PORT || 3000;
 
-// Conexão com o banco de dados usando as variáveis do .env
-const db = mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
-    port: process.env.MYSQL_PORT
+// Configuração da conexão usando variáveis de ambiente
+const connection = mysql.createConnection({
+  host: process.env.MYSQL_HOST || 'localhost',
+  user: process.env.MYSQL_USER || 'ak',
+  password: process.env.MYSQL_PASSWORD || '123Mudar',
+  database: process.env.MYSQL_DATABASE || 'info_proj',
+  port: process.env.MYSQL_PORT || 3306
 });
 
-
-db.connect((err) => {
-    if (err) {
-        console.error('Erro ao conectar ao banco de dados:', err);
-        return;
-    }
-    console.log('Conectado ao banco de dados MySQL');
+// Testar a conexão com o banco de dados
+connection.connect((err) => {
+  if (err) {
+    console.error('Erro ao conectar ao banco de dados:', err.stack);
+    return;
+  }
+  console.log('Conectado ao banco de dados MySQL com ID ' + connection.threadId);
 });
 
-// Rota de login
-app.post('/login', (req, res) => {
-    const { email, senha } = req.body;
-    const query = 'SELECT * FROM users WHERE email = ? AND senha = ?';
-    
-    db.query(query, [email, senha], (err, results) => {
-        if (err) {
-            console.error('Erro ao consultar banco de dados:', err);
-            res.status(500).json({ message: 'Erro interno do servidor' });
-            return;
-        }
-        if (results.length > 0) {
-            res.json({ token: 'jwt_token_simulado' });  // Gerar o JWT real aqui
-        } else {
-            res.status(401).json({ message: 'Credenciais inválidas' });
-        }
-    });
+// Definir uma rota para testar
+app.get('/', (req, res) => {
+  res.send('Servidor está rodando!');
 });
 
-const PORT = process.env.PORT || 3306;
+// Iniciar o servidor
 app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
+  console.log(`Servidor rodando na porta ${PORT}`);
 });
+// Rota para buscar dados do banco de dados
+// Rota para listar as tabelas do banco de dados
+app.get('/tabelas', (req, res) => {
+    connection.query('SHOW TABLES', (err, results) => {
+      if (err) {
+        console.error('Erro ao buscar tabelas:', err);
+        res.status(500).send('Erro ao buscar tabelas');
+        return;
+      }
+      console.log('Tabelas encontradas:', results);
+      res.json(results);  // Envia os resultados como JSON
+    });
+  });
+  app.get('/teste', (req, res) => {
+    connection.query('SELECT 1 + 1 AS solution', (err, results) => {
+      if (err) {
+        console.error('Erro ao executar teste:', err);
+        res.status(500).send('Erro ao executar teste');
+        return;
+      }
+      console.log('Resultado do teste:', results);
+      res.json(results);  // Envia os resultados como JSON
+    });
+  });
+  
