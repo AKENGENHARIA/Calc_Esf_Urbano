@@ -10,7 +10,7 @@ router.get('/consultar', projetoController.buscarProjetos);
 router.get('/:id', projetoController.getProjetoById);
 
 // Rota para criar um novo projeto
-router.post('/', projetoController.createProjeto);
+router.post('/novo', projetoController.createProjeto);
 
 // Rota para atualizar um projeto existente
 router.put('/:id', projetoController.updateProjeto);

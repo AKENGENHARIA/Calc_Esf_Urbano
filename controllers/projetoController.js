@@ -25,9 +25,11 @@ exports.createProjeto = (req, res) => {
         if (err) {
             return res.status(500).json({ error: 'Erro ao criar projeto' });
         }
-        res.status(201).json({ message: 'Projeto criado com sucesso', id: results.insertId });
+        // Certifique-se de que a resposta é JSON
+        res.status(201).json({ success: true, message: 'Projeto criado com sucesso', id: results.insertId });
     });
 };
+
 
 // Função para atualizar um projeto existente
 exports.updateProjeto = (req, res) => {

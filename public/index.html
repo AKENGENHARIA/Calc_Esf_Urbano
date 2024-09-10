@@ -11,10 +11,10 @@
 
 <body>
     <div class="sidebar">
+        <button id="novoBtn" onclick="abrirModalNovoProjeto()">Novo Projeto</button>
         <button id="continuarBtn" disabled onclick="continuarProjeto()">Continuar</button>
         <button id="editarBtn" disabled onclick="abrirModal()">Editar</button>
         <button id="concluirBtn" disabled onclick="concluirProjeto()">Concluir</button>
-        <button id="excluirBtn" disabled onclick="excluirProjeto()">Excluir</button>
         <button id="relatorioBtn" disabled onclick="Relatorio()">Relatório</button>
     </div>
 
@@ -82,6 +82,38 @@
             </div>
             <div class="modal-footer">
                 <button id="saveBtn" onclick="salvarProjetoEditado()" disabled>Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para criar novo projeto -->
+    <div id="novoProjetoModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" id="closeNovoProjetoModal">&times;</span>
+                <h2>Novo Projeto</h2>
+            </div>
+            <div class="modal-body">
+                <label for="novoModalNome">Nome do Projeto</label>
+                <input type="text" id="novoModalNome">
+
+                <label for="novoModalCidade">Cidade</label>
+                <input type="text" id="novoModalCidade">
+
+                <label for="novoModalEmpresa">Empresa</label>
+                <input type="text" id="novoModalEmpresa">
+
+                <label for="novoModalConcessionaria">Concessionária</label>
+                <input type="text" id="novoModalConcessionaria">
+
+                <label for="novoModalStatus">Status</label>
+                <select id="novoModalStatus">
+                    <option value="em andamento">Em Andamento</option>
+                    <option value="finalizado">Finalizado</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button id="saveNovoProjetoBtn" onclick="salvarNovoProjeto()" disabled>Salvar</button>
             </div>
         </div>
     </div>
@@ -256,7 +288,7 @@
             document.getElementById('continuarBtn').disabled = false;
             document.getElementById('editarBtn').disabled = false;
             document.getElementById('concluirBtn').disabled = false;
-            document.getElementById('excluirBtn').disabled = false;
+            document.getElementById('novoBtn').disabled = false;
             document.getElementById('relatorioBtn').disabled = false;
         }
 
@@ -301,6 +333,71 @@ function concluirProjeto() {
             });
     }
 }
+
+    // Adição: Função para abrir o modal de novo projeto
+    function abrirModalNovoProjeto() {
+        document.getElementById('novoProjetoModal').style.display = 'block';
+    }
+
+    // Adição: Função para salvar um novo projeto
+    function salvarNovoProjeto() {
+        const nome_projeto = document.getElementById('novoModalNome').value;
+        const cidade = document.getElementById('novoModalCidade').value;
+        const empresa = document.getElementById('novoModalEmpresa').value;
+        const concessionaria = document.getElementById('novoModalConcessionaria').value;
+        const status = document.getElementById('novoModalStatus').value;
+
+        // Verifica se todos os campos estão preenchidos
+        if (!nome_projeto || !cidade || !empresa || !concessionaria) {
+            alert("Por favor, preencha todos os campos.");
+            return;
+        }
+
+        // Fazer a requisição para criar um novo projeto
+        fetch('http://localhost:3000/api/projetos/novo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ nome_projeto, cidade, empresa, concessionaria, status })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Novo projeto criado com sucesso!');
+                document.getElementById('novoProjetoModal').style.display = 'none';
+                fetchProjects(); // Atualizar a lista de projetos após criar um novo
+            } else {
+                alert('Erro ao criar o projeto.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao criar projeto:', error);
+            alert('Erro ao criar projeto.');
+        });
+    }
+
+    // Adição: Fechar modal de novo projeto ao clicar no "x"
+    document.getElementById('closeNovoProjetoModal').onclick = function () {
+        document.getElementById('novoProjetoModal').style.display = 'none';
+    };
+
+    // Adição: Evento para habilitar o botão "Salvar" no modal de novo projeto
+    function verificarCamposNovoProjeto() {
+        const nome_projeto = document.getElementById('novoModalNome').value;
+        const cidade = document.getElementById('novoModalCidade').value;
+        const empresa = document.getElementById('novoModalEmpresa').value;
+        const concessionaria = document.getElementById('novoModalConcessionaria').value;
+
+        // Habilita o botão de salvar apenas se todos os campos estiverem preenchidos
+        const botaoSalvarNovoProjeto = document.getElementById('saveNovoProjetoBtn');
+        botaoSalvarNovoProjeto.disabled = !nome_projeto || !cidade || !empresa || !concessionaria;
+    }
+
+    // Adição: Eventos para verificar campos do modal de novo projeto
+    document.getElementById('novoModalNome').addEventListener('input', verificarCamposNovoProjeto);
+    document.getElementById('novoModalCidade').addEventListener('input', verificarCamposNovoProjeto);
+    document.getElementById('novoModalEmpresa').addEventListener('input', verificarCamposNovoProjeto);
+    document.getElementById('novoModalConcessionaria').addEventListener('input', verificarCamposNovoProjeto);
+
 
 
 
