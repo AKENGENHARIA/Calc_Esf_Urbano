@@ -1,61 +1,64 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif; /* Define a fonte principal da página */
 }
 
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    display: none; /* Esconde o modal por padrão */
+    position: fixed; /* Fixa o modal na tela, mesmo ao rolar a página */
+    z-index: 1; /* Define a prioridade de sobreposição, ficando acima de outros elementos */
+    left: 0; /* Alinha o modal à esquerda da tela */
+    top: 0; /* Alinha o modal ao topo da tela */
+    width: 100%; /* O modal ocupa toda a largura da tela */
+    height: 100%; /* O modal ocupa toda a altura da tela */
+    overflow: auto; /* Permite rolagem se o conteúdo do modal for maior que a tela */
+    background-color: rgba(0, 0, 0, 0.4); /* Fundo semitransparente para escurecer o resto da página */
 }
 
 .modal-content {
-    background-color: #f4f4f4;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 400px;
-    text-align: center;
-    border-radius: 8px;
+    background-color: #ffffff; /* Define a cor de fundo do conteúdo do modal */
+    margin: 10% auto; /* Centraliza o modal vertical e horizontalmente com margem */
+    padding: 20px; /* Adiciona espaçamento interno em volta do conteúdo do modal */
+    border: 1px solid #888; /* Adiciona uma borda ao redor do modal */
+    width: 600px; /* Define a largura do modal */
+    text-align: center; /* Centraliza o texto dentro do modal */
+    border-radius: 8px; /* Arredonda os cantos do modal */
 }
 
 h2 {
-    background-color: red;
-    color: white;
-    padding: 10px;
-    margin: -20px -20px 20px -20px;
+    background-color: rgba(0, 68, 255, 0.616); /* Define a cor de fundo do cabeçalho do modal */
+    color: rgb(0, 0, 0); /* Define a cor do texto no cabeçalho */
+    padding: 10px; /* Adiciona espaçamento interno no cabeçalho */
+    margin: -20px -20px 20px -20px; /* Remove margens ao redor do cabeçalho e ajusta o alinhamento */
+    border-radius: 8px; /* Arredonda os cantos do modal */
 }
 
 .radio-group {
-    display: inline-block;
-    margin-right: 10px;
-    text-align: left;
+    display: inline-block; /* Exibe o grupo de botões de rádio em bloco inline */
+    margin-right: 60px; /* Adiciona espaçamento à direita de cada grupo */
+    text-align: justify; /* Alinha o conteúdo do grupo à esquerda */
+    vertical-align: top;
+   
 }
 
 h4 {
-    font-size: 16px;
-    margin-bottom: 10px;
+    font-size: 16px; /* Define o tamanho da fonte do título dentro dos grupos de botões de rádio */
+    margin-bottom: 10px; /* Adiciona um espaço abaixo do título */
 }
 
 button#confirmar {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
+    margin-top: 20px; /* Adiciona espaço acima do botão */
+    padding: 10px 20px; /* Define o espaçamento interno (altura e largura) do botão */
+    background-color: #002fffa9; /* Define a cor de fundo verde do botão */
+    color: white; /* Define a cor do texto como branco */
+    border: none; /* Remove a borda padrão do botão */
+    cursor: pointer; /* Define o cursor como pointer (mãozinha) ao passar o mouse */
 }
 
 button#confirmar:hover {
-    background-color: #45a049;
+    background-color: #45a049; /* Altera a cor do botão quando o mouse passa sobre ele */
 }
 
 button:disabled {
-    background-color: grey;
-    cursor: not-allowed;
+    background-color: grey; /* Define a cor de fundo para cinza quando o botão está desabilitado */
+    cursor: not-allowed; /* Altera o cursor para "não permitido" quando o botão está desabilitado */
 }

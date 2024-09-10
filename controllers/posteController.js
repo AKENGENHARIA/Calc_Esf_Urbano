@@ -3,13 +3,33 @@ const db = require('../db');  // Certifique-se de que está se conectando corret
 exports.criarPoste = (req, res) => {
     const { numeroPoste, tipoPoste, altura, capacidade, projetoId } = req.body;
 
-    // Query SQL para inserir um novo poste no banco de dados
-    const sql = 'INSERT INTO postes (numero_Poste, tipo_Poste, altura, capacidade, projeto_Id) VALUES (?, ?, ?, ?, ?)';
-    db.query(sql, [numeroPoste, tipoPoste, altura, capacidade, projetoId], (err, result) => {
+    // Verificar se já existe um poste com o mesmo número para o projeto
+    const verificarPosteQuery = 'SELECT * FROM postes WHERE numeroPoste = ? AND projetoId = ?';
+
+    db.query(verificarPosteQuery, [numeroPoste, projetoId], (err, results) => {
         if (err) {
-            console.error('Erro ao inserir o poste:', err);
-            return res.status(500).json({ success: false, message: 'Erro ao criar o poste.' });
+            console.error('Erro ao verificar se o poste já existe:', err);
+            return res.status(500).json({ success: false, message: 'Erro ao verificar o poste' });
         }
-        res.status(201).json({ success: true, message: 'Poste criado com sucesso!' });
+
+        if (results.length > 0) {
+            // Se já existe um poste com o mesmo número no projeto
+            return res.status(400).json({ success: false, message: 'Já existe um poste com este número neste projeto.' });
+        }
+
+        // Se o número do poste ainda não foi usado, prosseguir com a criação
+        const criarPosteQuery = `
+            INSERT INTO postes (numeroPoste, tipoPoste, altura, capacidade, projetoId) 
+            VALUES (?, ?, ?, ?, ?)
+        `;
+
+        db.query(criarPosteQuery, [numeroPoste, tipoPoste, altura, capacidade, projetoId], (err, result) => {
+            if (err) {
+                console.error('Erro ao inserir o poste:', err);
+                return res.status(500).json({ success: false, message: 'Erro ao inserir o poste.' });
+            }
+
+            res.status(201).json({ success: true, message: 'Poste criado com sucesso!', data: result });
+        });
     });
 };
