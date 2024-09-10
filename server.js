@@ -3,7 +3,10 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
 const projetoRoutes = require('./routes/projetos');  // Rotas de Projetos
-const posteRoutes = require('./routes/postes');  // Rotas de Postes (Novo)
+const posteRoutes = require('./routes/postes'); 
+const forcaRoutes = require('./routes/forcas'); // Certifique-se de usar o caminho correto
+
+  // Rotas de Postes (Novo)
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -44,6 +47,9 @@ app.use('/api/projetos', projetoRoutes);  // Isso registra o prefixo '/api/proje
 
 // Use as rotas do arquivo 'postes.js'
 app.use('/api/postes', posteRoutes);  // Novo: Rotas para postes
+
+// Usar as rotas das forças
+app.use('/api/forcas', forcaRoutes);
 
 // Iniciando o servidor
 app.listen(port, () => {

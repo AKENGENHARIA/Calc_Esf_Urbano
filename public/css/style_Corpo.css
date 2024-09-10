@@ -33,16 +33,14 @@ h1 {
     text-align: center; /* Centraliza o texto do título */
 }
 
-.container {
-    display: flex; /* Exibe os elementos do container em linha */
-    justify-content: center; /* Centraliza os elementos no eixo horizontal */
-    gap: 10px; /* Define um espaçamento de 10px entre os itens */
-    flex-wrap: wrap; /* Permite que os itens "quebrem linha" quando necessário */
-    width: 100%; /* Define a largura como 100% do container */
-    max-width: 1200px; /* Define a largura máxima como 1200px */
-    margin: 20px 0; /* Adiciona uma margem de 20px em cima e embaixo */
+.forces-container {
+    display: flex; /* Define o layout como flexbox */
+    flex-wrap: wrap; /* Permite que os itens quebrem para uma nova linha quando necessário */
+    gap: 20px; /* Adiciona um espaço de 20px entre os itens */
+    justify-content: flex-start; /* Alinha os itens ao início (à esquerda) */
 }
 
+/* Mantém as configurações já feitas nos force-inputs */
 .force-input {
     background-color: #fff; /* Define o fundo dos inputs como branco */
     border: 1px solid #ccc; /* Adiciona uma borda cinza clara */
@@ -54,18 +52,21 @@ h1 {
     min-width: 200px; /* Define uma largura mínima de 200px */
 }
 
+/* Estilo para o título dentro de cada força */
 .force-input h3 {
     color: #0044cc; /* Define a cor dos títulos dentro dos inputs como azul */
     margin-bottom: 10px; /* Adiciona uma margem inferior de 10px */
     font-size: 16px; /* Define o tamanho da fonte como 16px */
 }
 
+/* Seções dentro de cada input */
 .vao-ang,
 .RedeDentrega,
 .estaio,
 .usoMutuo {
     margin-bottom: 10px; /* Adiciona uma margem inferior de 10px para essas seções */
 }
+
 
 label {
     display: block; /* Faz com que os rótulos sejam exibidos como blocos */
