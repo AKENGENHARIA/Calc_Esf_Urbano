@@ -1,11 +1,16 @@
 require('dotenv').config();
 const express = require('express');
-const mysql = require('mysql2');
-const app = express();
 const cors = require('cors');
+const mysql = require('mysql2');
+const projetoRoutes = require('./routes/projetos');  // Rotas de Projetos
+const posteRoutes = require('./routes/postes');  // Rotas de Postes (Novo)
+const app = express();
 const port = process.env.PORT || 3000;
 
-// Configurando o middleware para receber JSON
+// Middleware para habilitar o CORS
+app.use(cors());
+
+// Middleware para receber JSON
 app.use(express.json());
 
 // Configuração da conexão com o MySQL
@@ -34,12 +39,11 @@ db.query('SELECT 1 + 1 AS solution', (err, results) => {
     }
 });
 
-app.use(express.json());  // Middleware para interpretar JSON
-app.use(cors());  // Permitir requisições de qualquer origem (CORS)
+// Use as rotas do arquivo 'projetos.js'
+app.use('/api/projetos', projetoRoutes);  // Isso registra o prefixo '/api/projetos'
 
-// Rotas para os projetos
-const projetoRoutes = require('./routes/projetos');
-app.use('/api/projetos', projetoRoutes);
+// Use as rotas do arquivo 'postes.js'
+app.use('/api/postes', posteRoutes);  // Novo: Rotas para postes
 
 // Iniciando o servidor
 app.listen(port, () => {

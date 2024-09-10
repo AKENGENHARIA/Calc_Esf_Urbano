@@ -15,7 +15,7 @@
         <button id="editarBtn" disabled onclick="abrirModal()">Editar</button>
         <button id="concluirBtn" disabled onclick="concluirProjeto()">Concluir</button>
         <button id="excluirBtn" disabled onclick="excluirProjeto()">Excluir</button>
-        <button id="relatorioBtn" disabled onclick="salvarRelatorio()">Salvar Relatório</button>
+        <button id="relatorioBtn" disabled onclick="Relatorio()">Relatório</button>
     </div>
 
     <div class="container">
@@ -90,6 +90,16 @@
         let projetoSelecionadoId = null;
         let projetoSelecionado = null; // Variável para armazenar os dados do projeto selecionado
 
+        // Função para continuar o projeto
+        function continuarProjeto() {
+            if (projetoSelecionadoId) {
+                // Redireciona para a página index3_Corpo.html passando o ID do projeto selecionado na URL
+                window.location.href = `index3_Corpo.html?projetoId=${projetoSelecionadoId}`;
+            } else {
+                alert("Por favor, selecione um projeto para continuar.");
+            }
+        }
+
         // Função para abrir o modal de edição
         function abrirModal() {
             if (projetoSelecionado) {
@@ -110,11 +120,11 @@
         };
 
         // Fechar modal ao clicar fora dele
-        window.onclick = function (event) {
-            if (event.target === document.getElementById('editModal')) {
-                document.getElementById('editModal').style.display = 'none';
-            }
-        };
+        // window.onclick = function (event) {
+        //    if (event.target === document.getElementById('editModal')) {
+        //       document.getElementById('editModal').style.display = 'none';
+        //    }
+        // };
 
         // Verificar se os campos do modal estão preenchidos
         function verificarCamposModal() {
@@ -129,52 +139,47 @@
         }
 
         // Função para salvar o projeto editado
- // Função para salvar o projeto editado
-// Função para salvar o projeto editado
-function salvarProjetoEditado() {
-    const nome_projeto = document.getElementById('modalNome').value;
-    const cidade = document.getElementById('modalCidade').value;
-    const empresa = document.getElementById('modalEmpresa').value;
-    const concessionaria = document.getElementById('modalConcessionaria').value;
-    const status = document.getElementById('modalStatus').value;
+        function salvarProjetoEditado() {
+            const nome_projeto = document.getElementById('modalNome').value;
+            const cidade = document.getElementById('modalCidade').value;
+            const empresa = document.getElementById('modalEmpresa').value;
+            const concessionaria = document.getElementById('modalConcessionaria').value;
+            const status = document.getElementById('modalStatus').value;
 
-    // Fazer a requisição para atualizar o projeto
-    fetch(`http://localhost:3000/api/projetos/editar-projeto/${projetoSelecionadoId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome_projeto, cidade, empresa, concessionaria, status })  // Enviando os dados editados
-    })
-    .then(response => {
-        console.log("Status da resposta:", response.status);  // Verificar o status da resposta
-        console.log("Resposta completa:", response);  // Verificar a resposta completa
+            // Fazer a requisição para atualizar o projeto
+            fetch(`http://localhost:3000/api/projetos/editar-projeto/${projetoSelecionadoId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome_projeto, cidade, empresa, concessionaria, status })  // Enviando os dados editados
+            })
+                .then(response => {
+                    console.log("Status da resposta:", response.status);  // Verificar o status da resposta
+                    console.log("Resposta completa:", response);  // Verificar a resposta completa
 
-        if (!response.ok) {
-            return response.json().then(errData => {
-                throw new Error(errData.message || 'Erro desconhecido ao atualizar o projeto.');
-            });
+                    if (!response.ok) {
+                        return response.json().then(errData => {
+                            throw new Error(errData.message || 'Erro desconhecido ao atualizar o projeto.');
+                        });
+                    }
+                    return response.json();  // Verificar o JSON da resposta
+                })
+                .then(data => {
+                    console.log("Dados da resposta JSON:", data);  // Verificar o conteúdo da resposta JSON
+                    // Se a atualização foi bem-sucedida
+                    if (data.success) {
+                        alert('Projeto atualizado com sucesso!');
+                        fetchProjects(); // Atualizar a lista de projetos após a edição
+                        document.getElementById('editModal').style.display = 'none';
+                    } else {
+                        alert('Erro ao atualizar o projeto.');
+                    }
+                })
+                .catch(error => {
+                    // Captura qualquer erro e exibe uma mensagem
+                    console.error('Erro ao salvar projeto:', error);
+                    alert(`Erro ao salvar projeto: ${error.message}`);
+                });
         }
-        return response.json();  // Verificar o JSON da resposta
-    })
-    .then(data => {
-        console.log("Dados da resposta JSON:", data);  // Verificar o conteúdo da resposta JSON
-        // Se a atualização foi bem-sucedida
-        if (data.success) {
-            alert('Projeto atualizado com sucesso!');
-            fetchProjects(); // Atualizar a lista de projetos após a edição
-            document.getElementById('editModal').style.display = 'none';
-        } else {
-            alert('Erro ao atualizar o projeto.');
-        }
-    })
-    .catch(error => {
-        // Captura qualquer erro e exibe uma mensagem
-        console.error('Erro ao salvar projeto:', error);
-        alert(`Erro ao salvar projeto: ${error.message}`);
-    });
-}
-
-
-
 
         // Adicionar eventos para verificar campos do modal
         document.getElementById('modalNome').addEventListener('input', verificarCamposModal);
@@ -182,7 +187,7 @@ function salvarProjetoEditado() {
         document.getElementById('modalEmpresa').addEventListener('input', verificarCamposModal);
         document.getElementById('modalConcessionaria').addEventListener('input', verificarCamposModal);
 
-        // Carregar projetos e habilitar seleção
+        // Função para carregar projetos e habilitar seleção
         function fetchProjects(query = '', page = 1, status = '') {
             const loadingElement = document.getElementById('loading');
             const errorMessage = document.getElementById('errorMessage');
@@ -255,16 +260,56 @@ function salvarProjetoEditado() {
             document.getElementById('relatorioBtn').disabled = false;
         }
 
-        window.onload = function () {
-            fetchProjects();
-        };
-
+        // Função chamada ao clicar no botão "Pesquisar"
         document.getElementById('searchBtn').addEventListener('click', function () {
-            const query = document.getElementById('searchInput').value;
-            const status = document.getElementById('statusFilter').value;
+            const query = document.getElementById('searchInput').value; // Valor do campo de pesquisa
+            const status = document.getElementById('statusFilter').value; // Valor do seletor de status
+
+            // Log para garantir que os parâmetros corretos estão sendo enviados
+            console.log("Query:", query);
+            console.log("Status:", status);
+
             fetchProjects(query, 1, status);
         });
+
+
+        // Função executada no carregamento da página
+     
+
+        // Função para concluir o projeto
+// Função para concluir o projeto
+function concluirProjeto() {
+    if (projetoSelecionadoId && confirm("Tem certeza de que deseja concluir este projeto?")) {
+        fetch(`http://localhost:3000/api/projetos/concluir-projeto/${projetoSelecionadoId}`, { method: 'POST' })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao concluir o projeto. Status: ' + response.status);
+                }
+                return response.json();  // Verifica se a resposta é JSON
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Projeto concluído com sucesso!');
+                    fetchProjects();  // Atualiza a lista de projetos
+                } else {
+                    alert('Erro ao concluir o projeto.');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao concluir o projeto:', error);
+                alert(`Erro ao concluir o projeto: ${error.message}`);
+            });
+    }
+}
+
+
+
+window.onload = function () {
+            fetchProjects(); // Carrega os projetos quando a página é carregada
+        };
+
     </script>
+
 </body>
 
 </html>

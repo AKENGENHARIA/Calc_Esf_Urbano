@@ -97,13 +97,13 @@ table th, table td {
 
 /* Cabeçalhos da tabela */
 table th {
-    background-color: #007bff; /* Define a cor de fundo dos cabeçalhos da tabela (azul) */
-    color: white; /* Define a cor do texto dos cabeçalhos como branco */
+    background-color: #002fff98; /* Define a cor de fundo dos cabeçalhos da tabela (azul) */
+    color: rgb(5, 5, 5); /* Define a cor do texto dos cabeçalhos como branco */
 }
 
 /* Cor de fundo ao passar o mouse sobre uma linha */
 table tr:hover {
-    background-color: #6664e9; /* Altera o fundo da linha quando o mouse passa por cima */
+    background-color: #7375ee8f; /* Altera o fundo da linha quando o mouse passa por cima */
 }
 
 /* Cor de fundo da linha selecionada */

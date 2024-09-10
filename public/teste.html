@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal - Informações do Poste</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #f4f4f4;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 400px;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        h2 {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100px;
+            padding: 5px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .form-row div {
+            width: 30%;
+        }
+
+        .form-row h4 {
+            color: red;
+        }
+
+        .radio-group {
+            text-align: left;
+        }
+
+        .radio-group label {
+            display: block;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: gray;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Modal -->
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <h2>CARACTERÍSTICAS</h2>
+
+            <div class="form-group">
+                <label for="numeroPoste">Nº do Poste</label><br>
+                <input type="text" id="numeroPoste">
+            </div>
+
+            <div class="form-row">
+                <div class="radio-group">
+                    <h4>Tipo</h4>
+                    <label><input type="radio" name="tipoPoste" value="SC"> Poste SC</label>
+                    <label><input type="radio" name="tipoPoste" value="Madeira"> Poste Madeira</label>
+                    <label><input type="radio" name="tipoPoste" value="DT"> Poste DT</label>
+                    <label><input type="radio" name="tipoPoste" value="Aço"> Poste AÇO</label>
+                </div>
+
+                <div class="radio-group">
+                    <h4>Altura (m)</h4>
+                    <label><input type="radio" name="altura" value="9"> 9</label>
+                    <label><input type="radio" name="altura" value="10"> 10</label>
+                    <label><input type="radio" name="altura" value="11"> 11</label>
+                    <label><input type="radio" name="altura" value="12"> 12</label>
+                    <label><input type="radio" name="altura" value="13"> 13</label>
+                    <label><input type="radio" name="altura" value="15"> 15</label>
+                    <label><input type="radio" name="altura" value="18"> 18</label>
+                </div>
+
+                <div class="radio-group">
+                    <h4>Capacidade (daN)</h4>
+                    <label><input type="radio" name="capacidade" value="100"> 100</label>
+                    <label><input type="radio" name="capacidade" value="150"> 150</label>
+                    <label><input type="radio" name="capacidade" value="200"> 200</label>
+                    <label><input type="radio" name="capacidade" value="300"> 300</label>
+                    <label><input type="radio" name="capacidade" value="400"> 400</label>
+                    <label><input type="radio" name="capacidade" value="450"> 450</label>
+                    <label><input type="radio" name="capacidade" value="600"> 600</label>
+                    <label><input type="radio" name="capacidade" value="1000"> 1000</label>
+                </div>
+            </div>
+
+            <button id="confirmar">CONFIRMAR?</button>
+        </div>
+    </div>
+
+    <script>
+        // Exibir o modal (Simulação)
+        window.onload = function () {
+            document.getElementById("postModal").style.display = "block";
+        };
+
+        // Adicionar evento ao botão confirmar
+        document.getElementById("confirmar").addEventListener("click", function () {
+            const numeroPoste = document.getElementById("numeroPoste").value;
+            const tipoPoste = document.querySelector('input[name="tipoPoste"]:checked')?.value;
+            const altura = document.querySelector('input[name="altura"]:checked')?.value;
+            const capacidade = document.querySelector('input[name="capacidade"]:checked')?.value;
+
+            if (numeroPoste && tipoPoste && altura && capacidade) {
+                alert(`Poste Nº: ${numeroPoste}\nTipo: ${tipoPoste}\nAltura: ${altura} m\nCapacidade: ${capacidade} daN`);
+            } else {
+                alert('Por favor, preencha todos os campos.');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
