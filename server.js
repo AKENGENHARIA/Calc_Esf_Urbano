@@ -3,10 +3,10 @@ const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
 const projetoRoutes = require('./routes/projetos');  // Rotas de Projetos
-const posteRoutes = require('./routes/postes'); 
-const forcaRoutes = require('./routes/forcas'); // Certifique-se de usar o caminho correto
+const posteRoutes = require('./routes/postes');      // Rotas de Postes
+const forcaRoutes = require('./routes/forcas');       // Rotas de Forças
+const postesForcasRoutes = require('./routes/postes-forcas');    // Rota combinada
 
-  // Rotas de Postes (Novo)
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -42,14 +42,15 @@ db.query('SELECT 1 + 1 AS solution', (err, results) => {
     }
 });
 
-// Use as rotas do arquivo 'projetos.js'
-app.use('/api/projetos', projetoRoutes);  // Isso registra o prefixo '/api/projetos'
+// Rotas
+app.use('/api/projetos', projetoRoutes);  // Prefixo para rotas de projetos
 
-// Use as rotas do arquivo 'postes.js'
-app.use('/api/postes', posteRoutes);  // Novo: Rotas para postes
+app.use('/api/postes', posteRoutes);      // Prefixo para rotas de postes
 
-// Usar as rotas das forças
-app.use('/api/forcas', forcaRoutes);
+app.use('/api/forcas', forcaRoutes); 
+
+// Rota combinada para criar postes e forças
+app.use('/api/postes-forcas', postesForcasRoutes);
 
 // Iniciando o servidor
 app.listen(port, () => {

@@ -1,10 +1,9 @@
+// routes/postes.js
 const express = require('express');
 const router = express.Router();
-const posteController = require('../controllers/posteController');  // Certifique-se de que o caminho está correto
+const posteController = require('../controllers/posteController');
 
 // Rota para criar um novo poste
-router.post('/', posteController.criarPoste);
-
-// Outras rotas para postes podem ser adicionadas aqui
+router.post('/', posteController.createPoste);
 
 module.exports = router;

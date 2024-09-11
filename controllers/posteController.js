@@ -1,35 +1,29 @@
-const db = require('../db');  // Certifique-se de que está se conectando corretamente ao banco de dados
+// posteController.js
+const db = require('../db');
 
-exports.criarPoste = (req, res) => {
+// Função para criar um poste
+exports.createPoste = (req, res) => {
     const { numeroPoste, tipoPoste, altura, capacidade, projetoId } = req.body;
+    const sql = `INSERT INTO postes (numeroPoste, tipoPoste, altura, capacidade, projetoId) VALUES (?, ?, ?, ?, ?)`;
 
-    // Verificar se já existe um poste com o mesmo número para o projeto
-    const verificarPosteQuery = 'SELECT * FROM postes WHERE numeroPoste = ? AND projetoId = ?';
-
-    db.query(verificarPosteQuery, [numeroPoste, projetoId], (err, results) => {
+    db.query(sql, [numeroPoste, tipoPoste, altura, capacidade, projetoId], (err, result) => {
         if (err) {
-            console.error('Erro ao verificar se o poste já existe:', err);
-            return res.status(500).json({ success: false, message: 'Erro ao verificar o poste' });
+            return res.status(500).json({ success: false, message: 'Erro ao criar poste.', error: err });
         }
+        res.status(201).json({ success: true, message: 'Poste criado com sucesso!', id: result.insertId });
+    });
+};
 
-        if (results.length > 0) {
-            // Se já existe um poste com o mesmo número no projeto
-            return res.status(400).json({ success: false, message: 'Já existe um poste com este número neste projeto.' });
-        }
-
-        // Se o número do poste ainda não foi usado, prosseguir com a criação
-        const criarPosteQuery = `
-            INSERT INTO postes (numeroPoste, tipoPoste, altura, capacidade, projetoId) 
-            VALUES (?, ?, ?, ?, ?)
-        `;
-
-        db.query(criarPosteQuery, [numeroPoste, tipoPoste, altura, capacidade, projetoId], (err, result) => {
+// Função interna usada na rota combinada
+exports.createPosteInternal = ({ numeroPoste, tipoPoste, altura, capacidade, projetoId }) => {
+    return new Promise((resolve, reject) => {
+        const sql = `INSERT INTO postes (numeroPoste, tipoPoste, altura, capacidade, projetoId)
+                     VALUES (?, ?, ?, ?, ?)`;
+        db.query(sql, [numeroPoste, tipoPoste, altura, capacidade, projetoId], (err, result) => {
             if (err) {
-                console.error('Erro ao inserir o poste:', err);
-                return res.status(500).json({ success: false, message: 'Erro ao inserir o poste.' });
+                return reject(err);
             }
-
-            res.status(201).json({ success: true, message: 'Poste criado com sucesso!', data: result });
+            resolve({ id: result.insertId });
         });
     });
 };

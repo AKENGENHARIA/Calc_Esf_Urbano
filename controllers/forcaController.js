@@ -1,14 +1,14 @@
-const db = require('../db'); // Certifique-se de que o arquivo de configuração do banco de dados esteja configurado corretamente
+// posteController.js
+const db = require('../db');
 
-// Função para criar uma nova força
-// Função para salvar uma nova força
+// Função para criar uma força
 exports.createForca = (req, res) => {
-    const { poste_Id, vao, angulo, rede_mt, rede_bt, nivel_cruzeta_mt, estaio, uso_mutuo } = req.body;
+    const { poste_id, vao, angulo, rede_mt, valor_rede_mt, rede_bt, valor_rede_bt, nivel_cruzeta_mt, estaio, valor_estaio, uso_mutuo, valor_uso_mutuo } = req.body;
 
-    const sql = `INSERT INTO forcas (poste_Id, vao, angulo, rede_mt, rede_bt, nivel_cruzeta_mt, estaio, uso_mutuo) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
-    
-    db.query(sql, [poste_Id, vao, angulo, rede_mt, rede_bt, nivel_cruzeta_mt, estaio, uso_mutuo], (err, result) => {
+    const sql = `INSERT INTO forcas (poste_id, vao, angulo, rede_mt, valor_rede_mt, rede_bt, valor_rede_bt, nivel_cruzeta_mt, estaio, valor_estaio, uso_mutuo, valor_uso_mutuo)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+    db.query(sql, [poste_id, vao, angulo, rede_mt, valor_rede_mt, rede_bt, valor_rede_bt, nivel_cruzeta_mt, estaio, valor_estaio, uso_mutuo, valor_uso_mutuo], (err, result) => {
         if (err) {
             return res.status(500).json({ success: false, message: 'Erro ao salvar a força.', error: err });
         }
@@ -16,3 +16,17 @@ exports.createForca = (req, res) => {
     });
 };
 
+// Função interna usada na rota combinada
+exports.createForcaInternal = ({ posteId, vao, angulo, rede_mt, valor_rede_mt, rede_bt, valor_rede_bt, nivel_cruzeta_mt, estaio, valor_estaio, uso_mutuo, valor_uso_mutuo }) => {
+    return new Promise((resolve, reject) => {
+        const sql = `INSERT INTO forcas (poste_id, vao, angulo, rede_mt, valor_rede_mt, rede_bt, valor_rede_bt, nivel_cruzeta_mt, estaio, valor_estaio, uso_mutuo, valor_uso_mutuo)
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+        db.query(sql, [posteId, vao, angulo, rede_mt, valor_rede_mt, rede_bt, valor_rede_bt, nivel_cruzeta_mt, estaio, valor_estaio, uso_mutuo, valor_uso_mutuo], (err, result) => {
+            if (err) {
+                return reject(err);
+            }
+            resolve(result);
+        });
+    });
+};
