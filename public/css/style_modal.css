@@ -45,6 +45,35 @@ h4 {
     margin-bottom: 10px; /* Adiciona um espaço abaixo do título */
 }
 
+button#sair {
+    margin-top: 20px; /* Adiciona espaço acima do botão */
+    padding: 10px 20px; /* Define o espaçamento interno (altura e largura) do botão */
+    background-color: #002fffa9; /* Define a cor de fundo verde do botão */
+    color: white; /* Define a cor do texto como branco */
+    border: none; /* Remove a borda padrão do botão */
+    cursor: pointer; /* Define o cursor como pointer (mãozinha) ao passar o mouse */
+}
+
+button#sair:hover {
+    background-color: #45a049; /* Altera a cor do botão quando o mouse passa sobre ele */
+}
+    button#sair {
+        margin-top: 20px; /* Adiciona espaço acima do botão */
+        padding: 10px 20px; /* Define o espaçamento interno (altura e largura) do botão */
+        background-color: #ff0000a9; /* Define a cor de fundo verde do botão */
+        color: white; /* Define a cor do texto como branco */
+        border: none; /* Remove a borda padrão do botão */
+        cursor: pointer; /* Define o cursor como pointer (mãozinha) ao passar o mouse */
+    }
+    
+    button#sair:hover {
+        background-color: #45a049; /* Altera a cor do botão quando o mouse passa sobre ele */
+}
+
+button:disabled {
+    background-color: grey; /* Define a cor de fundo para cinza quando o botão está desabilitado */
+    cursor: not-allowed; /* Altera o cursor para "não permitido" quando o botão está desabilitado */
+}
 button#confirmar {
     margin-top: 20px; /* Adiciona espaço acima do botão */
     padding: 10px 20px; /* Define o espaçamento interno (altura e largura) do botão */
@@ -57,8 +86,4 @@ button#confirmar {
 button#confirmar:hover {
     background-color: #45a049; /* Altera a cor do botão quando o mouse passa sobre ele */
 }
-
-button:disabled {
-    background-color: grey; /* Define a cor de fundo para cinza quando o botão está desabilitado */
-    cursor: not-allowed; /* Altera o cursor para "não permitido" quando o botão está desabilitado */
-}
+ 

@@ -62,6 +62,8 @@
             </div>
 
             <button id="confirmar">CONFIRMAR</button>
+            <button id="sair">SAIR</button>
+
         </div>
     </div>
 
@@ -89,8 +91,12 @@
     
         // Função para exibir o modal e buscar o último poste do projeto
         window.onload = function () {
+            abrirModalParaNovoPoste();
+        };
+
+        // Função para abrir o modal automaticamente
+        function abrirModalParaNovoPoste() {
             if (projetoId) {
-                // Buscar o último poste do projeto
                 fetch(`http://localhost:3000/api/projetos/${projetoId}/ultimo-poste`)
                     .then(response => response.json())
                     .then(data => {
@@ -108,7 +114,7 @@
             } else {
                 alert('Projeto não selecionado.');
             }
-        };
+        }
     
         // Capturar os dados do poste e gerar inputs de força após fechar o modal
         document.getElementById('confirmar').addEventListener('click', function () {
@@ -150,7 +156,7 @@
 
             forceData.forEach(force => {
                 const forceHTML = `
-                   <div class="force-input" id="${force.id}">
+                  <div class="force-input" id="${force.id}">
                 <h3>FORÇA ${force.estaioId}</h3>
                 <section class="vao-ang">
                     <label for="span${force.estaioId}_${force.id}">Vão:</label>
@@ -253,10 +259,17 @@
             </div>
                 `;
                 forcesContainer.innerHTML += forceHTML;
-        });
-    }
+            });
+        }
 
-    // Verificar se pelo menos uma força foi inserida antes de salvar o poste e as forças
+        // Verificar se pelo menos uma força foi inserida antes de salvar o poste e as forças
+        function verificarForcasPreenchidas() {
+            const forceInputs = document.querySelectorAll('.force-input input');
+            return Array.from(forceInputs).some(input => input.value.trim() !== "");
+        
+        }
+
+         // Verificar se pelo menos uma força foi inserida antes de salvar o poste e as forças
     function verificarForcasPreenchidas() {
         const forceInputs = document.querySelectorAll('.force-input input');
         return Array.from(forceInputs).some(input => input.value.trim() !== "");
@@ -302,53 +315,55 @@
         alert(`Vetor Resultante: ${resultante}, Ângulo: ${anguloResultante}°`);
     });
 
-    // Função para salvar o poste e as forças
-    document.getElementById('Salvar').addEventListener('click', () => {
-        if (!verificarForcasPreenchidas()) {
-            alert('Por favor, insira pelo menos uma força antes de salvar.');
-            return;
-        }
+        // Função para salvar o poste e as forças
+        document.getElementById('Salvar').addEventListener('click', () => {
+            if (!verificarForcasPreenchidas()) {
+                alert('Por favor, insira pelo menos uma força antes de salvar.');
+                return;
+            }
 
-        // Coletar as informações das forças
-        const forceData = [
-            { id: 'F1', estaioId: 1 },
-            { id: 'F2', estaioId: 2 },
-            { id: 'F3', estaioId: 3 },
-            { id: 'F4', estaioId: 4 },
-            { id: 'F5', estaioId: 5 }
-        ];
+            // Coletar as informações das forças
+            const forceData = [
+                { id: 'F1', estaioId: 1 },
+                { id: 'F2', estaioId: 2 },
+                { id: 'F3', estaioId: 3 },
+                { id: 'F4', estaioId: 4 },
+                { id: 'F5', estaioId: 5 }
+            ];
 
-        const forcas = forceData.map(force => {
-            return {
-                vao: document.getElementById(`span${force.estaioId}_${force.id}`)?.value || null,
-                angulo: document.getElementById(`angle${force.estaioId}_${force.id}`)?.value || null,
-                rede_mt: document.getElementById(`rede_mt_${force.id}`)?.value || null,
-                valor_rede_mt: document.querySelector(`#rede_mt_${force.id} option:checked`)?.text || null,
-                rede_bt: document.getElementById(`rede_bt_${force.id}`)?.value || null,
-                valor_rede_bt: document.querySelector(`#rede_bt_${force.id} option:checked`)?.text || null,
-                nivel_cruzeta_mt: document.getElementById(`nivel_cruzeta_mt_${force.id}`)?.value || null,
-                estaio: document.getElementById(`estaio_${force.estaioId}`)?.value || null,
-                valor_estaio: document.querySelector(`#estaio_${force.estaioId} option:checked`)?.text || null,
-                uso_mutuo: document.getElementById(`usoMutuo_${force.id}`)?.value || null,
-                valor_uso_mutuo: document.querySelector(`#usoMutuo_${force.id} option:checked`)?.text || null
-            };
-        });
+            const forcas = forceData.map(force => {
+                return {
+                    vao: document.getElementById(`span${force.estaioId}_${force.id}`)?.value || null,
+                    angulo: document.getElementById(`angle${force.estaioId}_${force.id}`)?.value || null,
+                    rede_mt: document.getElementById(`rede_mt_${force.id}`)?.value || null,
+                    valor_rede_mt: document.querySelector(`#rede_mt_${force.id} option:checked`)?.text || null,
+                    rede_bt: document.getElementById(`rede_bt_${force.id}`)?.value || null,
+                    valor_rede_bt: document.querySelector(`#rede_bt_${force.id} option:checked`)?.text || null,
+                    nivel_cruzeta_mt: document.getElementById(`nivel_cruzeta_mt_${force.id}`)?.value || null,
+                    estaio: document.getElementById(`estaio_${force.estaioId}`)?.value || null,
+                    valor_estaio: document.querySelector(`#estaio_${force.estaioId} option:checked`)?.text || null,
+                    uso_mutuo: document.getElementById(`usoMutuo_${force.id}`)?.value || null,
+                    valor_uso_mutuo: document.querySelector(`#usoMutuo_${force.id} option:checked`)?.text || null
+                };
+            });
 
-        // Enviar os dados do poste e das forças
-        fetch('http://localhost:3000/api/postes-forcas', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                ...posteData,  // Dados do poste
-                forcas        // Dados das forças
+            // Enviar os dados do poste e das forças
+            fetch('http://localhost:3000/api/postes-forcas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ...posteData,  // Dados do poste
+                    forcas        // Dados das forças
+                })
             })
-        })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
                     alert('Poste e forças salvos com sucesso!');
+                    limparCampos(); // Limpa os campos após salvar
+                    abrirModalParaNovoPoste(); // Reabre o modal para um novo ciclo
                 } else {
                     console.error('Erro ao salvar poste e forças:', data.message);
                     alert('Erro ao salvar poste e forças.');
@@ -358,8 +373,21 @@
                 console.error('Erro ao enviar os dados:', error);
                 alert('Erro ao salvar poste e forças.');
             });
-    });
-</script>
+        });
+
+        // Função para limpar os campos após o salvamento
+        function limparCampos() {
+            document.getElementById("numeroPoste").value = '';
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+
+            const forceInputs = document.querySelectorAll('.force-input input, .force-input select');
+            forceInputs.forEach(input => input.value = '');
+        }
+
+        document.getElementById('sair').addEventListener('click', function () {
+            window.location.href = 'index.html'; // Redirecionar para a página inicial (index.html)
+        });
+    </script>
 
 </body>
 
