@@ -134,4 +134,18 @@ exports.getUltimoPostePorProjeto = (req, res) => {
     });
 };
 
+// Função para excluir um projeto
+exports.deleteProjeto = (req, res) => {
+    const { id } = req.params;
+    const sql = 'DELETE FROM projetos WHERE id = ?';
+    db.query(sql, [id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ success: false, message: 'Erro ao excluir o projeto' });
+        }
+        if (results.affectedRows === 0) {
+            return res.status(404).json({ success: false, message: 'Projeto não encontrado' });
+        }
+        res.status(200).json({ success: true, message: 'Projeto excluído com sucesso' });
+    });
+};
 

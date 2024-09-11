@@ -27,4 +27,8 @@ router.post('/concluir-projeto/:id', projetoController.concluirProjeto);
 // Rota para obter o último poste salvo de um projeto específico
 router.get('/:projetoId/ultimo-poste', projetoController.getUltimoPostePorProjeto);
 
+// Rota para excluir um projeto pelo ID
+router.delete('/excluir-projeto/:id', projetoController.deleteProjeto);
+
+
 module.exports = router;

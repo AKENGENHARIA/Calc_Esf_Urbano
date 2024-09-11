@@ -15,6 +15,7 @@
         <button id="continuarBtn" disabled onclick="continuarProjeto()">Continuar</button>
         <button id="editarBtn" disabled onclick="abrirModal()">Editar</button>
         <button id="concluirBtn" disabled onclick="concluirProjeto()">Concluir</button>
+        <button id="excluirBtn" disabled onclick="excluirProjetoSelecionado()">Excluir Projeto</button>
         <button id="relatorioBtn" disabled onclick="Relatorio()">Relatório</button>
     </div>
 
@@ -255,6 +256,7 @@
                             <td>${projeto.empresa}</td>
                             <td>${projeto.concessionaria}</td>
                             <td>${projeto.status}</td>
+                            
                         `;
 
                         row.onclick = function () {
@@ -290,6 +292,7 @@
             document.getElementById('concluirBtn').disabled = false;
             document.getElementById('novoBtn').disabled = false;
             document.getElementById('relatorioBtn').disabled = false;
+            document.getElementById('excluirBtn').disabled = false;
         }
 
         // Função chamada ao clicar no botão "Pesquisar"
@@ -398,6 +401,35 @@ function concluirProjeto() {
     document.getElementById('novoModalEmpresa').addEventListener('input', verificarCamposNovoProjeto);
     document.getElementById('novoModalConcessionaria').addEventListener('input', verificarCamposNovoProjeto);
 
+    function excluirProjetoSelecionado() {
+    if (projetoSelecionadoId && confirm("Tem certeza de que deseja excluir este projeto?")) {
+        fetch(`http://localhost:3000/api/projetos/excluir-projeto/${projetoSelecionadoId}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(errData.message || 'Erro desconhecido ao excluir o projeto.');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert('Projeto excluído com sucesso!');
+                fetchProjects(); // Atualizar a lista de projetos após a exclusão
+            } else {
+                alert('Erro ao excluir o projeto.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao excluir projeto:', error);
+            alert(`Erro ao excluir projeto: ${error.message}`);
+        });
+    } else if (!projetoSelecionadoId) {
+        alert("Nenhum projeto selecionado para exclusão.");
+    }
+}
 
 
 
