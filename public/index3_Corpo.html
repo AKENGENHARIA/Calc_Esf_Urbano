@@ -72,7 +72,7 @@
     <!-- Buttons -->
     <div id="buttons">
         <button class="button" id="calculate">Calcular</button>
-        <button class="button" id="generatePdf">Gerar PDF</button>
+        <button class="button" id="Salvar">Salvar</button>
         <button class="button" id="logout">Log out</button>
         <div id="resultado"></div>
     </div>
@@ -223,6 +223,66 @@
                 forcesContainer.innerHTML += forceHTML;
             });
         }
+    
+    document.getElementById('Salvar').addEventListener('click', () => {
+    const forceData = [
+        { id: 'F1', estaioId: 1 },
+        { id: 'F2', estaioId: 2 },
+        { id: 'F3', estaioId: 3 },
+        { id: 'F4', estaioId: 4 },
+        { id: 'F5', estaioId: 5 }
+    ];
+
+    const posteId = document.getElementById('numeroPoste').value; // ID do poste obtido do modal
+
+    // Percorre cada força e envia os dados preenchidos
+    forceData.forEach(force => {
+        const vao = document.getElementById(`span${force.estaioId}_${force.id}`).value;
+        const angulo = document.getElementById(`angle${force.estaioId}_${force.id}`).value;
+        const redeMt = document.getElementById(`rede_mt_${force.id}`).value;
+        const redeBt = document.getElementById(`rede_bt_${force.id}`).value;
+        const nivelCruzeta = document.getElementById(`nivel_cruzeta_mt_${force.id}`).value;
+        const estaio = document.getElementById(`estaio_${force.estaioId}`).value;
+        const usoMutuo = document.getElementById(`usoMutuo_${force.id}`).value;
+
+        // Checa se pelo menos um campo foi preenchido para essa força
+        if (vao || angulo || redeMt || redeBt || nivelCruzeta || estaio || usoMutuo) {
+            fetch('http://localhost:3000/api/forcas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    posteId,  // Id do poste
+                    vao,
+                    angulo,
+                    rede_mt: redeMt,  // Rede MT ID
+                    rede_bt: redeBt,  // Rede BT ID
+                    nivel_cruzeta: nivelCruzeta,
+                    estaio,
+                    uso_mutuo: usoMutuo
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Sucesso:', data);
+                alert('Força salva com sucesso!');
+            })
+            .catch(error => {
+                console.error('Erro ao enviar os dados:', error);
+                alert('Erro ao salvar força.');
+            });
+        } else {
+            console.log(`Força ${force.estaioId} não preenchida, ignorando...`);
+        }
+    });
+});
+
     </script>
 
 </body>
