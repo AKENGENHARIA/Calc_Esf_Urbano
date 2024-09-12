@@ -1,9 +1,9 @@
-// routes/forcas.js
-const express = require('express');
+import express from 'express'; // Correção da importação
+import { createForca } from '../controllers/forcaController.js'; // Certifique-se de que o caminho está correto
+
 const router = express.Router();
-const forcaController = require('../controllers/forcaController');
 
 // Rota para criar uma nova força
-router.post('/', forcaController.createForca);
+router.post("/", createForca);
 
-module.exports = router;
+export default router;

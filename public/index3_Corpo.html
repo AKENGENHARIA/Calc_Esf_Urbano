@@ -97,7 +97,7 @@
         // Função para abrir o modal automaticamente
         function abrirModalParaNovoPoste() {
             if (projetoId) {
-                fetch(`http://localhost:3000/api/projetos/${projetoId}/ultimo-poste`)
+                fetch(`https://akraquercem.web.api/projetos/${projetoId}/ultimo-poste`)
                     .then(response => response.json())
                     .then(data => {
                         if (data.success) {
@@ -348,7 +348,7 @@
             });
 
             // Enviar os dados do poste e das forças
-            fetch('http://localhost:3000/api/postes-forcas', {
+            fetch('https://akraquercem.web.api/postes-forcas', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

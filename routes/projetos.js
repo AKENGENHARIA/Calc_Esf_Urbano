@@ -1,34 +1,34 @@
-const express = require('express');
+
+import {  getProjetoById, createProjeto, updateProjeto, deleteProjeto } from '../controllers/projetoController.js';  // Importação correta
+
+import express from 'express';
 const router = express.Router();
-const projetoController = require('../controllers/projetoController');  // Certifique-se de que o caminho está correto
-const posteController = require('../controllers/posteController');  // Adicione o controller para postes
 
 // Rota para obter todos os projetos
-router.get('/consultar', projetoController.buscarProjetos);
+//router.get('/consultar', buscarProjetos);
 
 // Rota para obter um projeto pelo ID
-router.get('/:id', projetoController.getProjetoById);
+router.get('/:id', getProjetoById);
 
 // Rota para criar um novo projeto
-router.post('/novo', projetoController.createProjeto);
+router.post('/novo', createProjeto);
 
 // Rota para atualizar um projeto existente
-router.put('/:id', projetoController.updateProjeto);
+router.put('/:id', updateProjeto);
 
 // Rota para deletar um projeto
-router.delete('/:id', projetoController.deleteProjeto);
+router.delete('/:id', deleteProjeto);
 
 // Rota para editar um projeto existente
-router.put('/editar-projeto/:id', projetoController.updateProjeto);
+router.put('/editar-projeto/:id', updateProjeto);
 
 // Rota para concluir um projeto (atualizar o status para 'finalizado')
-router.post('/concluir-projeto/:id', projetoController.concluirProjeto);
+//router.post('/concluir-projeto/:id', concluirProjeto);
 
 // Rota para obter o último poste salvo de um projeto específico
-router.get('/:projetoId/ultimo-poste', projetoController.getUltimoPostePorProjeto);
+//router.get('/:projetoId/ultimo-poste',getUltimoPostePorProjeto);
 
 // Rota para excluir um projeto pelo ID
-router.delete('/excluir-projeto/:id', projetoController.deleteProjeto);
+router.delete('/excluir-projeto/:id', deleteProjeto);
 
-
-module.exports = router;
+export default router;

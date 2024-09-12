@@ -1,8 +1,8 @@
-// routes/postes-forcas.js
-const express = require('express');
+import express from 'express';
+import { createPosteInternal } from '../controllers/posteController.js'; // Verifique a extensão .js
+import { createForcaInternal } from '../controllers/forcaController.js';
+
 const router = express.Router();
-const posteController = require('../controllers/posteController');
-const forcaController = require('../controllers/forcaController');
 
 // Rota combinada para salvar tanto o poste quanto as forças
 router.post('/', async (req, res) => {
@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
         }
 
         // Salva o poste
-        const posteResult = await posteController.createPosteInternal({
+        const posteResult = await createPosteInternal({
             numeroPoste,
             tipoPoste,
             altura,
@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
 
         // Salva as forças associadas ao poste
         for (const forca of forcas) {
-            await forcaController.createForcaInternal({ ...forca, posteId });
+            await createForcaInternal({ ...forca, posteId });
         }
 
         res.status(201).json({ success: true, message: 'Poste e forças salvos com sucesso!' });
@@ -36,4 +36,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

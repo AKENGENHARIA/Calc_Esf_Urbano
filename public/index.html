@@ -180,7 +180,7 @@
             const status = document.getElementById('modalStatus').value;
 
             // Fazer a requisição para atualizar o projeto
-            fetch(`http://localhost:3000/api/projetos/editar-projeto/${projetoSelecionadoId}`, {
+            fetch(`https://akraquercem.web.api/projetos/editar-projeto/${projetoSelecionadoId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nome_projeto, cidade, empresa, concessionaria, status })  // Enviando os dados editados
@@ -228,7 +228,7 @@
 
             if (loadingElement) loadingElement.style.display = 'block';
 
-            fetch(`http://localhost:3000/api/projetos/consultar?search=${encodeURIComponent(query)}&status=${encodeURIComponent(status)}&page=${page}`)
+            fetch(`https://akraquercem.web.api/projetos/consultar?search=${encodeURIComponent(query)}&status=${encodeURIComponent(status)}&page=${page}`)
                 .then(response => {
                     if (loadingElement) loadingElement.style.display = 'none';
                     if (!response.ok) {
@@ -315,7 +315,7 @@
 // Função para concluir o projeto
 function concluirProjeto() {
     if (projetoSelecionadoId && confirm("Tem certeza de que deseja concluir este projeto?")) {
-        fetch(`http://localhost:3000/api/projetos/concluir-projeto/${projetoSelecionadoId}`, { method: 'POST' })
+        fetch(`https://akraquercem.web.api/projetos/concluir-projeto/${projetoSelecionadoId}`, { method: 'POST' })
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Erro ao concluir o projeto. Status: ' + response.status);
@@ -357,7 +357,7 @@ function concluirProjeto() {
         }
 
         // Fazer a requisição para criar um novo projeto
-        fetch('http://localhost:3000/api/projetos/novo', {
+        fetch('https://akraquercem.web.api/projetos/novo', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome_projeto, cidade, empresa, concessionaria, status })
@@ -403,7 +403,7 @@ function concluirProjeto() {
 
     function excluirProjetoSelecionado() {
     if (projetoSelecionadoId && confirm("Tem certeza de que deseja excluir este projeto?")) {
-        fetch(`http://localhost:3000/api/projetos/excluir-projeto/${projetoSelecionadoId}`, {
+        fetch(`https://akraquercem.web.api/projetos/excluir-projeto/${projetoSelecionadoId}`, {
             method: 'DELETE',
         })
         .then(response => {

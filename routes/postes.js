@@ -1,9 +1,10 @@
-// routes/postes.js
-const express = require('express');
+
+import express from 'express'; // Correção da importação
+import { createPoste } from '../controllers/posteController.js'; // Certifique-se de incluir a extensão '.js'
+
 const router = express.Router();
-const posteController = require('../controllers/posteController');
 
 // Rota para criar um novo poste
-router.post('/', posteController.createPoste);
+router.post("/", createPoste);
 
-module.exports = router;
+export default router;
