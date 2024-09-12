@@ -1,23 +1,34 @@
-const functions = require("firebase-functions");
-const mysql = require("mysql2");
+import functions from 'firebase-functions';
+import mysql from 'mysql2/promise';  // Usando a versão com promessas do mysql2
 
-// Usando variáveis de ambiente do Firebase
-const db = mysql.createConnection({
-  host: functions.config().railway.host,          // Host da sua URL pública
-  user: functions.config().railway.user,          // Usuário root da URL pública
-  password: functions.config().railway.password,  // Senha da URL pública
-  database: functions.config().railway.database,  // Nome do banco de dados (railway)
-  port: functions.config().railway.port           // Porta do banco de dados (27494)
-});
+// Usando variáveis de ambiente do Firebase para configurar a conexão
+const dbConfig = {
+  host: functions.dbConfig().railway.host,
+  user: functions.dbConfig().railway.user,
+  password: functions.dbConfig().railway.password,
+  database: functions.dbConfig().railway.database,
+  port: functions.dbConfig().railway.port,
+};
 
-// Exemplo de função para acessar dados do banco de dados
-exports.getDataFromDatabase = functions.https.onRequest((req, res) => {
-  db.query("SELECT * FROM minha_tabela", (error, results) => {
-    if (error) {
-      console.error("Erro ao consultar o banco de dados:", error);
-      res.status(500).send("Erro no banco de dados");
-    } else {
-      res.status(200).json(results);
+// Função para testar a conexão ao banco de dados
+export const testDatabaseConnection = functions.https.onRequest(async (req, res) => {
+  let connection;
+  try {
+    // Criar uma nova conexão ao banco de dados
+    connection = await mysql.createConnection(dbConfig);
+
+    // Executar uma query simples para testar a conexão
+    const [rows] = await connection.execute('SELECT 1 + 1 AS solution');
+
+    // Retornar o resultado da query
+    res.status(200).send(`A solução é: ${rows[0].solution}`);
+  } catch (error) {
+    console.error('Erro ao conectar ao banco de dados:', error);
+    res.status(500).send('Erro ao conectar ao banco de dados.');
+  } finally {
+    if (connection) {
+      // Fechar a conexão quando o teste estiver concluído
+      await connection.end();
     }
-  });
+  }
 });

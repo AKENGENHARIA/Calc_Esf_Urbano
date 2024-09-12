@@ -51,3 +51,48 @@ export const deleteProjeto = (req, res) => {
     res.json({ message: "Projeto deletado com sucesso" });
   });
 };
+
+// Função para buscar todos os projetos
+export const getAllProjetos = (req, res) => {
+  const sql = "SELECT * FROM projetos";
+  db.query(sql, (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Erro ao buscar projetos" });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Nenhum projeto encontrado" });
+    }
+    res.json(results);
+  });
+};
+
+// Função para atualizar o status de um projeto para 'finalizado'
+export const concluirProjeto = (req, res) => {
+  const { id } = req.params;
+  const sql = "UPDATE projetos SET status = 'finalizado' WHERE id = ?";
+  
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: "Erro ao concluir projeto." });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "Projeto não encontrado." });
+    }
+    res.status(200).json({ success: true, message: "Projeto concluído com sucesso!" });
+  });
+};
+// Função para obter o último poste salvo de um projeto específico
+export const getUltimoPostePorProjeto = (req, res) => {
+  const { projetoId } = req.params;
+  const sql = "SELECT * FROM postes WHERE projetoId = ? ORDER BY id DESC LIMIT 1";
+
+  db.query(sql, [projetoId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: "Erro ao buscar o último poste." });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Nenhum poste encontrado para este projeto." });
+    }
+    res.json(results[0]); // Retorna o último poste encontrado
+  });
+};

@@ -1,48 +1,49 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
-import express from 'express';
-import cors from 'cors';
 import mysql from 'mysql2';
-import projetoRoutes from './routes/projetos.js';  // Certifique-se de adicionar .js
-import posteRoutes from './routes/postes.js';
-import forcaRoutes from './routes/forcas.js';
-import postesForcasRoutes from './routes/postes-forcas.js';
 
-const app = express();
-const port = process.env.PORT || 3000;
+// Definindo manualmente a URL do banco de dados
+const dbUrl = new URL('mysql://root:gXpcxqgczzShiILURRhvfHERFlTtrnfz@junction.proxy.rlwy.net:27494/railway');
 
-// Configuração do banco de dados MySQL
-const db = mysql.createConnection(process.env.DATABASE_URL);
+// Configurações da conexão
+const connectionConfig = {
+    host: dbUrl.hostname,
+    user: dbUrl.username,
+    password: dbUrl.password,
+    database: dbUrl.pathname.replace('/', ''), // Remove a barra inicial
+    port: dbUrl.port,
+};
 
+// Criação da conexão com o banco de dados MySQL
+const db = mysql.createConnection(connectionConfig);
 
-// Conexão ao banco de dados
-db.connect((err) => {
-  if (err) {
-    console.error('Erro ao conectar ao banco de dados:', err);
-    process.exit(1); // Sai do processo se não conseguir conectar
-  } else {
-    console.log('Conectado ao banco de dados MySQL');
-  }
+// Função para conectar e testar a conexão
+function connectToDatabase() {
+    db.connect((err) => {
+        if (err) {
+            console.error('Erro ao conectar ao banco de dados:', err);
+            setTimeout(connectToDatabase, 5000); // Tentar reconectar após 5 segundos
+        } else {
+            console.log('Conectado ao banco de dados');
+        }
+    });
+}
+
+// Verifica se a conexão continua ativa
+db.on('error', (err) => {
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        console.error('Conexão com o banco de dados foi perdida. Reconectando...');
+        connectToDatabase();
+    } else {
+        throw err;
+    }
 });
 
-// Middlewares
-app.use(cors());
-app.use(express.json());
-
-// Injeta a conexão do banco de dados nas rotas
-app.use((req, res, next) => {
-  req.db = db;
-  next();
+// Testando a conexão ao banco de dados
+db.query('SELECT DATABASE() AS db;', (err, results) => {
+    if (err) {
+        console.error('Erro ao verificar banco de dados:', err);
+    } else {
+        console.log('Conectado ao banco de dados:', results[0].db);
+    }
 });
 
-// Rotas
-app.use('/api/projetos', projetoRoutes);
-app.use('/api/postes', posteRoutes);
-app.use('/api/forcas', forcaRoutes);
-app.use('/api/postes-forcas', postesForcasRoutes);
-
-// Servidor
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
-});
+export default db;

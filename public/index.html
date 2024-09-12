@@ -228,7 +228,7 @@
 
             if (loadingElement) loadingElement.style.display = 'block';
 
-            fetch(`https://akraquercem.web.api/projetos/consultar?search=${encodeURIComponent(query)}&status=${encodeURIComponent(status)}&page=${page}`)
+            fetch(`https://akraquercem.web/api/projetos/consultar?search=${encodeURIComponent(query)}&status=${encodeURIComponent(status)}&page=${page}`)
                 .then(response => {
                     if (loadingElement) loadingElement.style.display = 'none';
                     if (!response.ok) {
