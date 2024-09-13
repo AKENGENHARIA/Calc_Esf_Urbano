@@ -2,6 +2,11 @@
 import { getUltimoPostePorProjeto, concluirProjeto,getAllProjetos,getProjetoById, createProjeto, updateProjeto, deleteProjeto } from '../controllers/projetoController.js';  // Importação correta
 
 import express from 'express';
+import cors from 'cors';
+
+
+app.use(cors({ origin: true }));
+
 const router = express.Router();
 
 // Rota para obter todos os projetos
