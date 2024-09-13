@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif; /* Define a fonte padrão como Arial */
-    background-image: url(/img/fundo-poste.jpg); /* Define uma imagem de fundo */
+   
     color: #333; /* Define a cor do texto como um tom de cinza */
     margin: 0; /* Remove a margem padrão do body */
     padding: 0; /* Remove o padding padrão do body */

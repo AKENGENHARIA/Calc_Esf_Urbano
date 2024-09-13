@@ -1,4 +1,4 @@
-import db from '../db.js'; // Certifique-se de que está importando o arquivo de configuração do banco de dados
+import db from '../db.mjs'; // Certifique-se de que está importando o arquivo de configuração do banco de dados
 
 export const createPoste = (req, res) => {
   const { numeroPoste, tipoPoste, altura, capacidade, projetoId } = req.body;

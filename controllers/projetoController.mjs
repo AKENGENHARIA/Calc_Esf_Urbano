@@ -1,4 +1,4 @@
-import db from '../db.js';  // Supondo que você esteja usando um arquivo db.js
+import db from '../db.mjs';  // Supondo que você esteja usando um arquivo db.js
 
 // Função para obter um projeto pelo ID
 export const getProjetoById = (req, res) => {
@@ -16,15 +16,27 @@ export const getProjetoById = (req, res) => {
 };
 
 // Função para criar um novo projeto
-export const createProjeto = (req, res) => {
+export const createProjeto = async (req, res) => {
   const { nome_projeto, cidade, empresa, concessionaria, status } = req.body;
-  const sql = "INSERT INTO projetos (nome_projeto, cidade, empresa, concessionaria, status) VALUES (?, ?, ?, ?, ?)";
-  db.query(sql, [nome_projeto, cidade, empresa, concessionaria, status], (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: "Erro ao criar projeto" });
-    }
-    res.status(201).json({ success: true, message: "Projeto criado com sucesso", id: results.insertId });
-  });
+  
+  // Verificar se todos os campos necessários estão presentes
+  if (!nome_projeto || !cidade || !empresa || !concessionaria || !status) {
+      return res.status(400).json({ error: "Todos os campos são obrigatórios." });
+  }
+
+  try {
+      // Inserir o projeto no banco de dados
+      const [result] = await db.query(
+          'INSERT INTO projetos (nome_projeto, cidade, empresa, concessionaria, status) VALUES (?, ?, ?, ?, ?)',
+          [nome_projeto, cidade, empresa, concessionaria, status]
+      );
+
+      // Retornar sucesso e o ID do projeto criado
+      res.status(201).json({ success: true, message: 'Projeto criado com sucesso', id: result.insertId });
+  } catch (error) {
+      console.error('Erro ao criar projeto:', error);
+      res.status(500).json({ error: 'Erro ao criar projeto.' });
+  }
 };
 
 // Função para atualizar um projeto existente

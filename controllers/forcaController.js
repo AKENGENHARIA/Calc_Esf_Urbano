@@ -1,4 +1,4 @@
-import db from "../db.js"; // Corrigindo a importação do módulo db
+import db from "../db.mjs"; // Corrigindo a importação do módulo db
 
 
 

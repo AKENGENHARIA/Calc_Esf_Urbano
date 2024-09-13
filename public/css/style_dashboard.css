@@ -1,6 +1,6 @@
 /* Estilos básicos do corpo */
 body {
-    background-image: url(/img/fundo-login.jpg) ;
+    
     font-family: Arial, sans-serif; /* Define a fonte geral para o texto */
     margin: 0; /* Remove a margem padrão ao redor da página */
     padding: 20px; /* Adiciona espaçamento interno ao redor da página */
@@ -85,6 +85,7 @@ table {
     table-layout: auto; /* Permite que a tabela se ajuste ao conteúdo automaticamente */
     border-collapse: collapse; /* Remove o espaçamento entre as células da tabela */
     margin-bottom: 20px; /* Adiciona espaço abaixo da tabela */
+    flex: auto;
 }
 
 /* Células e cabeçalhos da tabela */
