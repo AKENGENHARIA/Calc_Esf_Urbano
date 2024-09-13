@@ -95,27 +95,7 @@
         };
 
         // Função para abrir o modal automaticamente
-        function abrirModalParaNovoPoste() {
-            if (projetoId) {
-                fetch(`https://us-central1-akraquercem.cloudfunctions.net/api/projetos/${projetoId}/ultimo-poste`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            const ultimoPoste = data.numeroPoste;
-                            alert(`O último poste salvo foi: ${ultimoPoste}. Continuando com o próximo...`);
-                            document.getElementById("postModal").style.display = "block"; // Exibir o modal
-                        } else {
-                            console.error('Erro ao buscar o último poste.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro ao buscar o último poste:', error);
-                    });
-            } else {
-                alert('Projeto não selecionado.');
-            }
-        }
-    
+
         // Capturar os dados do poste e gerar inputs de força após fechar o modal
         document.getElementById('confirmar').addEventListener('click', function () {
             const numeroPoste = parseInt(document.getElementById("numeroPoste").value);
