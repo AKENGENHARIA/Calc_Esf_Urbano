@@ -7,9 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Esforço Urbano</title>
     <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="css/style_Corpo.css">
-    <link rel="stylesheet" href="css/style_Tabela.css">
-    <link rel="stylesheet" href="css/style_modal.css"> <!-- Adicionando o CSS do Modal -->
+    
+    <!-- Adicionando o CSS do Modal -->
     <script src="https://unpkg.com/pdf-lib@1.16.0/dist/pdf-lib.min.js"></script>
 
 </head>
@@ -90,9 +89,27 @@
         }
     
         // Função para exibir o modal e buscar o último poste do projeto
-        window.onload = function () {
-            abrirModalParaNovoPoste();
-        };
+        function abrirModalParaNovoPoste() {
+            if (projetoId) {
+                fetch(`https://akraquercem.web.api/projetos/${projetoId}/ultimo-poste`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const ultimoPoste = data.numeroPoste;
+                            alert(`O último poste salvo foi: ${ultimoPoste}. Continuando com o próximo...`);
+                            document.getElementById("postModal").style.display = "block"; // Exibir o modal
+                        } else {
+                            console.error('Erro ao buscar o último poste.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar o último poste:', error);
+                    });
+            } else {
+                alert('Projeto não selecionado.');
+            }
+        }
+    ;
 
         // Função para abrir o modal automaticamente
 
@@ -328,7 +345,7 @@
             });
 
             // Enviar os dados do poste e das forças
-            fetch('https://us-central1-akraquercem.cloudfunctions.net/api/postes-forcas', {
+            fetch('https://akraquercem.web.api/postes-forcas', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
