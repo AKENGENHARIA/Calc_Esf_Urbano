@@ -7,37 +7,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Esforço Urbano</title>
     <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="css/style_Corpo.css">
-    <link rel="stylesheet" href="css/style_Tabela.css">
     <script src="https://unpkg.com/pdf-lib@1.16.0/dist/pdf-lib.min.js"></script>
 
     <style>
-        /* Usando Flexbox para alinhar as forças lado a lado */
+        /* Estilo geral */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        /* Estilo dos botões */
+        .button {
+            padding: 10px 20px;
+            margin: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilo do container de forças */
         .forces-container {
-            display: flex;
+            display: none;
             flex-wrap: wrap;
             gap: 20px;
-            justify-content: space-between;
-            /* Distribui o espaço entre os itens */
+            justify-content: center;
         }
 
-        /* Cada força terá um tamanho fixo */
+        /* Estilo para cada força */
         .force-input {
-            width: 150px;
-            /* Tamanho fixo para todas as janelas */
-            padding: 10px;
+            width: 250px;
+            padding: 28px;
             border: 1px solid #ccc;
             box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            border-radius: 8px;
+            background-color: #fff;
+            align-items: center;
+            text-align: left;
         }
 
-        h3 {
+        .force-input h3 {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 10px;
             text-align: center;
-            font-size: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* Seções internas */
+        .RedeDentrega,
+        .estaio-section,
+        .usoMutuo {
+            margin-bottom: 15px;
+        }
+
+        /* Estilo da seção de botões */
+        #buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .forces-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .force-input {
+                width: 100%;
+            }
         }
     </style>
-
 </head>
 
 <body>
@@ -77,7 +145,7 @@
                     </section>
                     <div class="RedeDentrega">
                         <h3>Rede de Energia</h3>
-                        <p>Rede MT</p>
+                        <label for="rede_mt_${force.id}">Rede MT:</label>
                         <select name="rede_mt_${force.id}" id="rede_mt_${force.id}">
                             <option value="0">Selecione</option>
                             <option value="415">3#50+9,5</option>
@@ -91,7 +159,7 @@
                             <option value="276">3#2</option>
                         </select>
 
-                        <p>Rede BT</p>
+                        <label for="rede_bt_${force.id}">Rede BT:</label>
                         <select name="rede_bt_${force.id}" id="rede_bt_${force.id}">
                             <option value="0">Selecione</option>
                             <option value="114">2x1x35+70</option>
@@ -101,11 +169,11 @@
                             <option value="381">3x1x120+70</option>
                         </select>
 
-                        <p>Nível da cruzeta MT</p>
+                        <label for="nivel_cruzeta_mt_${force.id}">Nível da cruzeta MT:</label>
                         <select name="nivel_cruzeta_mt_${force.id}" id="nivel_cruzeta_mt_${force.id}">
-                            <option value="1">NIVEL 1</option>
-                            <option value="0.96">NIVEL 2</option>
-                            <option value="0.86">NIVEL 3</option>
+                            <option value="1">NÍVEL 1</option>
+                            <option value="0.96">NÍVEL 2</option>
+                            <option value="0.86">NÍVEL 3</option>
                         </select>
                     </div>
                     <section class="estaio estaio-section">
@@ -154,4 +222,5 @@
     </script>
 
 </body>
+
 </html>
