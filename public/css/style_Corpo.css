@@ -1,178 +1,142 @@
+:root {
+    --primary-color: #0044cc;
+    --secondary-color: #0033a0;
+    --text-color: #333;
+    --background-color: #fff;
+}
+
 body {
-    font-family: Arial, sans-serif; /* Define a fonte padrão como Arial */
-   
-    color: #333; /* Define a cor do texto como um tom de cinza */
-    margin: 0; /* Remove a margem padrão do body */
-    padding: 0; /* Remove o padding padrão do body */
-    display: flex; /* Define o layout flexível para o body */
-    flex-direction: column; /* Organiza os elementos do body em uma coluna */
-    align-items: center; /* Centraliza os itens horizontalmente */
-}
-
-.cabecalho ul {
-    display: flex; /* Exibe os itens da lista em linha */
-    justify-content: center; /* Centraliza os itens horizontalmente */
-    gap: 20px; /* Define um espaçamento de 20px entre os itens */
-}
-
-.cabecalho ul a {
-    text-decoration: none; /* Remove o sublinhado dos links */
-    font-weight: 900; /* Aumenta a espessura da fonte */
-    color: black; /* Define a cor do texto dos links como preto */
-    border-bottom: solid 2px; /* Adiciona uma borda inferior sólida */
-}
-
-.cabecalho ul a:hover {
-    color: red; /* Muda a cor do texto para vermelho ao passar o mouse */
-    font-size: 20px; /* Aumenta o tamanho da fonte ao passar o mouse */
+    font-family: Arial, sans-serif;
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: var(--background-color);
 }
 
 h1 {
-    color: #0044cc; /* Define a cor do título como azul */
-    margin-top: 20px; /* Adiciona uma margem superior de 20px */
-    text-align: center; /* Centraliza o texto do título */
+    color: var(--primary-color);
+    margin-top: 20px;
+    text-align: center;
 }
 
 .forces-container {
-    display: flex; /* Define o layout como flexbox */
-    flex-wrap: wrap; /* Permite que os itens quebrem para uma nova linha quando necessário */
-    gap: 20px; /* Adiciona um espaço de 20px entre os itens */
-    justify-content: flex-start; /* Alinha os itens ao início (à esquerda) */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    align-items: flex-start;
 }
 
-/* Mantém as configurações já feitas nos force-inputs */
 .force-input {
-    background-color: #fff; /* Define o fundo dos inputs como branco */
-    border: 1px solid #ccc; /* Adiciona uma borda cinza clara */
-    border-radius: 8px; /* Arredonda os cantos dos inputs */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra suave ao redor dos inputs */
-    padding: 15px; /* Adiciona um espaçamento interno de 15px */
-    width: 180px; /* Define a largura dos inputs como 180px */
-    box-sizing: border-box; /* Inclui o padding e a borda no cálculo da largura */
-    min-width: 200px; /* Define uma largura mínima de 200px */
+    background-color: var(--background-color);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 200px;
+    box-sizing: border-box;
+    min-width: 180px;
 }
-
-/* Estilo para o título dentro de cada força */
-.force-input h3 {
-    color: #0044cc; /* Define a cor dos títulos dentro dos inputs como azul */
-    margin-bottom: 10px; /* Adiciona uma margem inferior de 10px */
-    font-size: 16px; /* Define o tamanho da fonte como 16px */
-}
-
-/* Seções dentro de cada input */
-.vao-ang,
-.RedeDentrega,
-.estaio,
-.usoMutuo {
-    margin-bottom: 10px; /* Adiciona uma margem inferior de 10px para essas seções */
-}
-
 
 label {
-    display: block; /* Faz com que os rótulos sejam exibidos como blocos */
-    margin-bottom: 5px; /* Adiciona uma margem inferior de 5px */
-    font-weight: bold; /* Define o peso da fonte como negrito */
-    font-size: 12px; /* Define o tamanho da fonte como 12px */
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 12px;
 }
 
 input[type="number"],
 select {
-    width: 100%; /* Define a largura dos inputs e selects como 100% do container */
-    padding: 6px; /* Adiciona um padding interno de 6px */
-    margin-bottom: 8px; /* Adiciona uma margem inferior de 8px */
-    border-radius: 4px; /* Arredonda os cantos dos inputs */
-    border: 1px solid #ccc; /* Adiciona uma borda cinza clara */
-    box-sizing: border-box; /* Inclui padding e borda no cálculo da largura */
-    font-size: 12px; /* Define o tamanho da fonte como 12px */
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 12px;
+}
+
+input[type="number"]:focus,
+select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 68, 204, 0.5);
 }
 
 .buttons {
-    display: flex; /* Exibe os botões em linha */
-    justify-content: center; /* Centraliza os botões no eixo horizontal */
-    gap: 15px; /* Define um espaçamento de 15px entre os botões */
-    margin-top: 20px; /* Adiciona uma margem superior de 20px */
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
 }
 
 .buttons button {
-    padding: 8px 15px; /* Define o espaçamento interno dos botões */
-    border: none; /* Remove a borda padrão dos botões */
-    border-radius: 4px; /* Arredonda os cantos dos botões */
-    background-color: #0044cc; /* Define a cor de fundo dos botões como azul */
-    color: white; /* Define a cor do texto dos botões como branco */
-    cursor: pointer; /* Muda o cursor para "pointer" ao passar sobre os botões */
-    font-size: 14px; /* Define o tamanho da fonte como 14px */
-    transition: background-color 0.3s ease; /* Suaviza a transição de cor de fundo ao passar o mouse */
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
 }
 
 .buttons button:hover {
-    background-color: #0033a0; /* Muda a cor de fundo dos botões para um azul mais escuro ao passar o mouse */
+    background-color: var(--secondary-color);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: var(--background-color);
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    border-radius: 10px;
+}
+
+.modal-content h2 {
+    text-align: center;
+    color: var(--primary-color);
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .results {
-    margin-top: 20px; /* Adiciona uma margem superior de 20px */
-    text-align: center; /* Centraliza o texto */
+    margin-top: 20px;
+    text-align: center;
 }
 
 .results .value {
-    font-size: 20px; /* Define o tamanho da fonte como 20px */
-    font-weight: bold; /* Define o peso da fonte como negrito */
-    color: #0044cc; /* Define a cor do texto como azul */
-}
-
-.chart {
-    margin-top: 30px; /* Adiciona uma margem superior de 30px */
-    width: 100%; /* Define a largura como 100% */
-    max-width: 500px; /* Define a largura máxima como 500px */
-}
-
-.button {
-    --bezier: cubic-bezier(0.22, 0.61, 0.36, 1); /* Define uma curva de transição personalizada */
-    --edge-light: hsla(0, 0%, 50%, 0.8); /* Define uma cor de borda clara */
-    --text-light: rgba(255, 255, 255, 0.4); /* Define a cor clara do texto para hover */
-    --back-color: 240, 40%; /* Define a cor de fundo como uma variável */
-
-    cursor: pointer; /* Define o cursor como pointer */
-    padding: 0.7em 1em; /* Define o padding interno */
-    border-radius: 0.5em; /* Arredonda os cantos */
-    min-height: 2.4em; /* Define a altura mínima */
-    min-width: 3em; /* Define a largura mínima */
-    display: inline; /* Exibe o botão como inline */
-    align-items: center; /* Centraliza o conteúdo verticalmente */
-    font-size: 18px; /* Define o tamanho da fonte */
-    letter-spacing: 0.05em; /* Define o espaçamento entre letras */
-    line-height: 1; /* Define a altura da linha */
-    font-weight: bold; /* Define o peso da fonte */
-    margin: 10px; /* Adiciona uma margem de 10px ao redor do botão */
-
-    background: linear-gradient(140deg,
-            hsla(var(--back-color), 50%, 1) min(2em, 20%),
-            hsla(var(--back-color), 50%, 0.6) min(8em, 100%)); /* Define um gradiente como fundo */
-    color: hsla(0, 0%, 90%); /* Define a cor do texto */
-    border: 0; /* Remove a borda */
-    box-shadow: inset 0.4px 1px 4px var(--edge-light); /* Adiciona uma sombra interna */
-
-    transition: all 0.1s var(--bezier); /* Define uma transição suave */
-}
-
-.button:hover {
-    --edge-light: hsla(0, 0%, 50%, 1); /* Muda a cor da borda ao passar o mouse */
-    text-shadow: 0px 0px 10px var(--text-light); /* Adiciona uma sombra ao texto no hover */
-    box-shadow: inset 0.4px 1px 4px var(--edge-light),
-        2px 4px 8px hsla(0, 0%, 0%, 0.295); /* Adiciona sombras extras no hover */
-    transform: scale(1.1); /* Aumenta o tamanho do botão no hover */
-
-}
-
-.button:active {
-    --text-light: rgba(255, 255, 255, 1);
-
-    background: linear-gradient(140deg,
-            hsla(var(--back-color), 50%, 1) min(2em, 20%),
-            hsla(var(--back-color), 50%, 0.6) min(8em, 100%));
-    box-shadow: inset 0.4px 1px 8px var(--edge-light),
-        0px 0px 8px hsla(var(--back-color), 50%, 0.6);
-    text-shadow: 0px 0px 20px var(--text-light);
-    color: hsla(0, 0%, 100%, 1);
-    letter-spacing: 0.1em;
-    transform: scale(1);
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--primary-color);
 }

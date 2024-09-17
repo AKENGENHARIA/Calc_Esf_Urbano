@@ -1,28 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-<<<<<<< HEAD:public/index3_Corpo.html
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Modal Exemplo</title>
-<link rel="stylesheet" href="/public/css/style_modal.css"> 
-=======
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Esforço Urbano</title>
-    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href='/public/css/style_Poste.css'> <!-- Adicionando o CSS do Modal -->
-    
-    <!-- Adicionando o CSS do Modal -->
-    <script src="https://unpkg.com/pdf-lib@1.16.0/dist/pdf-lib.min.js"></script>
-
->>>>>>> 9d40fbdaaace7bec925d8fa72f88ddc042f09fbb:public/CaracteristicaPoste.html
+    <link rel="stylesheet" href="/public/css/style_modal_Poste.css"> 
+    <link rel="stylesheet" href="/public/css/style_Corpo.css">
 </head>
 <body>
- <!-- Seu modal aqui -->
+    
+ <!-- Modal de características do poste -->
 <div id="postModal" class="modal">
-    <!-- Conteúdo do modal aqui -->
     <div class="modal-content">
         <h2>CARACTERÍSTICAS DO POSTE</h2>
 
@@ -69,83 +57,59 @@
     </div>
 </div>
 
-    <script>
-<<<<<<< HEAD:public/index3_Corpo.html
-        window.onload = function() {
-            var modal = document.getElementById('postModal');
-            modal.style.display = "block";
-=======
-        let ultimoPosteId = null; // Para armazenar o ID do poste criado
-        let projetoId = getProjetoIdFromURL(); // Obtém o projeto ID
-        let posteData = {}; // Armazenar dados temporários do poste
-    
-        // Função para obter o projetoId da URL
-        function getProjetoIdFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('projetoId');
+<!-- Container para as forças -->
+<div id="forces-container"></div>
+
+<script>
+
+    // Função que abre o modal ao carregar a página
+   window.onload = function() {
+        var modal = document.getElementById('postModal');
+       modal.style.display = "block";
+    }
+
+    let posteData = {}; // Armazenar dados temporários do poste
+
+    // Função para exibir o modal e buscar o último poste do projeto
+    function abrirModalParaNovoPoste() {
+        // Função que buscaria o último poste salvo, mas aqui exibimos apenas o modal
+        document.getElementById("postModal").style.display = "block"; // Exibir o modal
+    }
+
+    // Capturar os dados do poste e gerar inputs de força após fechar o modal
+    document.getElementById('confirmar').addEventListener('click', function () {
+        const numeroPoste = parseInt(document.getElementById("numeroPoste").value);
+        const tipoPoste = document.querySelector('input[name="tipoPoste"]:checked')?.value;
+        const altura = document.querySelector('input[name="altura"]:checked')?.value;
+        const capacidade = document.querySelector('input[name="capacidade"]:checked')?.value;
+
+        if (numeroPoste && tipoPoste && altura && capacidade) {
+            // Armazenar as informações do poste
+            posteData = {
+                numeroPoste,
+                tipoPoste,
+                altura,
+                capacidade
+            };
+
+            // Fechar o modal e gerar inputs para as forças
+            document.getElementById("postModal").style.display = "none";
+            generateForceInputs(); // Gera os inputs para as forças após o modal ser fechado
+        } else {
+            alert('Por favor, preencha todos os campos do poste.');
         }
-    
-        // Função para exibir o modal e buscar o último poste do projeto
-        function abrirModalParaNovoPoste() {
-            if (projetoId) {
-                fetch(`https://akraquercem.web.api/projetos/${projetoId}/ultimo-poste`)
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            const ultimoPoste = data.numeroPoste;
-                            alert(`O último poste salvo foi: ${ultimoPoste}. Continuando com o próximo...`);
-                            document.getElementById("postModal").style.display = "block"; // Exibir o modal
-                        } else {
-                            console.error('Erro ao buscar o último poste.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erro ao buscar o último poste:', error);
-                    });
-            } else {
-                alert('Projeto não selecionado.');
-            }
-        }
-    ;
+    });
 
-        // Função para abrir o modal automaticamente
-
-        // Capturar os dados do poste e gerar inputs de força após fechar o modal
-        document.getElementById('confirmar').addEventListener('click', function () {
-            const numeroPoste = parseInt(document.getElementById("numeroPoste").value);
-            const tipoPoste = document.querySelector('input[name="tipoPoste"]:checked')?.value;
-            const altura = document.querySelector('input[name="altura"]:checked')?.value;
-            const capacidade = document.querySelector('input[name="capacidade"]:checked')?.value;
-    
-            if (numeroPoste && tipoPoste && altura && capacidade) {
-                // Armazenar as informações do poste
-                posteData = {
-                    numeroPoste,
-                    tipoPoste,
-                    altura,
-                    capacidade,
-                    projetoId
-                };
-    
-                // Fechar o modal e gerar inputs para as forças
-                document.getElementById("postModal").style.display = "none";
-                generateForceInputs(); // Gera os inputs para as forças após o modal ser fechado
-            } else {
-                alert('Por favor, preencha todos os campos do poste.');
-            }
-        });
-
-        // Função para gerar os campos das forças
-        function generateForceInputs() {
-            const forceData = [
-                { id: 'F1', estaioId: 1 },
-                { id: 'F2', estaioId: 2 },
-                { id: 'F3', estaioId: 3 },
-                { id: 'F4', estaioId: 4 },
-                { id: 'F5', estaioId: 5 }
-            ];
-
-            const forcesContainer = document.getElementById('forces-container');
+    // Função para gerar os campos das forças
+    function generateForceInputs() {
+        const forceData = [
+            { id: 'F1', estaioId: 1 },
+            { id: 'F2', estaioId: 2 },
+            { id: 'F3', estaioId: 3 },
+            { id: 'F4', estaioId: 4 },
+            { id: 'F5', estaioId: 5 }
+        ];
+ const forcesContainer = document.getElementById('forces-container');
             forcesContainer.innerHTML = ''; // Limpar os campos existentes
 
             forceData.forEach(force => {
@@ -256,82 +220,74 @@
             });
         }
 
-        // Verificar se pelo menos uma força foi inserida antes de salvar o poste e as forças
-        function verificarForcasPreenchidas() {
-            const forceInputs = document.querySelectorAll('.force-input input');
-            return Array.from(forceInputs).some(input => input.value.trim() !== "");
->>>>>>> 9d40fbdaaace7bec925d8fa72f88ddc042f09fbb:public/CaracteristicaPoste.html
-        
-            var confirmarBtn = document.getElementById('confirmar');
-            confirmarBtn.onclick = function() {
-                modal.style.display = "none";
-            }
-<<<<<<< HEAD:public/index3_Corpo.html
-=======
+    // Verificar se pelo menos uma força foi inserida antes de salvar o poste e as forças
+    function verificarForcasPreenchidas() {
+        const forceInputs = document.querySelectorAll('.force-input input');
+        return Array.from(forceInputs).some(input => input.value.trim() !== "");
+    }
 
-            // Coletar as informações das forças
-            const forceData = [
-                { id: 'F1', estaioId: 1 },
-                { id: 'F2', estaioId: 2 },
-                { id: 'F3', estaioId: 3 },
-                { id: 'F4', estaioId: 4 },
-                { id: 'F5', estaioId: 5 }
-            ];
+    // Função para salvar o poste e as forças
+    document.getElementById('confirmar').addEventListener('click', () => {
+        // Verifica se pelo menos uma força foi preenchida
+        if (!verificarForcasPreenchidas()) {
+            alert('Por favor, preencha pelo menos uma força.');
+            return;
+        }
 
-            const forcas = forceData.map(force => {
-                return {
-                    vao: document.getElementById(`span${force.estaioId}_${force.id}`)?.value || null,
-                    angulo: document.getElementById(`angle${force.estaioId}_${force.id}`)?.value || null,
-                    rede_mt: document.getElementById(`rede_mt_${force.id}`)?.value || null,
-                    valor_rede_mt: document.querySelector(`#rede_mt_${force.id} option:checked`)?.text || null,
-                    rede_bt: document.getElementById(`rede_bt_${force.id}`)?.value || null,
-                    valor_rede_bt: document.querySelector(`#rede_bt_${force.id} option:checked`)?.text || null,
-                    nivel_cruzeta_mt: document.getElementById(`nivel_cruzeta_mt_${force.id}`)?.value || null,
-                    estaio: document.getElementById(`estaio_${force.estaioId}`)?.value || null,
-                    valor_estaio: document.querySelector(`#estaio_${force.estaioId} option:checked`)?.text || null,
-                    uso_mutuo: document.getElementById(`usoMutuo_${force.id}`)?.value || null,
-                    valor_uso_mutuo: document.querySelector(`#usoMutuo_${force.id} option:checked`)?.text || null
-                };
-            });
+        // Coletar as informações das forças
+        const forceData = [
+            { id: 'F1', estaioId: 1 },
+            { id: 'F2', estaioId: 2 },
+            { id: 'F3', estaioId: 3 },
+            { id: 'F4', estaioId: 4 },
+            { id: 'F5', estaioId: 5 }
+        ];
 
-            // Enviar os dados do poste e das forças
-            fetch('https://akraquercem.web.api/postes-forcas', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    ...posteData,  // Dados do poste
-                    forcas        // Dados das forças
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Poste e forças salvos com sucesso!');
-                    limparCampos(); // Limpa os campos após salvar
-                    abrirModalParaNovoPoste(); // Reabre o modal para um novo ciclo
-                } else {
-                    console.error('Erro ao salvar poste e forças:', data.message);
-                    alert('Erro ao salvar poste e forças.');
-                }
-            })
-            .catch(error => {
-                console.error('Erro ao enviar os dados:', error);
-                alert('Erro ao salvar poste e forças.');
-            });
+        const forcas = forceData.map(force => {
+            return {
+                vao: document.getElementById(`span${force.estaioId}_${force.id}`)?.value || null,
+                angulo: document.getElementById(`angle${force.estaioId}_${force.id}`)?.value || null,
+                estaio: document.getElementById(`estaio${force.estaioId}`).checked ? 'Sim' : 'Não'
+            };
         });
 
-        // Função para limpar os campos após o salvamento
-        function limparCampos() {
-            document.getElementById("numeroPoste").value = '';
-            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+        // Enviar os dados do poste e das forças
+        fetch('https://us-central1-akraquercem.cloudfunctions.net/api/projetos/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ...posteData,  // Dados do poste
+                forcas        // Dados das forças
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Poste e forças salvos com sucesso!');
+                limparCampos(); // Limpa os campos após salvar
+                abrirModalParaNovoPoste(); // Reabre o modal para um novo ciclo
+            } else {
+                console.error('Erro ao salvar poste e forças:', data.message);
+                alert('Erro ao salvar poste e forças.');
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao enviar os dados:', error);
+            alert('Erro ao salvar poste e forças.');
+        });
+    });
 
-            const forceInputs = document.querySelectorAll('.force-input input, .force-input select');
-            forceInputs.forEach(input => input.value = '');
->>>>>>> 9d40fbdaaace7bec925d8fa72f88ddc042f09fbb:public/CaracteristicaPoste.html
-        }
-        </script>
-        
+    // Função para limpar os campos após o salvamento
+    function limparCampos() {
+        document.getElementById("numeroPoste").value = '';
+        document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+
+        const forceInputs = document.querySelectorAll('.force-input input, .force-input select');
+        forceInputs.forEach(input => input.value = '');
+    }
+</script>
+
 </body>
 </html>

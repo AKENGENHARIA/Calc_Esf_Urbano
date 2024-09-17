@@ -5,6 +5,6 @@ import { createPoste } from '../controllers/posteController.js'; // Certifique-s
 const router = express.Router();
 
 // Rota para criar um novo poste
-router.post("/", createPoste);
+router.post("/novo-poste", createPoste);
 
 export default router;
