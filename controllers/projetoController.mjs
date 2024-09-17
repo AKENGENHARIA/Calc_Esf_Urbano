@@ -53,16 +53,29 @@ export const updateProjeto = (req, res) => {
 };
 
 // Função para deletar um projeto
-export const deleteProjeto = (req, res) => {
+export const deleteProjeto = async (req, res) => {
   const { id } = req.params;
+  console.log(`Tentando excluir projeto com ID: ${id}`);
+  
   const sql = "DELETE FROM projetos WHERE id = ?";
-  db.query(sql, [id], (err) => {
-    if (err) {
-      return res.status(500).json({ error: "Erro ao deletar projeto" });
+
+  try {
+    const [result] = await db.query(sql, [id]);
+
+    if (result.affectedRows === 0) {
+      console.log('Projeto não encontrado.');
+      return res.status(404).json({ error: 'Projeto não encontrado.' });
     }
-    res.json({ message: "Projeto deletado com sucesso" });
-  });
+
+    console.log('Projeto excluído com sucesso!');
+    res.json({ success: true, message: 'Projeto deletado com sucesso.' });
+  } catch (err) {
+    console.error('Erro ao deletar projeto:', err);
+    res.status(500).json({ error: 'Erro ao deletar projeto.' });
+  }
 };
+
+
 
 // Função para buscar todos os projetos
 export const getAllProjetos = (req, res) => {

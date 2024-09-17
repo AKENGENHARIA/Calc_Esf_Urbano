@@ -158,7 +158,7 @@
             return;
         }
 
-        fetch('https://us-central1-akraquercem.cloudfunctions.net/api/projetos/novo', {
+        fetch('https://us-central1-akraquercem.cloudfunctions.net/api/projetos', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome_projeto, cidade, empresa, concessionaria, status })
@@ -242,7 +242,7 @@
         const concessionaria = document.getElementById('modalConcessionaria').value;
         const status = document.getElementById('modalStatus').value;
 
-        fetch(`https://us-central1-akraquercem.cloudfunctions.net/api/projetos/editar-projeto/${projetoSelecionadoId}`, {
+        fetch(`https://us-central1-akraquercem.cloudfunctions.net/api/projetos/${projetoSelecionadoId}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ nome_projeto, cidade, empresa, concessionaria, status })
@@ -269,15 +269,24 @@
         });
     }
 
-    // Função para carregar projetos e habilitar seleção
-    function fetchProjects(query = '', page = 1, status = '') {
-        const loadingElement = document.getElementById('loading');
-        const errorMessage = document.getElementById('errorMessage');
-        errorMessage.innerHTML = '';
+// Função para carregar projetos e habilitar seleção com filtro de status e pesquisa
+function fetchProjects(query = '', page = 1, status = '') {
+    const loadingElement = document.getElementById('loading');
+    const errorMessage = document.getElementById('errorMessage');
+    errorMessage.innerHTML = '';
 
-        if (loadingElement) loadingElement.style.display = 'block';
+    if (loadingElement) loadingElement.style.display = 'block';
 
-        fetch(`https://us-central1-akraquercem.cloudfunctions.net/api/projetos`)
+    // Monta a URL com os parâmetros de pesquisa e status
+    let url = `https://us-central1-akraquercem.cloudfunctions.net/api/projetos?page=${page}`;
+    if (query) {
+        url += `&query=${encodeURIComponent(query)}`;
+    }
+    if (status) {
+        url += `&status=${encodeURIComponent(status)}`;
+    }
+
+    fetch(url)
         .then(response => {
             if (loadingElement) loadingElement.style.display = 'none';
             if (!response.ok) {
@@ -317,7 +326,7 @@
             if (loadingElement) loadingElement.style.display = 'none';
             errorMessage.innerHTML = `Erro: ${error.message}`;
         });
-    }
+}
 
     // Função para selecionar um projeto
     function selecionarProjeto(projeto) {
@@ -340,8 +349,8 @@
     // Função para concluir o projeto
     function concluirProjeto() {
         if (projetoSelecionadoId && confirm("Tem certeza de que deseja concluir este projeto?")) {
-            fetch(`https://us-central1-akraquercem.cloudfunctions.net/api/projetos/concluir-projeto/${projetoSelecionadoId}`, {
-                method: 'POST'
+            fetch(`https://us-central1-akraquercem.cloudfunctions.net/api/projetos/${projetoSelecionadoId}/concluir`, {
+                method: 'PUT'
             })
             .then(response => {
                 if (!response.ok) {
@@ -363,35 +372,48 @@
         }
     }
 
-    // Função para excluir o projeto selecionado
-    function excluirProjetoSelecionado() {
-        if (projetoSelecionadoId && confirm("Tem certeza de que deseja excluir este projeto?")) {
-            fetch(`https://us-central1-akraquercem.cloudfunctions.net/api/projetos/excluir-projeto/${projetoSelecionadoId}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(errData => {
-                        throw new Error(errData.message || 'Erro desconhecido ao excluir o projeto.');
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Projeto excluído com sucesso!');
-                    fetchProjects(); // Atualiza a lista de projetos
-                } else {
-                    alert('Erro ao excluir o projeto.');
-                }
-            })
-            .catch(error => {
-                alert(`Erro ao excluir projeto: ${error.message}`);
-            });
-        } else if (!projetoSelecionadoId) {
-            alert("Nenhum projeto selecionado para exclusão.");
-        }
+// Função para excluir o projeto selecionado
+function excluirProjetoSelecionado() {
+    if (projetoSelecionadoId && confirm("Tem certeza de que deseja excluir este projeto?")) {
+        const url = `https://us-central1-akraquercem.cloudfunctions.net/api/projetos/${projetoSelecionadoId}/excluir`;
+        console.log("URL para exclusão:", url);  // Log para ver a URL gerada
+        fetch(url, {
+            method: 'DELETE'
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errData => {
+                    throw new Error(errData.message || 'Erro desconhecido ao excluir o projeto.');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            alert('Projeto excluído com sucesso!');
+            fetchProjects(); // Atualiza a lista de projetos
+        })
+        .catch(error => {
+            alert(`Erro ao excluir projeto: ${error.message}`);
+        });
+    } else if (!projetoSelecionadoId) {
+        alert("Nenhum projeto selecionado para exclusão.");
     }
+}
+
+// Evento para o botão de pesquisa
+document.getElementById('searchBtn').addEventListener('click', function() {
+    const query = document.getElementById('searchInput').value;
+    const status = document.getElementById('statusFilter').value;
+    fetchProjects(query, 1, status);
+});
+
+// Evento para o filtro de status
+document.getElementById('statusFilter').addEventListener('change', function() {
+    const query = document.getElementById('searchInput').value;
+    const status = document.getElementById('statusFilter').value;
+    fetchProjects(query, 1, status);
+});
+
 
     // Carrega os projetos ao carregar a página
     window.onload = function () {

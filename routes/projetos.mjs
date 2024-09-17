@@ -1,5 +1,12 @@
-import { getUltimoPostePorProjeto, concluirProjeto, getAllProjetos, getProjetoById, createProjeto, updateProjeto, deleteProjeto } from '../controllers/projetoController.mjs';
 import express from 'express';
+import {
+    deleteProjeto,
+    concluirProjeto,
+    getAllProjetos,
+    getProjetoById,
+    createProjeto,
+    updateProjeto
+} from '../controllers/projetoController.mjs';
 
 const router = express.Router();
 
@@ -16,12 +23,9 @@ router.post('/novo', createProjeto);
 router.put('/:id', updateProjeto);
 
 // Rota para deletar um projeto pelo ID
-router.delete('/:id', deleteProjeto);
+router.delete('/:id/excluir', deleteProjeto);  // Rota para excluir projeto
 
 // Rota para concluir um projeto (atualizar o status para 'finalizado')
-router.post('/concluir-projeto/:id', concluirProjeto);
-
-// Rota para obter o último poste salvo de um projeto específico
-router.get('/:projetoId/ultimo-poste', getUltimoPostePorProjeto);
+router.put('/:id/concluir', concluirProjeto);  // Corrigi a rota para PUT aqui também
 
 export default router;

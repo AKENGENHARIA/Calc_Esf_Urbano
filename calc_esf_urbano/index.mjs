@@ -3,6 +3,8 @@ import mysql from 'mysql2/promise';
 import express from 'express';
 import cors from 'cors';
 
+
+
 // Configuração de conexão ao banco de dados
 const dbConfig = {
   host: 'junction.proxy.rlwy.net',
@@ -37,19 +39,37 @@ export const testDatabaseConnection = functions.https.onRequest(async (req, res)
 // Funções CRUD para "Projetos"
 
 // Função para buscar todos os projetos
+// Função para buscar todos os projetos com filtro de status e pesquisa
 app.get('/projetos', async (req, res) => {
+  const { status, query } = req.query;
   let connection;
   try {
-    connection = await mysql.createConnection(dbConfig);
-    const [results] = await connection.query('SELECT * FROM projetos');
-    res.json(results);
+      connection = await mysql.createConnection(dbConfig);
+
+      let sql = 'SELECT * FROM projetos WHERE 1=1';
+      const queryParams = [];
+
+      if (status) {
+          sql += ' AND status = ?';
+          queryParams.push(status);
+      }
+
+      if (query) {
+          sql += ' AND (cidade LIKE ? OR empresa LIKE ? OR concessionaria LIKE ?)';
+          const searchTerm = `%${query}%`;
+          queryParams.push(searchTerm, searchTerm, searchTerm);
+      }
+
+      const [results] = await connection.query(sql, queryParams);
+      res.json(results);
   } catch (error) {
-    console.error('Erro ao buscar projetos:', error);
-    res.status(500).json({ error: 'Erro ao buscar projetos.' });
+      console.error('Erro ao buscar projetos:', error);
+      res.status(500).json({ error: 'Erro ao buscar projetos.' });
   } finally {
-    if (connection) await connection.end();
+      if (connection) await connection.end();
   }
 });
+
 
 // Função para obter um projeto pelo ID
 app.get('/projetos/:id', async (req, res) => {
@@ -130,7 +150,7 @@ app.put('/projetos/:id', async (req, res) => {
 });
 
 // Função para deletar um projeto
-app.delete('/projetos/:id', async (req, res) => {
+app.delete('/projetos/:id/excluir', async (req, res) => {
   const { id } = req.params;
   let connection;
   try {
@@ -185,6 +205,8 @@ app.get('/projetos/:projetoId/ultimoPoste', async (req, res) => {
     if (connection) await connection.end();
   }
 });
+
+
 
 // Exportar todas as rotas como uma função HTTP do Firebase
 export const api = functions.https.onRequest(app);
