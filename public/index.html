@@ -314,7 +314,7 @@
             });
         })
         .catch(error => {
-            if (loadingElement) loadingElement.style.display = 'none';
+            if (loadingElement) loadingElement.style.display = 'block';
             errorMessage.innerHTML = `Erro: ${error.message}`;
         });
     }
