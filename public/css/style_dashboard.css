@@ -4,7 +4,11 @@ body {
     font-family: Arial, sans-serif; /* Define a fonte geral para o texto */
     margin: 0; /* Remove a margem padrão ao redor da página */
     padding: 20px; /* Adiciona espaçamento interno ao redor da página */
-    background-color: #f4f4f4; /* Define uma cor de fundo suave para a página */
+    background-image: url(/fundo-bemvindo.jpg); /* Define uma cor de fundo suave para a página */
+    background-size: cover; /* Faz a imagem de fundo cobrir a página inteira */
+    background-position: center; /* Centraliza a imagem de fundo */
+    background-repeat: no-repeat; /* Evita que a imagem de fundo se repita */
+    height: 100vh; /* Define que o body tenha 100% da altura da viewport */
 }
 
 /* Container principal */
