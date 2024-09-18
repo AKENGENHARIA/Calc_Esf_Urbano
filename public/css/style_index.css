@@ -1,115 +1,81 @@
 /* Estilos básicos do corpo */
 body {
-    
-    font-family: Arial, sans-serif; /* Define a fonte geral para o texto */
-    margin: 0; /* Remove a margem padrão ao redor da página */
-    padding: 20px; /* Adiciona espaçamento interno ao redor da página */
-    background-image: url(/fundo-bemvindo.jpg); /* Define uma cor de fundo suave para a página */
-    background-size: cover; /* Faz a imagem de fundo cobrir a página inteira */
+    font-family: 'Open Sans', Arial, sans-serif; /* Fonte mais moderna e suave */
+    margin: 0; /* Remove margens externas */
+    padding: 20px; /* Espaçamento interno consistente */
+    background-image: url(/fundo-bemvindo.jpg); /* Imagem de fundo */
+    background-size: cover; /* Garante que a imagem cubra toda a área visível */
     background-position: center; /* Centraliza a imagem de fundo */
-    background-repeat: no-repeat; /* Evita que a imagem de fundo se repita */
-    height: 100vh; /* Define que o body tenha 100% da altura da viewport */
+    background-repeat: no-repeat; /* Evita repetição da imagem */
+    height: 100vh; /* Altura completa da janela de visualização */
 }
 
 /* Container principal */
 .container {
-    max-width: 1200px; /* Define a largura máxima do container (900px) */
-    margin: 0 auto; /* Centraliza o container horizontalmente */
-    background-color: #ffffff; /* Define o fundo do container como branco */
-    padding: 20px; /* Adiciona espaçamento interno */
-    border-radius: 8px; /* Arredonda os cantos do container */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adiciona uma sombra suave ao redor do container */
+    max-width: 1200px; /* Largura máxima do container */
+    margin: 0 auto; /* Centralização horizontal */
+    background-color: rgba(255, 255, 255, 0.9); /* Fundo branco com leve transparência */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 8px; /* Cantos arredondados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para efeito de elevação */
 }
 
 /* Título */
 h1 {
-    font-size: 24px; /* Define o tamanho da fonte do título */
-    color: #333; /* Define a cor do texto (cinza escuro) */
-    text-align: center; /* Centraliza o título horizontalmente */
-    margin-bottom: 20px; /* Adiciona espaço abaixo do título */
+    font-size: 2rem; /* Tamanho de fonte aumentado para destaque */
+    color: #333; /* Cor do texto mantida */
+    text-align: center; /* Centralização do título */
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
 }
 
 /* Barra de pesquisa */
 .search-bar {
-    display: flex; /* Organiza os elementos da barra de pesquisa em uma linha */
-    justify-content: center; /* Centraliza os itens da barra horizontalmente */
-    margin-bottom: 20px; /* Adiciona espaço abaixo da barra de pesquisa */
+    display: flex; /* Flexbox para organização dos elementos */
+    justify-content: center; /* Itens centralizados horizontalmente */
+    margin-bottom: 20px; /* Espaço abaixo da barra de pesquisa */
 }
 
 .search-bar input {
-    padding: 10px; /* Adiciona espaçamento interno ao campo de entrada */
-    border: 1px solid #ccc; /* Define uma borda cinza clara ao redor do campo */
-    border-radius: 4px; /* Arredonda os cantos do campo de entrada */
-    margin-right: 10px; /* Adiciona espaço à direita do campo de entrada */
-    width: 60%; /* Define que o campo de entrada ocupará 60% da largura da barra */
+    flex: 1; /* O campo de entrada utiliza todo o espaço disponível */
+    padding: 10px; /* Espaçamento interno */
+    border: 1px solid #ccc; /* Borda sutil */
+    border-radius: 4px; /* Cantos arredondados */
+    margin-right: 10px; /* Espaço à direita do campo */
 }
 
 .search-bar button {
-    padding: 10px 20px; /* Define o espaçamento interno do botão (vertical x horizontal) */
-    background-color: #007bff; /* Define a cor de fundo do botão (azul) */
-    border: none; /* Remove qualquer borda do botão */
-    border-radius: 4px; /* Arredonda os cantos do botão */
-    color: #fff; /* Define a cor do texto do botão como branco */
-    cursor: pointer; /* Mostra um cursor de "mão" ao passar o mouse sobre o botão */
+    padding: 10px 20px; /* Espaçamento interno do botão */
+    background-color: #0056b3; /* Cor de fundo azul mais moderna */
+    color: white; /* Texto branco */
+    border: none; /* Sem borda */
+    border-radius: 4px; /* Cantos arredondados */
+    cursor: pointer; /* Cursor de ponteiro */
+    transition: background-color 0.3s; /* Transição suave ao alterar cor de fundo */
 }
 
 .search-bar button:hover {
-    background-color: #0056b3; /* Altera a cor do fundo do botão quando o mouse passa por cima */
-}
-
-/* Filtro de status */
-.filter-status {
-    display: flex; /* Organiza os elementos em uma linha */
-    justify-content: flex-end; /* Centraliza o filtro horizontalmente */
-    margin-bottom: 30px; /* Adiciona espaço abaixo do filtro de status */
-}
-
-.filter-status select {
-    padding: unset; /* Adiciona espaçamento interno ao seletor */
-    border-radius: 4px; /* Arredonda os cantos do seletor */
-    border: 1px solid #ccc; /* Define uma borda cinza clara ao redor do seletor */
-}
-
-/* Texto de carregamento */
-.loading {
-    text-align: center; /* Centraliza o texto */
-    margin-top: 10px; /* Adiciona espaço acima do texto */
-    font-weight: bold; /* Deixa o texto em negrito */
-}
-
-/* Mensagem de erro */
-.error-message {
-    color: red; /* Define a cor do texto como vermelho */
-    text-align: center; /* Centraliza a mensagem de erro */
+    background-color: #003f88; /* Cor de fundo ao passar o mouse */
 }
 
 /* Tabela */
 table {
-    width: 100%; /* Define que a tabela ocupará 100% da largura disponível */
-    table-layout: auto; /* Permite que a tabela se ajuste ao conteúdo automaticamente */
-    border-collapse: collapse; /* Remove o espaçamento entre as células da tabela */
-    margin-bottom: 20px; /* Adiciona espaço abaixo da tabela */
-    flex: auto;
+    width: 100%; /* Largura total */
+    table-layout: fixed; /* Layout fixo para evitar que o conteúdo dite o tamanho */
+    border-collapse: collapse; /* Bordas colapsadas para um visual limpo */
 }
 
-/* Células e cabeçalhos da tabela */
 table th, table td {
-    padding: 12px; /* Adiciona espaçamento interno às células e cabeçalhos */
-    text-align: left; /* Alinha o conteúdo das células e cabeçalhos à esquerda */
-    border-bottom: 1px solid #ddd; /* Adiciona uma linha inferior nas células e cabeçalhos */
-    white-space: nowrap; /* Impede a quebra de linha no conteúdo das células */
+    padding: 12px; /* Espaçamento interno nas células */
+    text-align: left; /* Alinhamento do texto à esquerda */
+    border-bottom: 1px solid #ddd; /* Linha divisória sutil */
 }
 
-/* Cabeçalhos da tabela */
 table th {
-    background-color: #002fff98; /* Define a cor de fundo dos cabeçalhos da tabela (azul) */
-    color: rgb(5, 5, 5); /* Define a cor do texto dos cabeçalhos como branco */
+    background-color: #0056b3; /* Cabeçalho com cor de fundo azul */
+    color: white; /* Texto do cabeçalho em branco */
 }
 
-/* Cor de fundo ao passar o mouse sobre uma linha */
-table tr:hover {
-    background-color: #003cff63; /* Altera o fundo da linha quando o mouse passa por cima */
-}
+
 
 /* Cor de fundo da linha selecionada */
 .selected-row {

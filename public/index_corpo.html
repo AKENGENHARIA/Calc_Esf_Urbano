@@ -1,293 +1,117 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Esforço Urbano</title>
-    <link rel="stylesheet" href="/public/css/style_modal_Poste.css"> 
+    <link rel="stylesheet" href="/public/css/style_modal_Poste.css">
     <link rel="stylesheet" href="/public/css/style_Corpo.css">
 </head>
+
 <body>
-    
- <!-- Modal de características do poste -->
-<div id="postModal" class="modal">
-    <div class="modal-content">
-        <h2>CARACTERÍSTICAS DO POSTE</h2>
 
-        <div class="form-group">
-            <label for="numeroPoste">Nº do Poste</label><br>
-            <input type="text" id="numeroPoste">
-        </div>
+    <!-- Modal de características do poste -->
+    <div id="postModal" class="modal">
+        <div class="modal-content">
+            <h2>CARACTERÍSTICAS DO POSTE</h2>
 
-        <div class="form-row">
-            <div class="radio-group">
-                <h4>Tipo</h4>
-                <label><input type="radio" name="tipoPoste" value="SC"> Poste SC</label>
-                <label><input type="radio" name="tipoPoste" value="Madeira"> Poste Madeira</label>
-                <label><input type="radio" name="tipoPoste" value="DT"> Poste DT</label>
-                <label><input type="radio" name="tipoPoste" value="Aço"> Poste AÇO</label>
+            <div class="form-group">
+                <label for="numeroPoste">Nº do Poste</label><br>
+                <input type="text" id="numeroPoste">
             </div>
 
-            <div class="radio-group">
-                <h4>Altura (m)</h4>
-                <label><input type="radio" name="altura" value="9"> 9</label>
-                <label><input type="radio" name="altura" value="10"> 10</label>
-                <label><input type="radio" name="altura" value="11"> 11</label>
-                <label><input type="radio" name="altura" value="12"> 12</label>
-                <label><input type="radio" name="altura" value="13"> 13</label>
-                <label><input type="radio" name="altura" value="15"> 15</label>
-                <label><input type="radio" name="altura" value="18"> 18</label>
-            </div>
-
-            <div class="radio-group">
-                <h4>Capacidade (daN)</h4>
-                <label><input type="radio" name="capacidade" value="100"> 100</label>
-                <label><input type="radio" name="capacidade" value="150"> 150</label>
-                <label><input type="radio" name="capacidade" value="200"> 200</label>
-                <label><input type="radio" name="capacidade" value="300"> 300</label>
-                <label><input type="radio" name="capacidade" value="400"> 400</label>
-                <label><input type="radio" name="capacidade" value="450"> 450</label>
-                <label><input type="radio" name="capacidade" value="600"> 600</label>
-                <label><input type="radio" name="capacidade" value="1000"> 1000</label>
-            </div>
-        </div>
-        
-        <button id="confirmar">CONFIRMAR</button>
-        <button id="sair">SAIR</button>
-    </div>
-</div>
-
-<!-- Container para as forças -->
-<div id="forces-container"></div>
-
-<script>
-
-    // Função que abre o modal ao carregar a página
-   window.onload = function() {
-        var modal = document.getElementById('postModal');
-       modal.style.display = "block";
-    }
-
-    let posteData = {}; // Armazenar dados temporários do poste
-
-    // Função para exibir o modal e buscar o último poste do projeto
-    function abrirModalParaNovoPoste() {
-        // Função que buscaria o último poste salvo, mas aqui exibimos apenas o modal
-        document.getElementById("postModal").style.display = "block"; // Exibir o modal
-    }
-
-    // Capturar os dados do poste e gerar inputs de força após fechar o modal
-    document.getElementById('confirmar').addEventListener('click', function () {
-        const numeroPoste = parseInt(document.getElementById("numeroPoste").value);
-        const tipoPoste = document.querySelector('input[name="tipoPoste"]:checked')?.value;
-        const altura = document.querySelector('input[name="altura"]:checked')?.value;
-        const capacidade = document.querySelector('input[name="capacidade"]:checked')?.value;
-
-        if (numeroPoste && tipoPoste && altura && capacidade) {
-            // Armazenar as informações do poste
-            posteData = {
-                numeroPoste,
-                tipoPoste,
-                altura,
-                capacidade
-            };
-
-            // Fechar o modal e gerar inputs para as forças
-            document.getElementById("postModal").style.display = "none";
-            generateForceInputs(); // Gera os inputs para as forças após o modal ser fechado
-        } else {
-            alert('Por favor, preencha todos os campos do poste.');
-        }
-    });
-
-    // Função para gerar os campos das forças
-    function generateForceInputs() {
-        const forceData = [
-            { id: 'F1', estaioId: 1 },
-            { id: 'F2', estaioId: 2 },
-            { id: 'F3', estaioId: 3 },
-            { id: 'F4', estaioId: 4 },
-            { id: 'F5', estaioId: 5 }
-        ];
- const forcesContainer = document.getElementById('forces-container');
-            forcesContainer.innerHTML = ''; // Limpar os campos existentes
-
-            forceData.forEach(force => {
-                const forceHTML = `
-                  <div class="force-input" id="${force.id}">
-                <h3>FORÇA ${force.estaioId}</h3>
-                <section class="vao-ang">
-                    <label for="span${force.estaioId}_${force.id}">Vão:</label>
-                    <input type="number" id="span${force.estaioId}_${force.id}" value="">
-                    <label for="angle${force.estaioId}_${force.id}">Ângulo:</label>
-                    <input type="number" id="angle${force.estaioId}_${force.id}" value="">
-                </section>
-                <div class="RedeDentrega">
-                    <h3>Rede de Energia</h3>
-                    <p>Rede MT</p>
-                    <select name="rede_mt_${force.id}" id="rede_mt_${force.id}">
-                    <option value="0">Selecione</option>
-                    <option value="415">3#50+9,5</option>
-                    <option value="255">1#50+9,6</option>
-                    <option value="517">3#150+9,7</option>
-                    <option value="58">1#4</option>
-                    <option value="116">2#4</option>
-                    <option value="174">3#4</option>
-                    <option value="92">1#2</option>
-                    <option value="184">2#2</option>
-                    <option value="276">3#2</option>
-                    <option value="145">1#1/0</option>
-                    <option value="290">2#1/0</option>
-                    <option value="435">3#1/0</option>
-                    <option value="293">1#4/0</option>
-                    <option value="586">2#4/0</option>
-                    <option value="879">3#4/0</option>
-                    <option value="467">1#336</option>
-                    <option value="934">2#336</option>
-                    <option value="1401">3#336</option>
-                    <option value="358">3x1x50+9</option>
-                    <option value="552">3x1x120+9</option>
-                    <option value="703">3x1x185+9</option>
-
-                    </select>
-
-                    <p>Rede BT</p>
-                    <select name="rede_bt_${force.id}" id="rede_bt_${force.id}">
-                    <option value="0">Selecione</option>
-                    <option value="114">2x1x35+70</option>
-                    <option value="181">2x1x70+70</option>
-                    <option value="161">3x1x35+70</option>
-                    <option value="245">3x1x70+70</option>
-                    <option value="381">3x1x120+70</option>
-                    <option value="58">1#4</option>
-                    <option value="116">2#4(4)</option>
-                    <option value="174">3#4(4)</option>
-                    <option value="92">1#2</option>
-                    <option value="183">2#2(4)</option>
-                    <option value="184">2#2(2)</option>
-                    <option value="275">3#2(4)</option>
-                    <option value="276">3#2(2)</option>
-                    <option value="145">1#1/0</option>
-                    <option value="290">2#1/0(2)</option>
-                    <option value="435">3#1/0(2)</option>
-                    <option value="293">1#4/0</option>
-                    <option value="586">2#4/0(1/0)</option>
-                    <option value="879">3#4/0(1/0)</option>
-                    <option value="467">1#336</option>
-                    <option value="934">2#336(4/0)</option>
-                    <option value="1401">3#336(4/0)</option>
-                    </select>
-
-                    <p>Nível da cruzeta MT</p>
-                    <select name="nivel_cruzeta_mt_${force.id}" id="nivel_cruzeta_mt_${force.id}">
-                        <option value="1">NIVEL 1</option>
-                        <option value="0.96">NIVEL 2</option>
-                        <option value="0.86">NIVEL 3</option>
-                    </select>
+            <div class="form-row">
+                <div class="radio-group">
+                    <h4>Tipo</h4>
+                    <label><input type="radio" name="tipoPoste" value="SC"> Poste SC</label>
+                    <label><input type="radio" name="tipoPoste" value="Madeira"> Poste Madeira</label>
+                    <label><input type="radio" name="tipoPoste" value="DT"> Poste DT</label>
+                    <label><input type="radio" name="tipoPoste" value="Aço"> Poste AÇO</label>
                 </div>
-                <section class="estaio estaio-section">
-                    <h3>Estaio ${force.estaioId}</h3>
-                    <input type="radio" id="estaio_sim${force.estaioId}" name="estaio${force.estaioId}" value="sim"> Sim
-                    <input type="radio" id="estaio_nao${force.estaioId}" name="estaio${force.estaioId}" value="nao"> Não
-                    <select id="estaio_${force.id}">
-                        <option value="0">Selecione</option>
-                        <option value="CZ-CZ">CZ-CZ</option>
-                        <option value="MT-PP">MT-PP</option>
-                        <option value="BT-PP">BT-PP</option>
-                        <option value="MT-PCP">MT-PCP</option>
-                        <option value="BT-PCP">BT-PCP</option>
 
-                    </select>
-                    <input type="number" id="estaio_${force.estaioId}">
-                </section>
-                <section class="usoMutuo">
-                    <h3>Uso Mútuo</h3>
-                    <select id="usoMutuo_${force.id}">
-                       <option value="0">Selecione</option>
-                        <option value="81">CFO-80G 12F</option>
-                        <option value="100">CFO-80G 24F</option>
-                        <option value="100">CFO-80G 36F</option>
-                        <option value="128">CFO-80G 48F</option>
-                        <option value="128">CFO-80G 72F</option>
-                        <option value="175">CFO-80G 96F</option>
-                        <option value="260">CFO-80G 144F</option>
+                <div class="radio-group">
+                    <h4>Altura (m)</h4>
+                    <label><input type="radio" name="altura" value="9"> 9</label>
+                    <label><input type="radio" name="altura" value="10"> 10</label>
+                    <label><input type="radio" name="altura" value="11"> 11</label>
+                    <label><input type="radio" name="altura" value="12"> 12</label>
+                    <label><input type="radio" name="altura" value="13"> 13</label>
+                    <label><input type="radio" name="altura" value="15"> 15</label>
+                    <label><input type="radio" name="altura" value="18"> 18</label>
+                </div>
 
-                    </select>
-                </section>
+                <div class="radio-group">
+                    <h4>Capacidade (daN)</h4>
+                    <label><input type="radio" name="capacidade" value="100"> 100</label>
+                    <label><input type="radio" name="capacidade" value="150"> 150</label>
+                    <label><input type="radio" name="capacidade" value="200"> 200</label>
+                    <label><input type="radio" name="capacidade" value="300"> 300</label>
+                    <label><input type="radio" name="capacidade" value="400"> 400</label>
+                    <label><input type="radio" name="capacidade" value="450"> 450</label>
+                    <label><input type="radio" name="capacidade" value="600"> 600</label>
+                    <label><input type="radio" name="capacidade" value="1000"> 1000</label>
+                </div>
             </div>
-                `;
-                forcesContainer.innerHTML += forceHTML;
+
+            <button id="confirmar">CONFIRMAR</button>
+            <button id="sair">SAIR</button>
+        </div>
+    </div>
+
+    <!-- Container para as forças -->
+    <div id="forces-container"></div>
+
+
+
+
+
+
+    <script>
+        // Espera o conteúdo da DOM estar totalmente carregado
+        document.addEventListener('DOMContentLoaded', function () {
+            // Seleciona o modal pelo ID
+            const modal = document.getElementById('postModal');
+            // Define o estilo de exibição para 'block' para tornar o modal visível
+            modal.style.display = 'block';
+    
+            // Adiciona evento ao botão 'sair' para fechar o modal
+            document.getElementById('sair').addEventListener('click', function () {
+                modal.style.display = 'none'; // Esconde o modal
             });
-        }
-
-    // Verificar se pelo menos uma força foi inserida antes de salvar o poste e as forças
-    function verificarForcasPreenchidas() {
-        const forceInputs = document.querySelectorAll('.force-input input');
-        return Array.from(forceInputs).some(input => input.value.trim() !== "");
-    }
-
-    // Função para salvar o poste e as forças
-    document.getElementById('confirmar').addEventListener('click', () => {
-        // Verifica se pelo menos uma força foi preenchida
-        if (!verificarForcasPreenchidas()) {
-            alert('Por favor, preencha pelo menos uma força.');
-            return;
-        }
-
-        // Coletar as informações das forças
-        const forceData = [
-            { id: 'F1', estaioId: 1 },
-            { id: 'F2', estaioId: 2 },
-            { id: 'F3', estaioId: 3 },
-            { id: 'F4', estaioId: 4 },
-            { id: 'F5', estaioId: 5 }
-        ];
-
-        const forcas = forceData.map(force => {
-            return {
-                vao: document.getElementById(`span${force.estaioId}_${force.id}`)?.value || null,
-                angulo: document.getElementById(`angle${force.estaioId}_${force.id}`)?.value || null,
-                estaio: document.getElementById(`estaio${force.estaioId}`).checked ? 'Sim' : 'Não'
-            };
         });
-
-        // Enviar os dados do poste e das forças
-        fetch('https://us-central1-akraquercem.cloudfunctions.net/api/projetos/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                ...posteData,  // Dados do poste
-                forcas        // Dados das forças
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Poste e forças salvos com sucesso!');
-                limparCampos(); // Limpa os campos após salvar
-                abrirModalParaNovoPoste(); // Reabre o modal para um novo ciclo
+    
+        // Adiciona um ouvinte de evento ao botão 'confirmar'
+        document.getElementById('confirmar').addEventListener('click', function () {
+            // Pega o valor do campo 'Nº do Poste'
+            const numeroPoste = document.getElementById('numeroPoste').value;
+    
+            // Checa se algum botão de rádio 'tipoPoste' está selecionado
+            const tipoPoste = document.querySelector('input[name="tipoPoste"]:checked');
+    
+            // Checa se algum botão de rádio 'altura' está selecionado
+            const altura = document.querySelector('input[name="altura"]:checked');
+    
+            // Checa se algum botão de rádio 'capacidade' está selecionado
+            const capacidade = document.querySelector('input[name="capacidade"]:checked');
+    
+            // Verifica se algum dos campos obrigatórios não está preenchido
+            if (!numeroPoste || !tipoPoste || !altura || !capacidade) {
+                // Alerta o usuário para preencher todos os campos caso algum esteja vazio
+                alert('Por favor, preencha todas as informações do poste.');
             } else {
-                console.error('Erro ao salvar poste e forças:', data.message);
-                alert('Erro ao salvar poste e forças.');
+                // Se todos os campos estiverem preenchidos, executa uma ação.
+                alert('Todas as informações preenchidas!'); // Exemplo de alerta de sucesso
+                // Fecha o modal após a confirmação
+            
             }
-        })
-        .catch(error => {
-            console.error('Erro ao enviar os dados:', error);
-            alert('Erro ao salvar poste e forças.');
         });
-    });
+    
 
-    // Função para limpar os campos após o salvamento
-    function limparCampos() {
-        document.getElementById("numeroPoste").value = '';
-        document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+    </script>
+    
 
-        const forceInputs = document.querySelectorAll('.force-input input, .force-input select');
-        forceInputs.forEach(input => input.value = '');
-    }
-</script>
 
 </body>
+
 </html>
