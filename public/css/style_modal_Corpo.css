@@ -27,6 +27,7 @@ h2 {
     color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    
 }
 
 .fieldset-container {
@@ -47,6 +48,7 @@ fieldset {
 legend {
     font-size: 14px;
     color: #555;
+    text-align: left;
 }
 
 label {
@@ -61,6 +63,8 @@ input[type="text"], input[type="radio"] {
     margin: 5px 0;
     border: 2px solid #ccc;
     border-radius: 5px;
+    
+   
 }
 
 button {
@@ -79,18 +83,73 @@ button:hover {
     transform: translateY(5px);
 }
 
-#forcasContainer {
+#forces-container {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between; /* Espaça as forças de forma igual */
+    flex-wrap: nowrap; /* Impede a quebra de linha */
     margin: 20px;
 }
 
-.forca {
+.force-input {
+    background-color: #e3e3e3;
     border: 1px solid #ccc;
-    padding: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    width: calc(20% - 10px); /* Ajusta a largura para 5 forças lado a lado */
+    box-sizing: border-box;
+}
+
+.force-input h3 {
+    margin-top: 0;
+    color: #007BFF;
+}
+
+.estaio-section, .vao-ang, .RedeDentrega, .usoMutuo {
     margin-bottom: 10px;
 }
 
+select, input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+}
+
+.estaio input[type="radio"] {
+    margin-right: 10px;
+}
+
 button {
-    margin-top: 10px;
+    background-color: #007BFF;
+    padding: 12px 24px;
+    font-size: 14px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.8s, transform 0.2s;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-5px);
+}
+@media (max-width: 1200px) {
+    .force-input {
+        width: calc(33.333% - 10px); /* 3 forças por linha em telas médias */
+    }
+}
+
+@media (max-width: 800px) {
+    .force-input {
+        width: calc(50% - 10px); /* 2 forças por linha em telas pequenas */
+    }
+}
+
+@media (max-width: 600px) {
+    .force-input {
+        width: 100%; /* 1 força por linha em telas muito pequenas */
+    }
 }
