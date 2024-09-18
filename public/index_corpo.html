@@ -1,117 +1,74 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Esforço Urbano</title>
-    <link rel="stylesheet" href="/public/css/style_modal_Poste.css">
-    <link rel="stylesheet" href="/public/css/style_Corpo.css">
+    <title>Modal com Características do Poste</title>
+    <link rel="stylesheet" href="/public/css/style_modal_Corpo.css">
 </head>
-
 <body>
+   
 
-    <!-- Modal de características do poste -->
-    <div id="postModal" class="modal">
+    <div id="modalPoste" class="modal" style="display: none;">
         <div class="modal-content">
-            <h2>CARACTERÍSTICAS DO POSTE</h2>
+            <h2>CARACTERÍSTICAS</h2>
+            <form id="formPoste">
+                <label for="numeroPoste">Nº DO POSTE</label>
+                <input type="text" id="numeroPoste" name="numeroPoste">
 
-            <div class="form-group">
-                <label for="numeroPoste">Nº do Poste</label><br>
-                <input type="text" id="numeroPoste">
-            </div>
+                <div class="fieldset-container">
+                    <fieldset>
+                        <legend>Tipo</legend>
+                        <label><input type="radio" name="tipoPoste" value="SC"> Poste SC</label>
+                        <label><input type="radio" name="tipoPoste" value="Madeira"> Poste Madeira</label>
+                        <label><input type="radio" name="tipoPoste" value="DT"> Poste DT</label>
+                        <label><input type="radio" name="tipoPoste" value="Aço"> Poste AÇO</label>
+                    </fieldset>
 
-            <div class="form-row">
-                <div class="radio-group">
-                    <h4>Tipo</h4>
-                    <label><input type="radio" name="tipoPoste" value="SC"> Poste SC</label>
-                    <label><input type="radio" name="tipoPoste" value="Madeira"> Poste Madeira</label>
-                    <label><input type="radio" name="tipoPoste" value="DT"> Poste DT</label>
-                    <label><input type="radio" name="tipoPoste" value="Aço"> Poste AÇO</label>
+                    <fieldset>
+                        <legend>Altura (m)</legend>
+                        <label><input type="radio" name="alturaPoste" value="9"> 9</label>
+                        <label><input type="radio" name="alturaPoste" value="10"> 10</label>
+                        <label><input type="radio" name="alturaPoste" value="11"> 11</label>
+                        <label><input type="radio" name="alturaPoste" value="12"> 11</label>
+                        <label><input type="radio" name="alturaPoste" value="13"> 11</label>
+                        <label><input type="radio" name="alturaPoste" value="15"> 11</label>
+                        <label><input type="radio" name="alturaPoste" value="18"> 11</label>
+
+                    </fieldset>
+
+                    <fieldset>
+                        <legend>Capacidade (daN)</legend>
+                        <label><input type="radio" name="capacidadePoste" value="100"> 100</label>
+                        <label><input type="radio" name="capacidadePoste" value="150"> 150</label>
+                        <label><input type="radio" name="capacidadePoste" value="200"> 150</label>
+                        <label><input type="radio" name="capacidadePoste" value="300"> 150</label>
+                        <label><input type="radio" name="capacidadePoste" value="400"> 150</label>
+                        <label><input type="radio" name="capacidadePoste" value="450"> 150</label>
+                        <label><input type="radio" name="capacidadePoste" value="600"> 150</label>
+                        <label><input type="radio" name="capacidadePoste" value="1000"> 150</label>
+
+
+                    </fieldset>
                 </div>
 
-                <div class="radio-group">
-                    <h4>Altura (m)</h4>
-                    <label><input type="radio" name="altura" value="9"> 9</label>
-                    <label><input type="radio" name="altura" value="10"> 10</label>
-                    <label><input type="radio" name="altura" value="11"> 11</label>
-                    <label><input type="radio" name="altura" value="12"> 12</label>
-                    <label><input type="radio" name="altura" value="13"> 13</label>
-                    <label><input type="radio" name="altura" value="15"> 15</label>
-                    <label><input type="radio" name="altura" value="18"> 18</label>
-                </div>
-
-                <div class="radio-group">
-                    <h4>Capacidade (daN)</h4>
-                    <label><input type="radio" name="capacidade" value="100"> 100</label>
-                    <label><input type="radio" name="capacidade" value="150"> 150</label>
-                    <label><input type="radio" name="capacidade" value="200"> 200</label>
-                    <label><input type="radio" name="capacidade" value="300"> 300</label>
-                    <label><input type="radio" name="capacidade" value="400"> 400</label>
-                    <label><input type="radio" name="capacidade" value="450"> 450</label>
-                    <label><input type="radio" name="capacidade" value="600"> 600</label>
-                    <label><input type="radio" name="capacidade" value="1000"> 1000</label>
-                </div>
-            </div>
-
-            <button id="confirmar">CONFIRMAR</button>
-            <button id="sair">SAIR</button>
+                <button type="submit">CONFIRMAR</button>
+            </form>
         </div>
+ 
     </div>
+    <div id="forces-container" style="display: none;"></div>
 
-    <!-- Container para as forças -->
-    <div id="forces-container"></div>
-
-
-
-
-
-
-    <script>
-        // Espera o conteúdo da DOM estar totalmente carregado
-        document.addEventListener('DOMContentLoaded', function () {
-            // Seleciona o modal pelo ID
-            const modal = document.getElementById('postModal');
-            // Define o estilo de exibição para 'block' para tornar o modal visível
-            modal.style.display = 'block';
-    
-            // Adiciona evento ao botão 'sair' para fechar o modal
-            document.getElementById('sair').addEventListener('click', function () {
-                modal.style.display = 'none'; // Esconde o modal
-            });
-        });
-    
-        // Adiciona um ouvinte de evento ao botão 'confirmar'
-        document.getElementById('confirmar').addEventListener('click', function () {
-            // Pega o valor do campo 'Nº do Poste'
-            const numeroPoste = document.getElementById('numeroPoste').value;
-    
-            // Checa se algum botão de rádio 'tipoPoste' está selecionado
-            const tipoPoste = document.querySelector('input[name="tipoPoste"]:checked');
-    
-            // Checa se algum botão de rádio 'altura' está selecionado
-            const altura = document.querySelector('input[name="altura"]:checked');
-    
-            // Checa se algum botão de rádio 'capacidade' está selecionado
-            const capacidade = document.querySelector('input[name="capacidade"]:checked');
-    
-            // Verifica se algum dos campos obrigatórios não está preenchido
-            if (!numeroPoste || !tipoPoste || !altura || !capacidade) {
-                // Alerta o usuário para preencher todos os campos caso algum esteja vazio
-                alert('Por favor, preencha todas as informações do poste.');
-            } else {
-                // Se todos os campos estiverem preenchidos, executa uma ação.
-                alert('Todas as informações preenchidas!'); // Exemplo de alerta de sucesso
-                // Fecha o modal após a confirmação
-            
-            }
-        });
+  
     
 
-    </script>
-    
+
+    <script src="scripts_modal.js"></script>
+
+
+
+
 
 
 </body>
-
 </html>
