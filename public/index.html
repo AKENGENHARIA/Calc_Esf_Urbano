@@ -37,19 +37,37 @@
         </div>
 
         <div id="loading" class="loading">Carregando projetos...</div>
-
-        <table id="projetosTable">
-            <thead>
-                <tr>
-                    <th>Nome do Projeto</th>
-                    <th>Cidade</th>
-                    <th>Empresa</th>
-                    <th>Concessionária</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <div class="table-container">
+            <table id="projetosTable">
+                <thead>
+                    <tr>
+                        <th>Nome do Projeto</th>
+                        <th>Cidade</th>
+                        <th>Empresa</th>
+                        <th>Concessionária</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-label="Nome do Projeto">Projeto Atualizado</td>
+                        <td data-label="Cidade">Cidade Nova</td>
+                        <td data-label="Empresa">Nova Empresa</td>
+                        <td data-label="Concessionária">Nova Concessionária</td>
+                        <td data-label="Status">Em Andamento</td>
+                    </tr>
+                    <tr>
+                        <td data-label="Nome do Projeto">Projeto Novo</td>
+                        <td data-label="Cidade">São Paulo</td>
+                        <td data-label="Empresa">Empresa Exemplo</td>
+                        <td data-label="Concessionária">Concessionária X</td>
+                        <td data-label="Status">Finalizado</td>
+                    </tr>
+                    <!-- Adicione mais linhas conforme necessário -->
+                </tbody>
+            </table>
+        </div>
+        
 
         <div class="pagination" id="pagination"></div>
         <div class="error-message" id="errorMessage"></div>
@@ -348,36 +366,58 @@ function fetchProjects(query = '', page = 1, status = '') {
 
     // Função para concluir o projeto
     function concluirProjeto() {
+<<<<<<< Updated upstream
         if (projetoSelecionadoId && confirm("Tem certeza de que deseja concluir este projeto?")) {
             fetch(`https://us-central1-akraquercem.cloudfunctions.net/api/projetos/${projetoSelecionadoId}/concluir`, {
                 method: 'PUT'
+=======
+    if (projetoSelecionadoId && confirm("Tem certeza de que deseja concluir este projeto?")) {
+        fetch(`https://us-central1-akraquercem.cloudfunctions.net/api/projetos/${projetoSelecionadoId}/concluir`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                status: 'finalizado'  // Atualiza o status do projeto para "finalizado"
+>>>>>>> Stashed changes
             })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao concluir o projeto. Status: ' + response.status);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Projeto concluído com sucesso!');
-                    fetchProjects(); // Atualiza a lista de projetos
-                } else {
-                    alert('Erro ao concluir o projeto.');
-                }
-            })
-            .catch(error => {
-                alert(`Erro ao concluir o projeto: ${error.message}`);
-            });
-        }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Erro ao concluir o projeto. Status: ' + response.status);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                alert('Projeto concluído com sucesso!');
+                fetchProjects(); // Atualiza a lista de projetos
+            } else {
+                alert('Erro ao concluir o projeto.');
+            }
+        })
+        .catch(error => {
+            alert(`Erro ao concluir o projeto: ${error.message}`);
+        });
+    } else if (!projetoSelecionadoId) {
+        alert("Nenhum projeto selecionado para conclusão.");
     }
+}
 
+
+<<<<<<< Updated upstream
 // Função para excluir o projeto selecionado
 function excluirProjetoSelecionado() {
     if (projetoSelecionadoId && confirm("Tem certeza de que deseja excluir este projeto?")) {
         const url = `https://us-central1-akraquercem.cloudfunctions.net/api/projetos/${projetoSelecionadoId}/excluir`;
         console.log("URL para exclusão:", url);  // Log para ver a URL gerada
         fetch(url, {
+=======
+    // Função para excluir o projeto selecionado
+    function excluirProjetoSelecionado() {
+    if (projetoSelecionadoId && confirm("Tem certeza de que deseja excluir este projeto?")) {
+        fetch(`https://us-central1-akraquercem.cloudfunctions.net/api/projetos/${projetoSelecionadoId}`, {
+>>>>>>> Stashed changes
             method: 'DELETE'
         })
         .then(response => {
@@ -389,8 +429,17 @@ function excluirProjetoSelecionado() {
             return response.json();
         })
         .then(data => {
+<<<<<<< Updated upstream
             alert('Projeto excluído com sucesso!');
             fetchProjects(); // Atualiza a lista de projetos
+=======
+            if (data.success) {
+                alert('Projeto excluído com sucesso!');
+                fetchProjects(); // Atualiza a lista de projetos
+            } else {
+                alert(`Erro ao excluir projeto: ${data.error}`);
+            }
+>>>>>>> Stashed changes
         })
         .catch(error => {
             alert(`Erro ao excluir projeto: ${error.message}`);
@@ -399,6 +448,7 @@ function excluirProjetoSelecionado() {
         alert("Nenhum projeto selecionado para exclusão.");
     }
 }
+<<<<<<< Updated upstream
 
 // Evento para o botão de pesquisa
 document.getElementById('searchBtn').addEventListener('click', function() {
@@ -414,6 +464,8 @@ document.getElementById('statusFilter').addEventListener('change', function() {
     fetchProjects(query, 1, status);
 });
 
+=======
+>>>>>>> Stashed changes
 
     // Carrega os projetos ao carregar a página
     window.onload = function () {

@@ -188,7 +188,7 @@ app.put('/projetos/:id/concluir', async (req, res) => {
 });
 
 // Função para obter o último poste de um projeto
-app.get('/projetos/:projetoId/ultimoPoste', async (req, res) => {
+app.get('/postes/:projetoId/ultimoPoste', async (req, res) => {
   const { projetoId } = req.params;
   let connection;
   try {

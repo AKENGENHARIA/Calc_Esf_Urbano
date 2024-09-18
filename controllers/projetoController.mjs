@@ -1,55 +1,60 @@
-import db from '../db.mjs';  // Supondo que você esteja usando um arquivo db.js
+import db from '../db.mjs';  // Importa a conexão com o banco de dados
 
 // Função para obter um projeto pelo ID
-export const getProjetoById = (req, res) => {
+export const getProjetoById = async (req, res) => {
   const { id } = req.params;
   const sql = "SELECT * FROM projetos WHERE id = ?";
-  db.query(sql, [id], (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: "Erro ao buscar projeto" });
-    }
+
+  try {
+    const [results] = await db.query(sql, [id]);
     if (results.length === 0) {
-      return res.status(404).json({ error: "Projeto não encontrado" });
+      return res.status(404).json({ success: false, error: "Projeto não encontrado" });
     }
-    res.json(results[0]);
-  });
+    res.json({ success: true, data: results[0] });
+  } catch (err) {
+    console.error('Erro ao buscar projeto:', err);
+    return res.status(500).json({ success: false, error: "Erro ao buscar projeto" });
+  }
 };
 
 // Função para criar um novo projeto
 export const createProjeto = async (req, res) => {
   const { nome_projeto, cidade, empresa, concessionaria, status } = req.body;
-  
-  // Verificar se todos os campos necessários estão presentes
+
   if (!nome_projeto || !cidade || !empresa || !concessionaria || !status) {
-      return res.status(400).json({ error: "Todos os campos são obrigatórios." });
+    return res.status(400).json({ success: false, error: "Todos os campos são obrigatórios." });
   }
 
   try {
-      // Inserir o projeto no banco de dados
-      const [result] = await db.query(
-          'INSERT INTO projetos (nome_projeto, cidade, empresa, concessionaria, status) VALUES (?, ?, ?, ?, ?)',
-          [nome_projeto, cidade, empresa, concessionaria, status]
-      );
-
-      // Retornar sucesso e o ID do projeto criado
-      res.status(201).json({ success: true, message: 'Projeto criado com sucesso', id: result.insertId });
+    const sql = 'INSERT INTO projetos (nome_projeto, cidade, empresa, concessionaria, status) VALUES (?, ?, ?, ?, ?)';
+    const [result] = await db.query(sql, [nome_projeto, cidade, empresa, concessionaria, status]);
+    res.status(201).json({ success: true, message: 'Projeto criado com sucesso', id: result.insertId });
   } catch (error) {
-      console.error('Erro ao criar projeto:', error);
-      res.status(500).json({ error: 'Erro ao criar projeto.' });
+    console.error('Erro ao criar projeto:', error);
+    res.status(500).json({ success: false, error: 'Erro ao criar projeto.' });
   }
 };
 
 // Função para atualizar um projeto existente
-export const updateProjeto = (req, res) => {
+export const updateProjeto = async (req, res) => {
   const { id } = req.params;
   const { nome_projeto, cidade, empresa, concessionaria, status } = req.body;
+
+  if (!nome_projeto || !cidade || !empresa || !concessionaria || !status) {
+    return res.status(400).json({ success: false, error: "Todos os campos são obrigatórios." });
+  }
+
   const sql = "UPDATE projetos SET nome_projeto = ?, cidade = ?, empresa = ?, concessionaria = ?, status = ? WHERE id = ?";
-  db.query(sql, [nome_projeto, cidade, empresa, concessionaria, status, id], (err) => {
-    if (err) {
-      return res.status(500).json({ error: "Erro ao atualizar projeto" });
+  try {
+    const [result] = await db.query(sql, [nome_projeto, cidade, empresa, concessionaria, status, id]);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, error: "Projeto não encontrado." });
     }
     res.status(200).json({ success: true, message: "Projeto atualizado com sucesso!" });
-  });
+  } catch (err) {
+    console.error('Erro ao atualizar projeto:', err);
+    return res.status(500).json({ success: false, error: "Erro ao atualizar projeto" });
+  }
 };
 
 // Função para deletar um projeto
@@ -61,6 +66,7 @@ export const deleteProjeto = async (req, res) => {
 
   try {
     const [result] = await db.query(sql, [id]);
+<<<<<<< Updated upstream
 
     if (result.affectedRows === 0) {
       console.log('Projeto não encontrado.');
@@ -72,52 +78,66 @@ export const deleteProjeto = async (req, res) => {
   } catch (err) {
     console.error('Erro ao deletar projeto:', err);
     res.status(500).json({ error: 'Erro ao deletar projeto.' });
+=======
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ success: false, error: "Projeto não encontrado." });
+    }
+    res.json({ success: true, message: "Projeto deletado com sucesso" });
+  } catch (err) {
+    console.error('Erro ao deletar projeto:', err);
+    return res.status(500).json({ success: false, error: "Erro ao deletar projeto" });
+>>>>>>> Stashed changes
   }
 };
 
 
 
 // Função para buscar todos os projetos
-export const getAllProjetos = (req, res) => {
+export const getAllProjetos = async (req, res) => {
   const sql = "SELECT * FROM projetos";
-  db.query(sql, (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: "Erro ao buscar projetos" });
-    }
+
+  try {
+    const [results] = await db.query(sql);
     if (results.length === 0) {
-      return res.status(404).json({ error: "Nenhum projeto encontrado" });
+      return res.status(404).json({ success: false, error: "Nenhum projeto encontrado" });
     }
-    res.json(results);
-  });
+    res.json({ success: true, data: results });
+  } catch (err) {
+    console.error('Erro ao buscar projetos:', err);
+    return res.status(500).json({ success: false, error: "Erro ao buscar projetos" });
+  }
 };
 
 // Função para atualizar o status de um projeto para 'finalizado'
-export const concluirProjeto = (req, res) => {
+export const concluirProjeto = async (req, res) => {
   const { id } = req.params;
   const sql = "UPDATE projetos SET status = 'finalizado' WHERE id = ?";
-  
-  db.query(sql, [id], (err, result) => {
-    if (err) {
-      return res.status(500).json({ error: "Erro ao concluir projeto." });
-    }
+
+  try {
+    const [result] = await db.query(sql, [id]);
     if (result.affectedRows === 0) {
-      return res.status(404).json({ error: "Projeto não encontrado." });
+      return res.status(404).json({ success: false, error: "Projeto não encontrado." });
     }
     res.status(200).json({ success: true, message: "Projeto concluído com sucesso!" });
-  });
+  } catch (err) {
+    console.error('Erro ao concluir projeto:', err);
+    return res.status(500).json({ success: false, error: "Erro ao concluir projeto." });
+  }
 };
+
 // Função para obter o último poste salvo de um projeto específico
-export const getUltimoPostePorProjeto = (req, res) => {
+export const getUltimoPostePorProjeto = async (req, res) => {
   const { projetoId } = req.params;
   const sql = "SELECT * FROM postes WHERE projetoId = ? ORDER BY id DESC LIMIT 1";
 
-  db.query(sql, [projetoId], (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: "Erro ao buscar o último poste." });
-    }
+  try {
+    const [results] = await db.query(sql, [projetoId]);
     if (results.length === 0) {
-      return res.status(404).json({ error: "Nenhum poste encontrado para este projeto." });
+      return res.status(404).json({ success: false, error: "Nenhum poste encontrado para este projeto." });
     }
-    res.json(results[0]); // Retorna o último poste encontrado
-  });
+    res.json({ success: true, data: results[0] });
+  } catch (err) {
+    console.error('Erro ao buscar o último poste:', err);
+    return res.status(500).json({ success: false, error: "Erro ao buscar o último poste." });
+  }
 };

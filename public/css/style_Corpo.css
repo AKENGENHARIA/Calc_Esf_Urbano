@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 /* Estilos globais */
 :root {
     --primary-color: #0044cc;
@@ -16,7 +17,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-image: url('/fundo-poste.jpg') ;
+    background-image: url('/img/fundo-poste.jpg') ;
     
     display: flex;
     flex-direction: column;
@@ -191,4 +192,95 @@ select:focus {
     font-size: 24px;
     font-weight: bold;
     color: var(--primary-color);
+=======
+/* Contêiner da tabela para permitir rolagem */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Permite rolagem horizontal quando necessário */
+    -webkit-overflow-scrolling: touch; /* Suporte para rolagem suave em dispositivos móveis */
+    margin-top: 20px;
+}
+
+/* Estilos gerais para tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto;
+    word-wrap: break-word; /* Força quebra de palavra longa */
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+thead {
+    background-color: #0044cc;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Novos ajustes de responsividade no tbody */
+tbody {
+    display: block; /* Força o tbody a ser tratado como bloco para dispositivos móveis */
+    width: 100%;
+}
+
+/* Ajusta as colunas para caberem em telas menores */
+@media screen and (max-width: 768px) {
+    th, td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    tbody {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+/* Estilos detalhados para dispositivos muito pequenos */
+@media screen and (max-width: 480px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none; /* Oculta cabeçalhos */
+    }
+
+    td {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 50%;
+        text-align: right;
+        position: relative;
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        width: 45%;
+        padding-left: 10px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+    }
+>>>>>>> Stashed changes
 }

@@ -1,6 +1,6 @@
 import express from 'express';
-import { createPosteInternal } from '../controllers/posteController.js'; // Verifique a extensão .js
-import { createForcaInternal } from '../controllers/forcaController.js';
+import { createPosteInternal } from '../controllers/posteController.mjs'; // Verifique a extensão .js
+import { createForcaInternal } from '../controllers/forcaController.mjs';
 
 const router = express.Router();
 

@@ -1,25 +1,30 @@
+<<<<<<< Updated upstream
 import express from 'express';
 import cors from 'cors';
 import router from './routes/projetos.mjs';
+=======
+import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+>>>>>>> Stashed changes
 
-const app = express();
+// Carrega as variáveis de ambiente do arquivo .env
+dotenv.config();
 
-// Configuração de CORS para permitir o frontend acessar a API
-app.use(cors({
-   origin: 'https://akraquercem.web.app',  // Adicione o domínio correto do seu frontend aqui
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true
-}));
+// Extrai as partes da URL do banco de dados
+const dbUrl = new URL(process.env.DATABASE_URL);
 
-// Configura o roteamento com o caminho /api/projetos
-app.use('/api/projetos', router);
+// Configuração de conexão com o banco de dados
+const connectionConfig = {
+  host: dbUrl.hostname,
+  user: dbUrl.username,
+  password: dbUrl.password,
+  database: dbUrl.pathname.replace('/', ''),  // Remove a barra inicial do nome do banco
+  port: dbUrl.port,
+};
 
-// Define a porta que o servidor vai usar (você pode definir a porta via variáveis de ambiente)
-const PORT = process.env.PORT || 3000;
+// Cria a conexão com o MySQL
+const db = await mysql.createConnection(connectionConfig);
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-});
+console.log('Conexão com o banco de dados estabelecida');
 
-// Exporta o app para ser usado no Firebase Functions ou outro servidor, caso necessário
-export default app;
+export default db;

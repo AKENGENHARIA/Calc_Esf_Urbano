@@ -1,49 +1,29 @@
-import mysql from 'mysql2';
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import projetoRouter from './routes/projeto.mjs';
+import posteRouter from './routes/postes.mjs'; // Certifique-se de importar o arquivo de rotas corretamente
+import db from './db.mjs'; // Importa a conexão do banco de dados
 
-// Definindo manualmente a URL do banco de dados
-const dbUrl = new URL('mysql://root:gXpcxqgczzShiILURRhvfHERFlTtrnfz@junction.proxy.rlwy.net:27494/railway');
+dotenv.config();
 
-// Configurações da conexão
-const connectionConfig = {
-    host: dbUrl.hostname,
-    user: dbUrl.username,
-    password: dbUrl.password,
-    database: dbUrl.pathname.replace('/', ''), // Remove a barra inicial
-    port: dbUrl.port,
-};
+const app = express();
 
-// Criação da conexão com o banco de dados MySQL
-const db = mysql.createConnection(connectionConfig);
+app.use(cors());
+app.use(express.json());
 
-// Função para conectar e testar a conexão
-function connectToDatabase() {
-    db.connect((err) => {
-        if (err) {
-            console.error('Erro ao conectar ao banco de dados:', err);
-            setTimeout(connectToDatabase, 5000); // Tentar reconectar após 5 segundos
-        } else {
-            console.log('Conectado ao banco de dados');
-        }
-    });
-}
-
-// Verifica se a conexão continua ativa
-db.on('error', (err) => {
-    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-        console.error('Conexão com o banco de dados foi perdida. Reconectando...');
-        connectToDatabase();
-    } else {
-        throw err;
-    }
+// Verificar conexão com o banco de dados
+db.connect().then(() => {
+  console.log('Banco de dados conectado com sucesso!');
+}).catch((err) => {
+  console.error('Erro ao conectar ao banco de dados:', err);
 });
 
-// Testando a conexão ao banco de dados
-db.query('SELECT DATABASE() AS db;', (err, results) => {
-    if (err) {
-        console.error('Erro ao verificar banco de dados:', err);
-    } else {
-        console.log('Conectado ao banco de dados:', results[0].db);
-    }
-});
+// Define as rotas
+app.use('/api/projetos', projetoRouter); // Use o roteador de projetos
+app.use('/api/postes', posteRouter);     // Use o roteador de postes
 
-export default db;
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta ${PORT}`);
+});
